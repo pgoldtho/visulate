@@ -1,0 +1,287 @@
+Database Server
+
+Server Hardware Specifications
+
+Data Center: USA.Orlando DC2
+Operating System: CentOS 6 (64bit)
+CPU Processor Type: Single Xeon Quad-Core E3-1230 3.2Ghz w/HT
+Memory Installed: 16GB
+Hard Drive Configuration:
+120 GB SSD (MLC)
+120 GB SSD (MLC)
+1 TB SATA RAID 1 (7.2k)
+1 TB SATA RAID 1 (7.2k)
+RAID Configuration: Hardware RAID 1
+
+Server IP Address Allocation
+
+64.37.61.43
+64.37.61.44
+64.37.61.45
+64.37.61.46
+
+
+Setup Steps
+
+1.  Install Oracle Linux from media
+
+http://www.oracle-base.com/articles/linux/oracle-linux-6-installation.php
+http://ftp.linux.org.uk/pub/distributions/enterprise/OL6/U4/x86_64/
+or Convert CentOS to use Oracle Linux 6 (see: http://linux.oracle.com/switch/centos/)
+
+setup machine as DNS Client
+
+vi /etc/resolv.conf
+
+nameserver 66.7.207.2
+nameserver 66.7.206.2
+
+2.  Install Enterprise kernel release 2 (https://blogs.oracle.com/linux/entry/oracle_unbreakable_enterprise_kernel_release)
+Check kernel version 
+# uname -r
+2.6.39-400.17.1.el6uek.x86_64
+
+Optional update to rel 3
+https://oss.oracle.com/ol6/docs/RELEASE-NOTES-UEK3-en.html
+
+
+3.  Mount /dev/sdc and /dev/sdb as /ssd1 and /ssd2
+notes:  
+mkfs -t ext3 /dev/sdb1
+mkdir /ssd1
+mount /dev/sdb1 /ssd1
+mkfs -t ext3 /dev/sdc1
+mkdir /ssd2
+mount /dev/sdc1 /ssd2
+
+vi /etc/fstab
+
+3.  Configure system for Oracle installation
+http://www.oracle.com/technetwork/articles/servers-storage-admin/ginnydbinstallonlinux-488779.html
+
+yum install oracle-rdbms-server-11gR2-preinstall
+
+edit /etc/hosts
+[oracle@server database]$ hostname
+server.vis13db.com
+
+[root@server OraDB11g]# vi /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+64.37.61.43 server.vis13db.com
+192.168.99.11 ias.visulate.net
+66.192.83.62  rets.offutt-innovia.com
+69.87.53.49   mfr.rets.interealty.com
+69.87.62.223  myfloridahomesmls.com
+66.192.83.22  www.brevardmls.com
+
+
+
+4. Move Oracle installation zip files from /root/oracle_install to home directory of new Oracle user and chown to oracle:oinstall
+
+mkdir /home/OraDB11g
+
+5. Unzip install files into a new directory under oracle user's home directory.
+
+6. Install Oracle software and create database called vis13
+ - use /ssd1 for datafiles and temp files.
+ - use hdd (create directory under /home) for flash recovery, rollback etc
+
+7. Post install database setup.
+
+create symlink for java home
+ln -s  /etc/alternatives java
+
+Install rlwrap
+
+Find latest rpm from http://rpm.pbone.net/index.php3/stat/4/idpl/15282330/dir/redhat_el_6/com/rlwrap-0.37-1.el6.i686.rpm.html
+wget ....rpm
+wget ftp://ftp.univie.ac.at/systems/linux/fedora/epel/6/i386/rlwrap-0.37-1.el6.i686.rpm
+yum install rlwrap-0.37-1.el6.i686.rpm
+
+
+edit ~oracle/.bash_profile
+
+
+
+7a. Turn off or configure database features that cause problems for databases supporting web servers
+  - Password expiration (Webserver can't connect because database locks the account)
+  
+select profile from DBA_USERS where username = 'RNTMGR2';
+select resource_name,limit from dba_profiles where profile='DEFAULT';
+alter profile "DEFAULT"  limit password_life_time UNLIMITED;
+commit;
+
+  
+  - Database login monitoring (SYS.AUD$ grew to > 50GB before crashing the database)
+  
+  
+7b. Tune database parameters for production database
+  - Huge number of short sessions - connect, query, disconnect
+  - 3 Batch updates once per day.  One of them takes a number of hours to complete
+  - very small volume of OLTP updates < 100 per day
+  - Allocate memory based on 2 production servers
+
+8. Create tablespaces 
+
+create BIGFILE tablespace PR_PROPERTY_DATA2
+  datafile '/ssd2/oradata/vis13/pr_property_data.dbf'
+  SIZE 11G AUTOEXTEND ON;
+
+create BIGFILE tablespace PR_CORP_DATA2
+  datafile '/ssd2/oradata/vis13/pr_corp_data.dbf'
+  SIZE 3G AUTOEXTEND ON;
+
+create BIGFILE tablespace MLS_DATA2
+  datafile '/ssd2/oradata/vis13/mls_data.dbf'
+  SIZE 1G AUTOEXTEND ON;
+
+create BIGFILE tablespace RNT_DATA2
+  datafile '/ssd2/oradata/vis13/rnt_data.dbf'
+  SIZE 1G AUTOEXTEND ON;
+
+create tablespace MGT_DATA2
+  datafile '/ssd2/oradata/vis13/mgt_data.dbf'
+  SIZE 500M AUTOEXTEND ON;
+
+create tablespace SPATIAL_INDEX2
+  datafile '/ssd2/oradata/vis13/spatial_index.dbf'
+  SIZE 1G AUTOEXTEND ON;
+
+create tablespace SPATIAL_WORK2
+  datafile '/ssd2/oradata/vis13/spatial_work.dbf'
+  SIZE 1G AUTOEXTEND ON;
+
+
+9.  Create Application User
+
+create user rntmgr2 identified by &1
+default tablespace rnt_data2
+temporary tablespace temp;
+
+alter user rntmgr2 quota unlimited on rnt_data2;
+alter user rntmgr2 quota unlimited on mls_data2;
+alter user rntmgr2 quota unlimited on mgt_data2;
+alter user rntmgr2 quota unlimited on pr_property_data2;
+alter user rntmgr2 quota unlimited on pr_corp_data2;
+alter user rntmgr2 quota unlimited on spatial_index2;
+alter user rntmgr2 quota unlimited on spatial_work2;
+
+
+grant create session to rntmgr2;
+grant create table to rntmgr2;
+grant create procedure to rntmgr2;
+grant create sequence to rntmgr2;
+grant create view to rntmgr2;
+grant create type to rntmgr2;
+grant create synonym to rntmgr2;
+
+grant create trigger to rntmgr2;
+grant create materialized view to rntmgr2;
+grant execute on DBMS_CRYPTO to rntmgr2;
+
+GRANT EXECUTE ON CTX_CLS    TO rntmgr2;
+GRANT EXECUTE ON CTX_DDL    TO rntmgr2;
+GRANT EXECUTE ON CTX_DOC    TO rntmgr2;
+GRANT EXECUTE ON CTX_OUTPUT TO rntmgr2;
+GRANT EXECUTE ON CTX_QUERY  TO rntmgr2;
+GRANT EXECUTE ON CTX_REPORT TO rntmgr2;
+GRANT EXECUTE ON CTX_THES   TO rntmgr2;
+
+GRANT READ, WRITE ON DIRECTORY dpump_dir to rntmgr2;
+
+
+10.  Create and configure ACL
+
+grant  execute on utl_http to rntmgr2;
+grant execute on dbms_crypto to rntmgr2;
+grant SCHEDULER_ADMIN to rntmgr2;
+
+BEGIN
+   DBMS_NETWORK_ACL_ADMIN.CREATE_ACL (
+    acl          => 'visulate2-acl.xml',
+    description  => 'Permissions to access MLS and Property Appraiser sites',
+    principal    => 'RNTMGR2',
+    is_grant     => TRUE,
+    privilege    => 'connect');
+   COMMIT;
+END;
+/
+create role webaccess2;
+BEGIN
+   DBMS_NETWORK_ACL_ADMIN.ADD_PRIVILEGE (
+    acl          => 'visulate2-acl.xml',
+    principal    => 'WEBACCESS2',
+    is_grant     => TRUE,
+    privilege    => 'connect',
+    position     => null);
+   COMMIT;
+END;
+/
+
+BEGIN
+   DBMS_NETWORK_ACL_ADMIN.ADD_PRIVILEGE (
+    acl          => 'visulate2-acl.xml',
+    principal    => 'RNTMGR2',
+    is_grant     => TRUE,
+    privilege    => 'connect',
+    position     => null);
+   COMMIT;
+END;
+/
+
+BEGIN
+   DBMS_NETWORK_ACL_ADMIN.ASSIGN_ACL (
+    acl          => 'visulate2-acl.xml',
+    host         => '*.offutt-innovia.com',
+    lower_port   => 1,
+    upper_port   => 9999);
+
+   DBMS_NETWORK_ACL_ADMIN.ASSIGN_ACL (
+    acl          => 'visulate2-acl.xml',
+    host         => '*.brevardmls.com',
+    lower_port   => 1,
+    upper_port   => 9999);
+
+   DBMS_NETWORK_ACL_ADMIN.ASSIGN_ACL (
+    acl          => 'visulate2-acl.xml',
+    host         => '*.brevardpropertyappraiser.com',
+    lower_port   => 1,
+    upper_port   => 9999);
+
+   DBMS_NETWORK_ACL_ADMIN.ASSIGN_ACL (
+    acl          => 'visulate2-acl.xml',
+    host         => '*.rets.interealty.com',
+    lower_port   => 1,
+    upper_port   => 9999);
+
+   DBMS_NETWORK_ACL_ADMIN.ASSIGN_ACL (
+    acl          => 'visulate2-acl.xml',
+    host         => '*.myfloridahomesmls.com',
+    lower_port   => 1,
+    upper_port   => 9999);
+
+   DBMS_NETWORK_ACL_ADMIN.ASSIGN_ACL (
+    acl          => 'visulate2-acl.xml',
+    host         => 'myfloridahomesmls.com',
+    lower_port   => 1,
+    upper_port   => 9999);
+
+   DBMS_NETWORK_ACL_ADMIN.ASSIGN_ACL (
+    acl          => 'visulate2-acl.xml',
+    host         => '*.flexmls.com',
+    lower_port   => 1,
+    upper_port   => 9999);
+
+   COMMIT;
+END;
+/
+
+
+11. Create Datapump directory
+ Example:
+CREATE DIRECTORY dpump_dir AS '/home/oracle/app/dpump';
+GRANT READ, WRITE ON DIRECTORY dpump_dir to rntmgr2;
+
+12. Document Installation Details
+ 

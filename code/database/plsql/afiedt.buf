@@ -1,0 +1,8 @@
+begin
+    mls_price_ranges_pkg.get_rentals( X_COUNTY    => 'MIAMI-DADE'
+                                 , X_TAB_NAME  => 'real_estate'
+                                 , X_MENU_NAME => 'location'
+                                , X_PAGE_NAME => 'miami'
+                                 , X_SUB_PAGE  => 'Buy to Rent' );
+end;
+/

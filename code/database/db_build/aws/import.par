@@ -1,0 +1,12 @@
+DIRECTORY=dpump_dir 
+DUMPFILE=full_fri.dmp 
+REMAP_SCHEMA=rntmgr2:rntmgr
+REMAP_TABLESPACE=users:pr_property_data
+REMAP_TABLESPACE=pr_property_data2:pr_property_data
+REMAP_TABLESPACE=pr_corp_data2:pr_corp_data
+REMAP_TABLESPACE=mls_data2:mls_data
+REMAP_TABLESPACE=rnt_data2:rnt_data
+REMAP_TABLESPACE=mgt_data2:mgt_data
+REMAP_TABLESPACE=spatial_index2:spatial_index
+REMAP_TABLESPACE=spatial_work2:spatial_work
+

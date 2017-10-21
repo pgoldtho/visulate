@@ -1,0 +1,320 @@
+/* CSS Document */
+html {
+  margin:0;
+  padding:0;
+}
+
+body { 
+  color: #000; 
+  font: 75% Arial, Helvetica, sans-serif;
+  margin:0;
+  padding:0;
+}
+
+#container {
+  width:1004px;
+  margin:0 auto;
+  padding:0;
+  background:url(../images/back1.gif) repeat-y center top;
+}
+
+/* Header
+-------------------------------------------------------------- */
+#header {
+  width:100%;
+  margin:0 0 0 0;
+  padding:15px 0 0 0;
+  min-height:140px;
+  height:auto!important;
+  height:140px;
+}
+a.logotype {
+  width:230px;
+  height:126px;
+  display:block;
+  border:none;
+  text-decoration:none;
+  background:url(../images/logo_visulate.gif) no-repeat left top;
+  margin:0 0 0 30px;
+  position:relative;
+  z-index:26
+}
+a.logotype:hover {
+  background-position: left bottom;
+}
+
+/* Top Menu
+-------------------------------------------------------------- */
+#top_menu {
+  width:100%;
+  position:relative;
+  left:0;
+  top:-56px;
+}
+#login {
+  position:absolute;
+  z-index:15;
+  height:74px;
+  right:5px;
+  /*background:url(../images/tm_right.gif) no-repeat right top;*/
+}
+#login a {
+  margin-right:5px;
+  padding:10px 15px 10px 15px;
+  display:block;
+  background:url(../images/tm_back1.gif) no-repeat right top;
+  color:#fff;
+  font-size:0.9em;
+  text-decoration:none;
+}
+/* First Menu
+-------------------------------------------------------------- */
+ul.first_menu {
+  margin:0;
+  padding:0;
+  width:70%;
+  height:74px;
+  position: absolute;
+  z-index:10;
+  right:5px;
+  background:url(../images/tm_back0.gif) repeat-x left top;
+}
+ul.first_menu li {
+  list-style:none outside;
+  float:left;
+}
+#li1_last {
+  background:url(../images/tm_right.gif) no-repeat right top;
+  float:right;
+  display:block;
+  width:16px;
+  height:30px;
+}
+ul.first_menu a {
+  background:url(../images/tm_back1.gif) no-repeat right top;
+  color:#fff!important;
+  font-weight: bold;
+  font-size:0.98em;
+  text-decoration:none;
+  display:block;
+  height:30px;
+  float:left;
+}
+ul.first_menu span {
+  padding:8px 14px 7px 14px;
+  display:block;
+  border-right:1px solid #fff;
+}
+ul.first_menu #li1_first span {
+  background:url(../images/tm_left1.gif) no-repeat left top;
+  /*height:21px;*/
+  padding-left:26px;
+}
+ul.first_menu a:hover, ul.first_menu a.current {
+  background:url(../images/tm_cur1.gif) repeat-x left top;
+}
+ul.first_menu #li1_first a:hover span, ul.first_menu #li1_first a.current span{
+  background:url(../images/tm_curli1_1.gif) no-repeat left top;
+}
+/* Second Menu
+-------------------------------------------------------------- */
+#menu2_back {
+  background: url(../images/tm_left.gif) no-repeat left bottom;
+  width:100%;
+  position:absolute;
+  z-index:11;
+  left:0;
+  top:30px;
+}
+ul.second_menu {
+  margin:0 0 0 12px;
+  padding:0 0 0 0;
+  height:44px;
+  background:url(../images/tm_back.gif) repeat-x left bottom;
+}
+#li2_last {
+  background:url(../images/tm_right.gif) no-repeat right bottom;
+  float:right;
+  width:16px;
+  height:44px;
+}
+ul.second_menu a {
+  font-weight:normal;
+  padding:9px 14px 3px 14px;
+  background:none;
+  height:32px;
+}
+ul.second_menu a.current, ul.second_menu a:hover {
+  background:url(../images/tm_cur2.gif) no-repeat center bottom;
+  color:#383838!important;
+}
+
+/* Third Menu
+-------------------------------------------------------------- */
+#menu3_back {
+  position: relative;
+  z-index:12;
+  width:70%;
+  height:44px;
+  top:56px;
+  left:0;
+  background:url(../images/tm_left3_1.gif) no-repeat 18.5px top;
+}
+ul.third_menu {
+  height:44px;
+  margin:0;
+  padding:0 0 0 0;
+  background: url(../images/tm_back3_.gif) repeat-x left bottom;
+}
+ul.third_menu  li {
+  list-style:none outside;
+  float:left;
+}
+#li3_first {
+  background:url(../images/tm_left3_.gif) no-repeat left bottom;
+  padding:0 0 0 35px;
+}
+#li3_last {
+  background:url(../images/tm_right3.gif) no-repeat right bottom;
+  float:right;
+  display:block;
+  width:19px;
+  height:44px;
+}
+ul.third_menu a {
+  font-weight:normal;
+  padding:16px 14px 0px 14px;
+  background:none;
+  height:28px;
+  font-size:1.0em;
+  color:#383838;
+  float:left;
+  text-decoration:none;
+}
+ul.third_menu a.current, ul.third_menu a:hover {
+  background: url(../images/tm_cur3.gif) no-repeat center bottom;
+  color:#000;
+}
+
+/* Content
+-------------------------------------------------------------- */
+#main {
+  width:100%;
+  margin:20px 0 0 0;
+  padding:0;
+  overflow:hidden;
+}
+#content {
+  width:100%;
+  min-height:450px;
+  height:auto!important;
+  height:450px;
+  float:left;
+  margin:0;
+  padding:0 0 40px 0;
+  background:url(../images/main_bk.gif) no-repeat left bottom;
+}
+#left_part {
+  width:222px;
+  margin:0;
+  padding:0 0 0 3px;
+  float:left;
+}
+#right_part {
+  margin:0;
+  padding:0 40px 0 0;
+  float: right;
+  width:715px
+}
+
+/* Column
+-------------------------------------------------------------- */
+.column  {
+  float: left;
+  margin-right:20px;
+}
+
+/* The last column in a row needs this class. */
+.last  { margin-right: 0; }
+.clear { clear:both; }
+
+/* Width column
+-------------------------------------------------------------- */
+.span-1  { width:222px; }
+.span-2  { width:729px; }
+.span-3  { width:35%; }
+.span-4  { width:18%; }
+.span-5  { width:70%; }
+
+
+/* Left Menu
+-------------------------------------------------------------- */
+#nav {
+  margin:0;
+  padding:0;
+}
+.title {
+  height:30px;
+  display:block;
+  background:url(../images/title_bk.gif) no-repeat left top;
+  color:#fff;
+  text-align:right;
+  font-size:1.4em;
+  margin:5px 0 5px 0;
+  padding:0 25px 0 0;
+  position:relative;
+  font-weight:550;
+  line-height:1.4em;
+}
+.title a {
+  color:#fff;
+  text-decoration:none;
+  margin:0 0 0 0;
+  padding:0;
+}
+.title a:hover, .title a.active {
+  color:#24292d;
+}
+ul.left_menu {
+  margin:0 0 0 0;
+  padding:5px 0 0 0;
+  text-align:right;
+  position:relative;
+  top:-12px;
+  background:url(../images/lm_bk.gif) repeat-y left top;
+}
+ul.left_menu li {
+  list-style:none outside;
+  margin:0 0 0 4px;
+  padding:4px 0 3px 0;
+  background:url(../images/lm_li_bk.gif) no-repeat left bottom;
+}
+.li_left_last {
+  background:url(../images/lm_bottom.gif) no-repeat left bottom!important;
+  margin:0!important;
+  padding-bottom:17px!important;
+}
+ul.left_menu a {
+  text-decoration:none;
+  color:#383838;
+  padding-right:25px;
+}
+ul.left_menu a:hover, ul.left_menu a.active {
+  text-decoration:none;
+  color:#000;
+  background:url(../images/lm_act_bk.gif) no-repeat right center;
+}
+
+
+/* Footer
+-------------------------------------------------------------- */
+#footer {
+  margin:-15px 0 0 0;
+  padding:0;
+  clear:both;
+}
+#footer p {
+  margin:0 0 0 20px;
+  padding:0;
+  position:relative;
+}

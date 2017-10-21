@@ -1,0 +1,3 @@
+Some changes in Pear - add List Of Values element to HTML forms.
+copy file lov.php to %PEAR%\HTML\QuickForm 
+copy file QuickForm.php to %PEAR%\HTML

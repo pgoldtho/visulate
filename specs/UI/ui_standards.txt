@@ -1,0 +1,63 @@
+1.  Menu Standards
+
+1.1 System should present a 3 level menu with tabs, sub tabs and menu items.
+1.2 Menus should be presented as unordered lists <UL> and formatted using css.
+1.3 Each menu should be contained in a <div> element and identified with the following id's:
+
+*  l1_tab    = 1st level tabs menu
+*  l2_subtab = 2nd level sub tabs menu
+*  l3_menu   = 3rd level menu
+
+Note the screen mockup currently names these: navigation, navcontainer and nav.
+a new css file called menu.css should be created to implement the new names.
+
+
+1.4 Active menu selections should be identified by setting their class to "active"
+
+example:
+
+<div id="l1_tab">
+  <ul>
+    <li><a href="#" class="active">Property</a></li>
+    <li><a href="2-1.html">Tenant</a></li>
+    <li><a href="3-1.html">Payment</a></li>
+  </ul>
+</div>
+
+
+2. Layout Standards
+
+2.1 CSS should be used to divide the page into 3 regions:
+
+*  Logo and Tabs menu
+*  Context menu
+*  Data Entry
+
+Logo and tabs should be displayed at the top of the screen
+Context Menu should appear under this on the left of the screen
+Data Entry area should appear under the menu on the right of the screen.
+
+See screen mockups for examples.
+
+The data entry area may include an copyright notice to be displayed at the bottom of the data entry area.
+
+2.2  Each screen must not exceed 1024 x 768 pixels
+
+2.3  html layout tables should only be used in the data entry area of the screen.
+they should be assigned to the "layouttable" class.
+
+2.4 Tables that display data should be assigned to the "datatable" class.
+
+
+3.  Template Standards
+
+1) MVC design model for the interface
+2) Smarty template system for separation of application code from presentation.
+(page layout can be maintained in template files).
+3) Creole ORM classes for the DB access.
+4) Business logic on the database side released in packages (see attached code example).
+5) QuickForm package from PEAR.
+
+4. Users
+Each user have access by password. In system present three type of user: admin, 
+manager and tentant.

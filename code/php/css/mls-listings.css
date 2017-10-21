@@ -1,0 +1,98 @@
+       #prop-top {
+         padding-left: 250px;
+
+       }
+
+       .large {
+         height: 500px;
+         position: absolute;
+       }
+
+       .small {
+         width: 25%;
+         float: left;
+       }
+
+       .thumbs {
+         height: 100%;
+         overflow-y: scroll;
+         width: 100%;
+         float: right;
+         padding-left: 667px;
+       }
+
+       .photos {
+         height: 500px;
+         width: 100%;
+         margin-right: 0;
+         //margin-top: -5px;
+       }
+
+       .top-info {
+         margin: 0 10px 0 10px;
+        }
+
+      @media screen and (min-width: 1750px) {
+        .large {
+          height: 650px;
+        }
+        .thumbs {
+          padding-left: 867px;
+        }
+        .photos {
+          height: 650px;
+        }
+      }
+
+      @media screen and (min-width: 1600px) and (max-width: 1749px) {
+        .large {
+          height: 600px;
+        }
+        .thumbs {
+          padding-left: 800px;
+        }
+        .photos {
+          height: 600px;
+        }
+
+      }
+
+
+      @media screen and (max-width: 1430px) {
+        .small {
+          width: 33.33333%;
+        }
+      }
+
+      @media screen and (max-width: 1330px) {
+         .small {
+           width: 50%;
+         }
+      }
+
+      @media screen and (max-width: 1180px) {
+        .small {
+          width: 100%;
+        }
+      }
+
+      @media screen and (max-width: 1095px) {
+        .large {
+         height: 400px;
+       }
+        .small {
+         width: 50%;
+        }
+        .thumbs {
+         padding-left: 533px;
+        }
+        .photos {
+         height: 400px;
+        }
+      }
+
+      @media screen and (max-width: 1005px) {
+        .small {
+          width: 100%;
+        }
+      }

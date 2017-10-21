@@ -1,0 +1,308 @@
+/* Print */
+h1, h2, h3, h4, h5, h6 {
+    color: #111;
+    font-family: "Myriad Pro", Arial, Helvetica, sans-serif;
+}
+
+/* Headings
+-------------------------------------------------------------- */
+
+h1, h2 {
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+}
+
+h1 {
+    font-size: 2.2em;
+    line-height: 1;
+    margin-bottom: 0.5em;
+}
+
+h2 {
+    font-size: 2em;
+    margin-bottom: 0.75em;
+}
+
+h3 {
+    font-size: 1.5em;
+    line-height: 1;
+    margin-top: 0;
+    margin-bottom: 1em;
+}
+
+h4 {
+    font-size: 1.2em;
+    line-height: 1.25;
+    margin-bottom: 1.25em;
+}
+
+h5 {
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 1.5em;
+}
+
+h6 {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+/* Text elements
+-------------------------------------------------------------- */
+
+p {
+    margin: 0 0 1.5em;
+}
+
+p img {
+    float: left;
+    margin: 1.5em 1.5em 1.5em 0;
+    padding: 0;
+}
+
+img {
+    margin: 0 0 1.5em;
+}
+
+ul, ol {
+    margin: 0 1.5em 1.5em 1.5em;
+}
+
+ul {
+    list-style-type: circle;
+}
+
+ol {
+    list-style-type: decimal;
+}
+
+dl {
+    margin: 0 0 1.5em 0;
+}
+
+dl dt {
+    font-weight: bold;
+}
+
+dd {
+    margin-left: 1.5em;
+}
+
+abbr,
+acronym {
+    border-bottom: 1px dotted #666;
+}
+
+address {
+    margin-top: 1.5em;
+    font-style: italic;
+}
+
+del {
+    color: #666;
+}
+
+a:focus,
+a:hover {
+    color: #000;
+}
+
+a {
+    color: #009;
+    text-decoration: underline;
+}
+
+blockquote {
+    margin: 1.5em;
+    color: #666;
+    font-style: italic;
+}
+
+strong {
+    font-weight: bold;
+}
+
+em, dfn {
+    font-style: italic;
+    background: #ffc;
+}
+
+dfn {
+    font-weight: bold;
+}
+
+pre, code {
+    margin: 1.5em 0;
+    white-space: pre;
+}
+
+pre, code, tt {
+    font: 1em 'andale mono', 'monotype.com', 'lucida console', monospace;
+    line-height: 1.5;
+}
+
+tt {
+    display: block;
+    margin: 1.5em 0;
+    line-height: 1.5;
+}
+
+/* Tables
+-------------------------------------------------------------- */
+
+td, th {
+    font: 0.9em Tahoma Arial, Helvetica, sans-serif;
+}
+
+td.current {
+    background-color: #7bb347;
+}
+
+.layouttable td {
+    vertical-align: top;
+}
+
+table.datatable, table.datatable1 {
+    border-style: solid none none solid;
+    border-width: 1px;
+    border-color: #a3a591;
+    margin: 0 0 20px 0;
+    padding: 0;
+    border-collapse: collapse;
+}
+
+.datatable td, .datatable1 td {
+    border-style: none solid solid none;
+    border-width: 1px;
+    border-color: #a3a591;
+    text-align: left;
+    padding: 4px 2px 4px 2px;
+}
+/* th_back3 */
+.datatable th, .datatable1 th {
+    border-style: none solid solid none;
+    border-width: 1px;
+    border-color: #a3a591;
+    /*background-color: #DEE1C6;*/
+    background:url(../images/th_back3.gif) repeat-x left bottom;
+    color: #383838;
+    font-weight: bold;
+    text-align: left;
+    padding: 4px 2px 4px 2px;
+}
+/* th_back3 */
+.datatable th {
+    background:url(../images/th_back3.gif) repeat-x left bottom;
+}
+/* th_back3 */
+.datatable1 th {
+    background:url(../images/th_back3.gif) repeat-x left bottom;
+}
+
+.datatable th td {
+    border: none;
+}
+
+.datatable caption {
+    font: bold 1.0em Tahoma, Arial, Helvetica, sans-serif;
+    background-color: #a3a591;
+    color: #fff;
+    padding: 4px 2px;
+    margin: 0 0 0 -1px;
+    border: 1px solid #a3a591;
+    border-collapse: collapse;
+}
+
+/* Forms
+-------------------------------------------------------------- */
+label {
+    font-weight: bold;
+}
+
+/* Fieldsets */
+fieldset {
+    padding: 1.4em;
+    margin: 0 0 1.5em 0;
+    border: 1px solid #ccc;
+}
+
+legend {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+/* Text fields */
+input {
+    margin: 0.1em 0 0.1em 0;
+    font-size: 1.0em;
+}
+
+/* Textareas */
+textarea {
+    margin: 0.5em 0.5em 0.5em 0;
+}
+
+textarea {
+    border: 1px solid #bbb;
+    background: #eee;
+    padding: 5px;
+}
+
+/* Select fields */
+select {
+    border: 1px solid #ccc;
+    background: #f6f6f6;
+}
+
+/* Success, error & notice boxes for messages and errors. */
+/*.error,*/
+.notice,
+.success {
+    padding: .8em;
+    margin-bottom: 1em;
+    border: 2px solid #ddd;
+}
+
+/*.error      { background: #FBE3E4; color: #D12F19; border-color: #FBC2C4; }*/
+.notice {
+    background: #FFF6BF;
+    color: #817134;
+    border-color: #FFD324;
+}
+
+.success {
+    background: #E6EFC2;
+    color: #529214;
+    border-color: #C6D880;
+}
+
+.error a {
+    color: #D12F19;
+}
+
+.notice a {
+    color: #817134;
+}
+
+.success a {
+    color: #529214;
+}
+
+.error {
+    color: red;
+}
+
+.nomargin {
+    margin: 0px;
+}
+
+/* Hide Menus in Printer View
+-------------------------------------------------------------- */
+div#header, div#left_part {
+    display: none;
+}
+

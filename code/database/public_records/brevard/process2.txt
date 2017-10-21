@@ -1,0 +1,43 @@
+export the tables 
+
+BRD_BUILDINGS
+BRD_PROPERTIES
+BRD_SALES
+BRD_SALES_PROPERTIES
+
+Drop and then import into the target database
+
+drop table BRD_BUILDINGS purge;
+drop table BRD_PROPERTIES purge;
+drop table BRD_SALES purge;
+drop table BRD_SALES_PROPERTIES purge;
+
+imp rntmgr
+
+sqlplus rntmgr
+@update_brevard.sql 
+
+-- Runs:
+@brevard1.sql -- create properties
+@brevard2.sql -- Property Usage
+@brevard3.sql -- Buildings
+@brevard4.sql -- Sales
+@brevard5.sql -- Owner Addresses
+@brevard6.sql -- Property Owner
+commit;
+
+
+Refresh Reporting MV's
+
+begin
+  DBMS_MVIEW.REFRESH('PR_COMMERCIAL_SALES_MV', 'C');
+  DBMS_MVIEW.REFRESH('PR_COMMERCIAL_SUMMARY_MV', 'C'); 
+  DBMS_MVIEW.REFRESH('PR_SALES_MV', 'C'); 
+  DBMS_MVIEW.REFRESH('PR_SALES_SUMMARY_MV', 'C'); 
+  DBMS_MVIEW.REFRESH('PR_LAND_SALES_MV', 'C');
+  DBMS_MVIEW.REFRESH('PR_LAND_SUMMARY_MV', 'C');
+end;
+/
+
+
+	

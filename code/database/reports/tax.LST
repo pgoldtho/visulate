@@ -1,0 +1,273 @@
+SQL> @tax_summary
+Payment Summary for Goldthorp Properties
+Income
+
+Property                       Payment Type                       Amount        
+------------------------------ ------------------------------ ----------        
+105 Sky Lane                   Late Fee                                0        
+                               Other Income                        768.6        
+                               Rent                                 9550        
+******************************                                ----------        
+sum                                                              10318.6        
+                                                                                
+111 Grannis Av                 Rent                                14440        
+                               Section 8 Rent                       3150        
+******************************                                ----------        
+sum                                                                17590        
+                                                                                
+1135 Pine Valley Lane          Late Fee                               50        
+                               Rent                                 1768        
+                               Section 8 Rent                       5432        
+******************************                                ----------        
+sum                                                                 7250        
+                                                                                
+117 Grannis av                 Other Income                          150        
+                               Rent                                13375        
+                               Section 8 Rent                       4025        
+******************************                                ----------        
+sum                                                                17550        
+                                                                                
+1221 Jackson St                Rent                                 9045        
+******************************                                ----------        
+sum                                                                 9045        
+                                                                                
+210 Lura lane                  Section 8 Rent                       4728        
+******************************                                ----------        
+sum                                                                 4728        
+                                                                                
+2775 Venus drive               Mortgage Payment P&I              2644.94        
+******************************                                ----------        
+sum                                                              2644.94        
+                                                                                
+2793 Myers Dr                  Late Fee                                0        
+                               Rent                                 7550        
+******************************                                ----------        
+sum                                                                 7550        
+                                                                                
+2797 Myers drive               Other Income                         2330        
+                               Rent                                 2800        
+******************************                                ----------        
+sum                                                                 5130        
+                                                                                
+3325 Daryl Terrace             Late Fee                                0        
+                               Other Income                       619.32        
+                               Rent                                 9710        
+******************************                                ----------        
+sum                                                             10329.32        
+                                                                                
+3620 Dixie hwy                 Late Fee                               25        
+                               Rent                                 7680        
+******************************                                ----------        
+sum                                                                 7705        
+                                                                                
+415 Prospect Av                Mortgage Interest                      91        
+                               Mortgage Payment P&I                  920        
+******************************                                ----------        
+sum                                                                 1011        
+                                                                                
+455 Lincoln Av                 Late Fee                                0        
+                               Rent                                 1206        
+                               Section 8 Rent                       8019        
+******************************                                ----------        
+sum                                                                 9225        
+                                                                                
+735 Thomas lane                Late Fee                               25        
+                               Rent                                 2727        
+                               Section 8 Rent                      11848        
+******************************                                ----------        
+sum                                                                14600        
+                                                                                
+746 Bernard Street             Late Fee                               55        
+                               Rent                                14750        
+******************************                                ----------        
+sum                                                                14805        
+                                                                                
+910 S Park Avenue              Late Fee                                0        
+                               Other Income                        767.2        
+                               Rent                                 9430        
+******************************                                ----------        
+sum                                                              10197.2        
+                                                                                
+
+36 rows selected.
+
+
+Payment Type                       Amount                                       
+------------------------------ ----------                                       
+Late Fee                              155                                       
+Mortgage Interest                      91                                       
+Mortgage Payment P&I              3564.94                                       
+Other Income                      4635.12                                       
+Rent                               104031                                       
+Section 8 Rent                      37202                                       
+                               ----------                                       
+sum                             149679.06                                       
+                                                                                
+
+6 rows selected.
+
+Expenses:
+
+Property                       Payment Type                       Amount        
+------------------------------ ------------------------------ ----------        
+105 Sky Lane                   Auto and Travel                       291        
+                               Capital Improvements                  920        
+                               Cleaning and maintenance              805        
+                               Insurance                         1602.15        
+                               Mortgage Payment P&I                 4368        
+                               Property Tax                      1715.55        
+                               Repairs                               195        
+                               Utilities                           68.51        
+******************************                                ----------        
+sum                                                              9965.21        
+                                                                                
+111 Grannis Av                 Auto and Travel                    266.75        
+                               Capital Improvements               144.43        
+                               Cleaning and maintenance          3119.58        
+                               Insurance                            1800        
+                               Mortgage Interest                   10100        
+                               Property Tax                       2103.2        
+                               Repairs                            599.51        
+******************************                                ----------        
+sum                                                             18133.47        
+                                                                                
+1135 Pine Valley Lane          Auto and Travel                       291        
+                               Capital Improvements              7711.36        
+                               Cleaning and maintenance         11262.94        
+                               Insurance                            1020        
+                               Mortgage Payment P&I              4117.92        
+                               Property Tax                      1778.66        
+                               Utilities                          298.35        
+******************************                                ----------        
+sum                                                             26480.23        
+                                                                                
+117 Grannis av                 Auto and Travel                     242.5        
+                               Capital Improvements              1740.77        
+                               Cleaning and maintenance          3413.04        
+                               Insurance                            1800        
+                               Mortgage Interest                    9700        
+                               Property Tax                       2103.2        
+                               Repairs                            1059.2        
+                               Utilities                          353.55        
+******************************                                ----------        
+sum                                                             20412.26        
+                                                                                
+1221 Jackson St                Auto and Travel                      58.2        
+                               Cleaning and maintenance            83.74        
+                               Insurance                          1710.6        
+                               Mortgage Payment P&I              3705.84        
+                               Property Tax                      1942.08        
+                               Repairs                           4329.24        
+                               Utilities                           46.85        
+******************************                                ----------        
+sum                                                             11876.55        
+                                                                                
+210 Lura lane                  Auto and Travel                       135        
+                               Capital Improvements               598.89        
+                               Cleaning and maintenance          4245.33        
+                               Mortgage Interest                 3756.48        
+                               Property Tax                      1327.24        
+                               Repairs                               150        
+                               Utilities                           517.1        
+******************************                                ----------        
+sum                                                             10730.04        
+                                                                                
+2793 Myers Dr                  Auto and Travel                    267.72        
+                               Cleaning and maintenance           646.58        
+                               Insurance                          829.21        
+                               Mortgage Interest                    4680        
+                               Property Tax                      1274.41        
+                               Utilities                          159.06        
+******************************                                ----------        
+sum                                                              7856.98        
+                                                                                
+2797 Myers drive               Auto and Travel                    267.72        
+                               Cleaning and maintenance            99.57        
+                               Insurance                          979.56        
+                               Mortgage Interest                    4680        
+                               Property Tax                       650.83        
+                               Repairs                             73.92        
+                               Utilities                          287.99        
+******************************                                ----------        
+sum                                                              7039.59        
+                                                                                
+3325 Daryl Terrace             Auto and Travel                       291        
+                               Insurance                            1032        
+                               Mortgage Payment P&I              4328.49        
+                               Property Tax                         2736        
+                               Utilities                           68.51        
+******************************                                ----------        
+sum                                                                 8456        
+                                                                                
+3620 Dixie hwy                 Auto and Travel                    267.72        
+                               Cleaning and maintenance            28.05        
+                               Insurance                          898.08        
+                               Mortgage Interest                    4680        
+                               Property Tax                      1389.99        
+                               Utilities                          156.22        
+******************************                                ----------        
+sum                                                              7420.06        
+
+Property                       Payment Type                       Amount        
+------------------------------ ------------------------------ ----------        
+                                                                                
+455 Lincoln Av                 Auto and Travel                      58.2        
+                               Cleaning and maintenance           495.23        
+                               Insurance                         1784.93        
+                               Mortgage Payment P&I              4095.84        
+                               Property Tax                      1268.16        
+******************************                                ----------        
+sum                                                              7702.36        
+                                                                                
+735 Thomas lane                Auto and Travel                      58.2        
+                               Cleaning and maintenance          1032.97        
+                               Insurance                            1737        
+                               Mortgage Payment P&I               9373.2        
+                               Property Tax                      1945.58        
+                               Repairs                              6.99        
+******************************                                ----------        
+sum                                                             14153.94        
+                                                                                
+746 Bernard Street             Auto and Travel                      58.2        
+                               Cleaning and maintenance          1161.15        
+                               Insurance                            2274        
+                               Mortgage Payment P&I              7860.48        
+                               Property Tax                      1936.92        
+                               Repairs                               469        
+******************************                                ----------        
+sum                                                             13759.75        
+                                                                                
+910 S Park Avenue              Auto and Travel                       291        
+                               Cleaning and maintenance               80        
+                               Insurance                          1475.4        
+                               Mortgage Payment P&I              4924.09        
+                               Other Interest                    1323.68        
+                               Property Tax                         1464        
+                               Repairs                                70        
+                               Utilities                           68.51        
+******************************                                ----------        
+sum                                                              9696.68        
+                                                                                
+
+93 rows selected.
+
+
+Payment Type                       Amount                                       
+------------------------------ ----------                                       
+Auto and Travel                   2844.21                                       
+Capital Improvements             11115.45                                       
+Cleaning and maintenance         26473.18                                       
+Insurance                        18942.93                                       
+Mortgage Interest                37596.48                                       
+Mortgage Payment P&I             42773.86                                       
+Other Interest                    1323.68                                       
+Property Tax                     23635.82                                       
+Repairs                           6952.86                                       
+Utilities                         2024.65                                       
+                               ----------                                       
+sum                             173683.12                                       
+                                                                                
+
+10 rows selected.
+
+SQL> spool off

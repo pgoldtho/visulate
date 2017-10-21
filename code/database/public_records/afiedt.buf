@@ -1,0 +1,11 @@
+select substr(source_pk, 6, 2)
+      ||substr(source_pk, 4, 2)
+      ||substr(source_pk, 2, 2)
+      ||substr(source_pk, 8, 11)
+      ||substr(source_pk, 1, 1) alt_key
+ ,    source_pk
+ ,    prop_id
+ from pr_properties pp
+ where source_id = 38
+and rownum<10
+/
