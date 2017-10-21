@@ -12,8 +12,8 @@ create or replace package mls_sef_pkg as
   global_errors    pls_integer   := 0;
   global_login     varchar2(256) := 'http://sef.rets.interealty.com/Login.asmx/Login';
   global_logout    varchar2(256) := 'http://sef.rets.interealty.com/Logout.asmx/Logout';
-  global_user      varchar2(16)  := 'sRuSanW';
-  global_passwd    varchar2(16)  := 'fds83b43';
+  global_user      varchar2(16)  := '';
+  global_passwd    varchar2(16)  := '';
   global_base      varchar2(256) := 'http://sef.rets.interealty.com/Search.asmx/Search?SearchType=Property';
   global_src       number := 8; -- South East Florida MLS
   global_agent     varchar2(16)  := global_user;

@@ -2,7 +2,7 @@ create or replace package mls_brevard_pkg as
 /*******************************************************************************
    Copyright (c) Visulate 2011, 2013        All rights reserved worldwide
     Name:      mls_brevard_pkg
-    Purpose:   MLS Replication API's 
+    Purpose:   MLS Replication API's
     Revision History
     Ver        Date        Author           Description
     --------   ---------   ---------------- ---------------------
@@ -12,24 +12,24 @@ create or replace package mls_brevard_pkg as
 *******************************************************************************/
   global_errors    pls_integer   := 0;
   global_login     varchar2(256) := 'http://retsgw.flexmls.com/rets2_3/Login';
-  global_user      varchar2(16)  := 'spc.rets.3222516';
-  global_passwd    varchar2(16)  := 'enapt-ulent90';
+  global_user      varchar2(16)  := '';
+  global_passwd    varchar2(16)  := '';
   global_base      varchar2(256) := 'http://retsgw.flexmls.com/rets2_3/Search?SearchType=Property';
   global_src       number := 6; -- Brevard MLS
-  
+
   -- Global variables for photo download
   global_realm     varchar2(256);
   global_nonce     varchar2(256);
   global_seq       integer;
   global_opaque    varchar2(256);
   global_session   varchar2(4000);
- 
+
 
   type tax_rec_type is record
   ( source_id           number
   , display_name        varchar2(256)
   , link_name           varchar2(32));
-  
+
   function get_select_vals return pr_rets_pkg.value_table;
 
   function get_id( p_source_id  in mls_listings.source_id%type
@@ -38,15 +38,15 @@ create or replace package mls_brevard_pkg as
 
   function get_tax_source
                return tax_rec_type;
-               
+
   procedure get_by_type( p_type in varchar2
                        , p_mode in varchar2 := 'update');
   procedure get_listings;
   procedure process_listings;
-  
+
   procedure get_listings( p_ltype     in varchar2
                         , p_mode      in varchar2 := 'update');
-                        
+
   procedure process_listings( p_ltype   in varchar2);
   procedure get_photos( p_prop_id     in number
                       , p_mls_id      in number
@@ -55,13 +55,13 @@ create or replace package mls_brevard_pkg as
   procedure update_price_ranges;
   procedure update_mls;
 end mls_brevard_pkg;
-/  
-                                   
+/
+
 create or replace package body mls_brevard_pkg as
 /*******************************************************************************
    Copyright (c) Visulate 2011        All rights reserved worldwide
     Name:      mls_brevard_pkg
-    Purpose:   MLS Replication API's 
+    Purpose:   MLS Replication API's
     Revision History
     Ver        Date        Author           Description
     --------   ---------   ---------------- ---------------------
@@ -72,7 +72,7 @@ create or replace package body mls_brevard_pkg as
   function get_select_vals return pr_rets_pkg.value_table is
     v_select pr_rets_pkg.value_table;
   begin
-    /* 
+    /*
      LIST_1   = Internal Listing ID
      LIST_87  = Modification Timestamp
      LIST_104 = Display on Public Wesites
@@ -114,20 +114,20 @@ create or replace package body mls_brevard_pkg as
 
     -- A = ResidentialProperty
     v_select('A') := 'LIST_105,LIST_73,LIST_80,LIST_87,LIST_104,LIST_1,LIST_133,LIST_10,LIST_21,LIST_22,LIST_48,LIST_66,LIST_67,LIST_69,LIST_78,listing_office_name,FEAT20130303191402055377000000,FEAT20130303191418283689000000,GF20130226183428681591000000,GF20130606024608499268000000,GF20130614153345482319000000,UNBRANDEDIDXVIRTUALTOUR';
-    
-    -- B=MultiFamily 
+
+    -- B=MultiFamily
     v_select('B') := 'LIST_105,LIST_73,LIST_80,LIST_74,LIST_87,LIST_104,LIST_1,LIST_133,LIST_10,LIST_21,LIST_22,LIST_48,LIST_78,listing_office_name';
-    
-    -- E=CommonInterest 
+
+    -- E=CommonInterest
     v_select('E') := 'LIST_105,LIST_73,LIST_80,LIST_9,LIST_74,LIST_75,LIST_87,LIST_104,LIST_1,LIST_133,LIST_10,LIST_21,LIST_22,LIST_48,LIST_78,listing_office_name';
-    
+
     -- C=LotsAndLand
     v_select('C') := 'LIST_105,LIST_73,LIST_80,LIST_74,LIST_87,LIST_104,LIST_1,LIST_133,LIST_10,LIST_21,LIST_22,LIST_57,LIST_78,listing_office_name,LIST_75';
 
     -- F=CommercialSale
     v_select('F') := 'LIST_105,LIST_73,LIST_80,LIST_9,LIST_74,LIST_75,LIST_87,LIST_104,LIST_1,LIST_133,LIST_10,LIST_21,LIST_22,LIST_48,LIST_78,listing_office_name';
-    
-    
+
+
 
 
      return v_select;
@@ -170,14 +170,14 @@ create or replace package body mls_brevard_pkg as
   function get_id( p_source_id  in mls_listings.source_id%type
                  , p_mls_number in mls_listings.mls_number%type)
                      return mls_listings.mls_id%type is
-     
+
      cursor cur_mls( p_source_id  in mls_listings.source_id%type
                   , p_mls_number in mls_listings.mls_number%type) is
      select mls_id
      from mls_listings
      where source_id = p_source_id
      and mls_number = p_mls_number;
-     
+
      v_return  mls_listings.mls_id%type := null;
   begin
     for m_rec in cur_mls(p_source_id, p_mls_number) loop
@@ -185,9 +185,9 @@ create or replace package body mls_brevard_pkg as
      end loop;
      return v_return;
   end get_id;
-  
 
-  function get_tax_source  
+
+  function get_tax_source
                return tax_rec_type is
      v_text        varchar2(32);
      v_tax_id      varchar2(32);
@@ -211,7 +211,7 @@ create or replace package body mls_brevard_pkg as
 
   end get_by_type;
 
-  
+
   procedure get_listings is
   begin
     delete from mls_rets_responses
@@ -223,7 +223,7 @@ create or replace package body mls_brevard_pkg as
      get_listings('VacantLand');
 
   end get_listings;
-  
+
   procedure process_listings is
   begin
      process_listings('ResidentialProperty');
@@ -232,17 +232,17 @@ create or replace package body mls_brevard_pkg as
      process_listings('VacantLand');
 
   end process_listings;
-  
+
   procedure get_listings( p_ltype     in varchar2
                         , p_mode      in varchar2 := 'update') is
-                        
+
     cursor cur_responses( p_query_type in varchar2
                         , p_source_id  in number) is
     select mls_number
     from mls_rets_responses
     where query_type = p_query_type
     and   source_id  = p_source_id;
-    
+
     v_realm       varchar2(256);
     v_nonce       varchar2(256);
     v_seq         integer;
@@ -263,7 +263,7 @@ create or replace package body mls_brevard_pkg as
     v_session     varchar2(4000);
     v_xslt        xmltype;
     x_multi       xmltype;
-     
+
     unsupported_county  exception;
 
 
@@ -303,7 +303,7 @@ create or replace package body mls_brevard_pkg as
                      , p_nonce   => v_nonce
                      , p_seq     => v_seq
                      , p_opaque  => v_opaque
-                     , p_session => v_session);        
+                     , p_session => v_session);
 
  --   v_resp := pr_rets_pkg.get_resp( p_url     => v_url
  --                                  , p_session => v_session);
@@ -316,10 +316,10 @@ create or replace package body mls_brevard_pkg as
     v_str := '/RETS/DATA['||i||']';
     str_found := x_content.existsnode(v_str);
     v_seq := 2;
-    while str_found = 1 loop  
+    while str_found = 1 loop
       v_value := x_content.extract(v_str||'/text()').getStringVal();
       v_value := regexp_substr(v_value, '[0-9]+');
-      
+
       begin
         select mls_id into v_mls_id
         from mls_listings
@@ -335,7 +335,7 @@ create or replace package body mls_brevard_pkg as
         when no_data_found then null;
         when others then raise;
       end;
-      
+
       insert into mls_rets_responses( mls_number
                                     , date_found
                                     , query_type
@@ -344,7 +344,7 @@ create or replace package body mls_brevard_pkg as
       values (v_value, sysdate, p_ltype, 'N', global_src);
       commit;
 
-      
+
       i := i + 1;
       v_str := '/RETS/DATA['||i||']';
       str_found := x_content.existsnode(v_str);
@@ -371,7 +371,7 @@ create or replace package body mls_brevard_pkg as
                      , p_session => v_session);
         x_multi := pr_rets_pkg.get_xml(v_resp, false);
     else
-*/    
+*/
         v_url := global_base -- Pull all active listings
                ||'&Class='||v_ltype
                ||'&Format=COMPACT-DECODED&QueryType=DMQL2'
@@ -386,7 +386,7 @@ create or replace package body mls_brevard_pkg as
                      , p_nonce   => v_nonce
                      , p_seq     => v_seq
                      , p_opaque  => v_opaque
-                     , p_session => v_session);                               
+                     , p_session => v_session);
         x_multi := pr_rets_pkg.get_xml(v_resp, false);
 
         global_realm   := v_realm;
@@ -394,10 +394,10 @@ create or replace package body mls_brevard_pkg as
         global_seq     := v_seq;
         global_opaque  := v_opaque;
         global_session := v_session;
-/*        
+/*
     end if;
 */
-      
+
     for l_rec in cur_responses(p_ltype, global_src) loop
          v_xslt := xmltype(
 '<?xml version=''1.0''?>
@@ -449,7 +449,7 @@ create or replace package body mls_brevard_pkg as
      ');
 
       x_content2 := x_multi.transform(xsl => v_xslt);
-      
+
       if x_content2 is not null then
             update mls_rets_responses
             set response = x_content2
@@ -465,14 +465,14 @@ create or replace package body mls_brevard_pkg as
             pr_rets_pkg.put_line('skipped mls # '||l_rec.mls_number);
       end if;
       commit;
-    end loop;      
+    end loop;
   end get_listings;
-  
+
   procedure set_listing( p_query_type  in mls_rets_responses.query_type%type
                        , p_values      in pr_rets_pkg.value_table
                        , p_prop_id     in pr_properties.prop_id%type
                        , p_verified    in varchar2) is
-     
+
     v_display_price     varchar2(32);
      v_listing_type      varchar2(32);
      v_broker            varchar2(64);
@@ -516,7 +516,7 @@ create or replace package body mls_brevard_pkg as
      end;
      v_display_price := to_char(p_values('LIST_22'), '$99,999,999');
      if p_query_type = 'ResidentialProperty' then
-       
+
        v_listing_type := 'Sale';
        v_broker := p_values('listing_office_name');
        v_price := to_number(replace(p_values('LIST_22'), ','));
@@ -532,7 +532,7 @@ create or replace package body mls_brevard_pkg as
               || '<tr><th>MLS Number</th><td>'||p_values('LIST_105')||'</td></tr>';
 
        if p_values('GF20130614153345482319000000') is not null then
-           v_desc := v_desc  
+           v_desc := v_desc
               || '<tr><th>Rental Restrictions</th><td>'||p_values('GF20130614153345482319000000')||'</td></tr>';
        end if;
 
@@ -584,7 +584,7 @@ create or replace package body mls_brevard_pkg as
      else
        raise unknown_query_type;
      end if;
-     
+
      --
      -- Assemble the link text and geo coordinates
      --
@@ -598,11 +598,11 @@ create or replace package body mls_brevard_pkg as
        when others then
          v_link_text := null;
         end;
-     
+
      --
      -- Verify we have data for all of the listing items
      --
-     
+
     if (p_values('LIST_105') is null or
          v_listing_type        is null or
          v_price               is null or
@@ -613,12 +613,12 @@ create or replace package body mls_brevard_pkg as
          v_desc                is null) then
          raise null_values;
     end if;
-    
+
      --
      -- Insert or update a record
      --
-     
-     
+
+
     v_mls_id := mls_listings_pkg.get_mls_id(global_src, p_values('LIST_105'));
      if v_mls_id is null then
         v_mls_id := mls_listings_pkg.insert_row
@@ -637,9 +637,9 @@ create or replace package body mls_brevard_pkg as
                       , X_DESCRIPTION    => v_desc
                       , X_LAST_ACTIVE    => sysdate
                       , X_GEO_LOCATION   => v_geo_location);
-     
+
      else
-       v_checksum := mls_listings_pkg.get_checksum(v_mls_id);       
+       v_checksum := mls_listings_pkg.get_checksum(v_mls_id);
        mls_listings_pkg.update_row
                       ( X_MLS_ID         => v_mls_id
                       , X_PROP_ID        => p_prop_id
@@ -670,7 +670,7 @@ create or replace package body mls_brevard_pkg as
         if v_photo_count < 1 then
      */
          get_photos(p_prop_id, v_mls_id, p_values('LIST_1'));
-     /*    
+     /*
         else
           select photo_url
           into v_photo
@@ -682,7 +682,7 @@ create or replace package body mls_brevard_pkg as
           end if;
         end if;
       */
-        
+
 
      /*
      exception
@@ -698,8 +698,8 @@ create or replace package body mls_brevard_pkg as
 --            end if;
 */
      end set_listing;
- 
-  
+
+
   procedure get_photos( p_prop_id     in number
                       , p_mls_id      in number
                       , p_request_id  in varchar2 := null) is
@@ -722,7 +722,7 @@ create or replace package body mls_brevard_pkg as
       v_url := 'http://retsgw.flexmls.com/rets2_3/GetObject?Type=HiRes&Resource=Property&ID='
                  ||p_request_id||':*&Location=1';
 
- 
+
       global_seq := global_seq + 1;
       v_resp := pr_rets_pkg.get_resp
                      ( p_url     => v_url
@@ -754,8 +754,8 @@ create or replace package body mls_brevard_pkg as
               utl_http.end_response(v_resp);
          when others then raise;
       END;
-      
-    else                  
+
+    else
       for p_rec in cur_photos(p_prop_id) loop
         v_photo_seq := v_photo_seq + 1;
         mls_photos_pkg.insert_row
@@ -765,7 +765,7 @@ create or replace package body mls_brevard_pkg as
             , X_PHOTO_DESC => null);
       end loop;
     end if;
-     
+
   end get_photos;
 
 
@@ -781,7 +781,7 @@ create or replace package body mls_brevard_pkg as
        where query_type = p_ltype
        and processed_yn = 'N'
        and source_id = global_src;
-     
+
      v_values      pr_rets_pkg.value_table;
      v_mls_id      MLS_LISTINGS.MLS_ID%TYPE;
      v_id          number;
@@ -852,7 +852,7 @@ create or replace package body mls_brevard_pkg as
     else
       raise no_listings_found;
     end if;
-     
+
   exception
     when no_listings_found then
       pr_rets_pkg.put_line('No listings found');
@@ -860,31 +860,31 @@ create or replace package body mls_brevard_pkg as
      pr_rets_pkg.put_line('Error in process_listings on MLS# '||v_id);
      -- raise;
   end process_listings;
-  
+
   procedure update_price_ranges is
   begin
     mls_price_ranges_pkg.set_price_ranges('BREVARD', global_src);
   end update_price_ranges;
-  
- 
-  
+
+
+
   procedure update_mls is
   begin
     get_by_type('CommercialProperty');
     get_by_type('ResidentialProperty');
     get_by_type('IncomeProperty');
     get_by_type('VacantLand');
-    
+
     update_price_ranges;
     mls_price_ranges_pkg.update_static_pages('BREVARD');
      --
      -- Mark old listings as inactive
      --
     pr_rets_pkg.set_inactive(global_src);
-     
+
   end update_mls;
  end mls_brevard_pkg;
-/  
+/
 show errors package mls_brevard_pkg
 show errors package body mls_brevard_pkg
 

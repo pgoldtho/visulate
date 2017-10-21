@@ -1,4 +1,0 @@
-DIRECTORY=dpump_dir1 
-DUMPFILE=rnt_data.dmp 
-REMAP_SCHEMA=rntmgr:rntmgr2
-REMAP_TABLESPACE=users:mgt_data2

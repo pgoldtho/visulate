@@ -1,5 +1,0 @@
-begin
-  dbms_mview.refresh('PR_SALES_MV', 'C');
-  dbms_mview.refresh('PR_SALES_SUMMARY_MV', 'C');
-end;
-/

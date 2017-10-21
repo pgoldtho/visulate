@@ -1,4 +1,0 @@
-DIRECTORY=dpump_dir1 
-DUMPFILE=mls_data.dmp 
-REMAP_SCHEMA=rntmgr:rntmgr2
-REMAP_TABLESPACE=users:mls_data2

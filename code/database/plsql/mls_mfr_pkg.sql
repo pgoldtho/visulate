@@ -13,8 +13,8 @@ create or replace package mls_mfr_pkg as
 *******************************************************************************/
   global_errors    pls_integer   := 0;
   global_login     varchar2(256) := 'http://rets.mfrmls.com/contact/rets/login';
-  global_user      varchar2(16)  := 'RETS534';
-  global_passwd    varchar2(16)  := '7+Er+7aqeD';
+  global_user      varchar2(16)  := '';
+  global_passwd    varchar2(16)  := '';
   global_base      varchar2(256) := 'http://rets.mfrmls.com/contact/rets/search?SearchType=Property';
   global_src       number := 7; -- Florida Regional MLS
  
