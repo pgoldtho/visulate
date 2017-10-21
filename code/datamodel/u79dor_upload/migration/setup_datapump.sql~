@@ -1,0 +1,5 @@
+CREATE DIRECTORY dpump_dir1 AS '/home/oracle/app/dpump';
+GRANT READ, WRITE ON DIRECTORY dpump_dir1 to rntmgr;
+
+
+

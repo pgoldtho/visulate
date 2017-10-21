@@ -1,0 +1,33 @@
+alter table pr_properties add
+( PARCEL_ID          VARCHAR2(26)
+, alt_key            varchar2(26)
+, value_group        number(1)
+, quality_code       number(1)
+, year_built         number(4)
+, building_count     number(4)
+, residential_units  number(4)
+, legal_desc         varchar2(30)
+, market_area        varchar2(3)
+, neighborhood_code  varchar2(10)
+, census_bk          varchar2(16)
+, geo_coordinates    MDSYS.SDO_GEOMETRY);
+
+alter table pr_taxes modify tax_amount null;
+
+create table pr_property_values
+ ( prop_id        number not null
+ , per_foot_rent  number not null
+ , sq_ft          number not null
+ , vacancy_pct    number not null
+ , lease_type     varchar2(8) not null
+ , maintenance    number not null
+ , utilities      number not null
+ , property_tax   number not null
+ , insurance      number not null
+ , mgt_fees       number not null
+ , cap_rate       number not null
+ , min_val        number not null
+ , max_val        number not null
+ , median_val     number not null
+ , constraint pr_property_values_pk
+   primary key (prop_id));

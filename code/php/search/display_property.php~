@@ -1,0 +1,247 @@
+<?php
+ function display_property($smarty, $template_prefix, $dbReport)
+  {
+    $is_editor = $smarty->user->isBuyer();
+    $prop_id = htmlentities($_REQUEST["PROP_ID"], ENT_QUOTES);
+    $href = $GLOBALS["PATH_FORM_ROOT"]."visulate_search.php?REPORT_CODE=PROPERTY_DETAILS&PROP_ID=$prop_id";
+
+     $submenu3 = array(array("href" => $href, "value"=>"Property"),
+                     array("href" => $href."&MODE=cashflow", "value" => "Cashflow Estimate") );
+
+         $type = (htmlentities($_REQUEST["MODE"], ENT_QUOTES));
+         if ($type != "" && $type != "cashflow")
+             $type = "";
+
+         if ($type == ""){
+                $skey = 0;
+   //     $photos = $dbReport->getPropPhotos($prop_id);
+   //     $smarty->assign("photos", $photos);
+               }
+        else if ($type == "cashflow"){
+                    $skey = 1;
+                    }
+        else
+            echo "error";
+
+     $report_data = $dbReport->getPropertyDetails($prop_id);
+     if (!($photos))
+      {
+       $streetview = $dbReport->get_streetview_url($report_data["PROPERTY"]["LAT"], $report_data["PROPERTY"]["LON"]);
+       //print $streetview;
+       $smarty->assign("streetview", $streetview);
+      }
+/*
+     if ((strlen($report_data["PROPERTY"]["LAT"]) > 0) &&
+         (strlen($report_data["PROPERTY"]["LON"]) > 0) && (MAINTENANCE_MODE != "Y") &&
+         ($report_data["PROPERTY"]["ADDRESS1"] != "1600 Pennsylvania Avenue NW"))
+      {
+
+        $dbCity   = new RNTCities($smarty->connection);
+        $city = $dbCity->getGeoCity($report_data["PROPERTY"]["LAT"], $report_data["PROPERTY"]["LON"], $report_data["PROPERTY"]["CITY"]);
+        $smarty->assign("cityDataValues", $city);
+      }
+*/
+
+     $canonical = 'property/'.$prop_id;
+
+     if ($report_data["PROPERTY"]["ADDRESS1"] == "1600 Pennsylvania Avenue NW")
+       {
+         http_response_code(404);
+         $photos = array();
+         $photos[1] = array("URL"      => 'http://www.whitehouse.gov/sites/default/files/image/whitehouse_historypg.jpg'
+                           ,"FILENAME" => 'whitehouse_historypg.jpg');
+         $smarty->assign("photos", $photos);
+       }
+      //header("HTTP/1.0 404 Not Found");
+     $ucode = 90001;
+     foreach ($report_data["PROPERTY_USAGE"] as $k => $v)
+       {
+       $ucode = $k;
+       $usage = $v;
+       }
+
+     if ($report_data["PROPERTY"]["PUMA"])
+       {
+       $dbSearch = new LISTSearch($smarty->connection);
+       $puma = $dbSearch->getPumaSummary($report_data["PROPERTY"]["PUMA"]);
+       $smarty->assign("puma", $puma);
+       }
+       //print_r($report_data);
+     $comps       = $dbReport->getSimilar($prop_id);
+     $mls         = $dbReport->getMLS($prop_id);
+     $mls_listings = $dbReport->getSimilarMLS($prop_id);
+
+     $default_values = $dbReport->getDefaults($prop_id, $ucode);
+     $lease_type = $dbReport->getLeaseType($prop_id);
+     $pclass     = $default_values["A"]["PCLASS"];
+
+
+     foreach ($default_values as $k => $v){
+        if ($lease_type == 'Triple Net')
+          {
+          $default_values[$k]["INSURANCE"]
+            = $default_values[$k]["INSURANCE"] * $default_values[$k]["VACANCY_PERCENT"]/100;
+          $default_values[$k]["MAINTENANCE"]
+            = $default_values[$k]["MAINTENANCE"] * $default_values[$k]["VACANCY_PERCENT"]/100;
+          $default_values[$k]["UTILITIES"]
+            = $default_values[$k]["UTILITIES"] * $default_values[$k]["VACANCY_PERCENT"]/100;
+          $default_values[$k]["TAX"]
+            = $default_values[$k]["TAX"] * $default_values[$k]["VACANCY_PERCENT"]/100;
+          }
+
+    $default_values[$k]["NOI"] = round(($default_values[$k]["ANNUAL_RENT"] - $default_values[$k]["VACANCY_AMOUNT"]
+                           - $default_values[$k]["INSURANCE"] - $default_values[$k]["MAINTENANCE"]
+                           - $default_values[$k]["UTILITIES"]
+                           - $default_values[$k]["TAX"] - $default_values[$k]["MGT_AMOUNT"]));
+    $default_values[$k]["VALUE"] = round($default_values[$k]["NOI"] / $default_values[$k]["CAP_RATE"] * 100);
+    $default_values[$k]["DOWN"] = round($default_values[$k]["VALUE"] * 25/100);
+    $default_values[$k]["LOAN"] = round($default_values[$k]["VALUE"] * 75/100);
+    $default_values[$k]["COSTS"] = round($default_values[$k]["VALUE"] * 4/100);
+  }
+    if ($is_editor)
+     {
+       require_once dirname(__FILE__)."/classes/database/rnt_business_units.class.php";
+
+       $smarty->user->set_database_user();
+       $dbBU   = new RNTBusinessUnit($smarty->connection);
+       $buList = $dbBU->getBusinessUnitByRole('BUYER');
+
+       $smarty->assign("buList", $buList);
+     }
+
+     //$display_property = $dbReport->getPropDesc($prop_id);
+     $display_property = $report_data["PROPERTY"]["ADDRESS1"].", ".$report_data["PROPERTY"]["CITY"]
+     .", ".$report_data["PROPERTY"]["STATE"];
+     //$prop_desc = $dbReport->getPropSummary($prop_id);
+     //print_r($report_data);
+
+    if ($report_data["PROPERTY"]["ADDRESS1"] == "1600 Pennsylvania Avenue NW")
+      $prop_desc = "404 Not Found";
+    elseif ($skey == 1)
+    {$display_property = $display_property." Investment Analysis";
+     $prop_desc =  "Interactive worksheet for ".$report_data["PROPERTY"]["ADDRESS1"]
+     .".  Estimate its net operating income, unleveraged yield, finance costs, cashflow and cash on cash return."
+     ." Download a spreadsheet to estimate a 5 year IRR.";
+    }
+    elseif ($default_values[$pclass]["VALUE"] == 0)
+    {$prop_desc = "Address: ".$report_data["PROPERTY"]["ADDRESS1"]
+                 .", Acreage: ".number_format($report_data["PROPERTY"]["ACREAGE"], 2)
+                 .", Latitude: ".number_format($report_data["PROPERTY"]["LAT"], 2)
+                 .", Longitude: ".number_format($report_data["PROPERTY"]["LON"], 2);
+    }
+    elseif  ($lease_type == 'Triple Net' && ($report_data["PROPERTY"]["SQ_FT"] > 0))
+    { $prop_desc =  $report_data["PROPERTY"]["ADDRESS1"]." is a ". number_format($report_data["PROPERTY"]["SQ_FT"])." sq ft ".$usage
+              .". We estimate it will lease for $".number_format($default_values[$pclass]["ANNUAL_RENT"]/$report_data["PROPERTY"]["SQ_FT"])
+              ."/ft and have an NOI of $".number_format($default_values[$pclass]["NOI"])
+              ."/year giving it an income Value of $". number_format($default_values[$pclass]["VALUE"])
+              .". Its market value in ".$default_values[$pclass]["YEAR"]
+              ." was $".number_format($default_values[$pclass]["MEDIAN_MARKET_VALUE"]);
+    }
+    else
+    { $prop_desc =  $report_data["PROPERTY"]["ADDRESS1"]." is a ". number_format($report_data["PROPERTY"]["SQ_FT"])." sq ft ".$usage
+              .". We estimate it would rent for $".number_format($default_values[$pclass]["MONTHLY_RENT"])
+              ."/month giving it a net operating income of $".number_format($default_values[$pclass]["NOI"])
+              ."/year. Applying a cap rate of ".number_format($default_values[$pclass]["CAP_RATE"])
+              ."% would result in an income value of $". number_format($default_values[$pclass]["VALUE"])
+              .". Its market value in ".$default_values[$pclass]["YEAR"]
+              ." was $".number_format($default_values[$pclass]["MEDIAN_MARKET_VALUE"]);
+    }
+
+
+    $smarty->assign("isEditor", $is_editor);
+    $smarty->assign("defaults", $default_values);
+    $smarty->assign("p_class", $pclass);
+    $smarty->assign("pvalues", $default_values[$pclass]);
+
+    $smarty->assign("data", $report_data);
+    $smarty->assign("lease_type", $lease_type);
+    $smarty->assign("pageTitle", "$display_property - Visulate");
+    $smarty->assign("pageDesc", "$prop_desc");
+    $smarty->assign("canonical", $canonical);
+    $smarty->assign("comps", $comps);
+    $smarty->assign("mls_listings", $mls_listings);
+    $smarty->assign("mls", $mls);
+
+    $smarty->assign("submenu2_1", $submenu3);
+    $smarty->assign("skey", $skey);
+
+    $html_report = $smarty->display($template_prefix."-property-details.tpl");
+  }
+
+function display_owner($smarty, $template_prefix, $dbReport)
+  {
+     $display_owner = htmlentities($_REQUEST["OWNER_ID"], ENT_QUOTES);
+     $report_data = $dbReport->getOwnerDetails(htmlentities($_REQUEST["OWNER_ID"], ENT_QUOTES));
+     $smarty->assign("data", $report_data);
+     $smarty->assign("pageTitle", "Property Owner Details: $display_owner");
+     $smarty->assign("pageDesc", "Property owner details as recorded in tax records.");
+     $html_report = $smarty->display($template_prefix."-owner-details.tpl");
+   }
+
+  function save2BU($smarty)
+  {
+     $form = new HTML_QuickForm('Save2BU', 'POST');
+     $post_values = $form->getSubmitValues();
+     $values = array();
+
+     $values["PROP_ID"]         = htmlentities($post_values["PROP_ID"], ENT_QUOTES);
+     $values["BUSINESS_ID"]     = htmlentities($post_values["BUSINESS_ID"], ENT_QUOTES);
+     $values["ESTIMATE_TITLE"]  = htmlentities($post_values["ESTIMATE_TITLE"], ENT_QUOTES);
+     $values["MONTHLY_RENT"]    = htmlentities(str_replace(",", "",$post_values["MONTHLY_RENT"]), ENT_QUOTES);
+     $values["OTHER_INCOME"]    = htmlentities(str_replace(",", "",$post_values["OTHER_INCOME"]), ENT_QUOTES);
+     $values["VACANCY_PCT"]     = htmlentities(str_replace(",", "",$post_values["VACANCY_PCT"]), ENT_QUOTES);
+     $values["REPLACE_3YEARS"]  = htmlentities(str_replace(",", "",$post_values["REPLACE_3YEARS"]), ENT_QUOTES);
+     $values["REPLACE_5YEARS"]  = htmlentities(str_replace(",", "",$post_values["REPLACE_5YEARS"]), ENT_QUOTES);
+     $values["REPLACE_12YEARS"] = htmlentities(str_replace(",", "",$post_values["REPLACE_12YEARS"]), ENT_QUOTES);
+     $values["MAINTENANCE"]     = htmlentities(str_replace(",", "",$post_values["MAINTENANCE"]), ENT_QUOTES);
+     $values["UTILITIES"]       = htmlentities(str_replace(",", "",$post_values["UTILITIES"]), ENT_QUOTES);
+     $values["PROPERTY_TAXES"]  = htmlentities(str_replace(",", "",$post_values["PROPERTY_TAXES"]), ENT_QUOTES);
+     $values["INSURANCE"]       = htmlentities(str_replace(",", "",$post_values["INSURANCE"]), ENT_QUOTES);
+     $values["MGT_FEES"]        = htmlentities(str_replace(",", "",$post_values["MGT_FEES"]), ENT_QUOTES);
+     $values["DOWN_PAYMENT"]    = htmlentities(str_replace(",", "",$post_values["DOWN_PAYMENT"]), ENT_QUOTES);
+     $values["CLOSING_COSTS"]   = htmlentities(str_replace(",", "",$post_values["CLOSING_COSTS"]), ENT_QUOTES);
+     $values["PURCHASE_PRICE"]  = htmlentities(str_replace(",", "",$post_values["PURCHASE_PRICE"]), ENT_QUOTES);
+     $values["CAP_RATE"]        = htmlentities(str_replace(",", "",$post_values["CAP_RATE"]), ENT_QUOTES);
+     $values["LOAN1_AMOUNT"]    = htmlentities(str_replace(",", "",$post_values["LOAN1_AMOUNT"]), ENT_QUOTES);
+     $values["LOAN1_TYPE"]      = htmlentities(str_replace(",", "",$post_values["LOAN1_TYPE"]), ENT_QUOTES);
+     $values["LOAN1_TERM"]      = htmlentities(str_replace(",", "",$post_values["LOAN1_TERM"]), ENT_QUOTES);
+     $values["LOAN1_RATE"]      = htmlentities(str_replace(",", "",$post_values["LOAN1_RATE"]), ENT_QUOTES);
+     $values["LOAN2_AMOUNT"]    = htmlentities(str_replace(",", "",$post_values["LOAN2_AMOUNT"]), ENT_QUOTES);
+     $values["LOAN2_TYPE"]      = htmlentities(str_replace(",", "",$post_values["LOAN2_TYPE"]), ENT_QUOTES);
+     $values["LOAN2_TERM"]      = htmlentities(str_replace(",", "",$post_values["LOAN2_TERM"]), ENT_QUOTES);
+     $values["LOAN2_RATE"]      = htmlentities(str_replace(",", "",$post_values["LOAN2_RATE"]), ENT_QUOTES);
+
+     $is_editor = $smarty->user->isBuyer();
+     if ($is_editor)
+       {
+        require_once dirname(__FILE__)."/classes/database/rnt_business_units.class.php";
+        require_once dirname(__FILE__)."/classes/database/rnt_estimate.class.php";
+
+        $smarty->user->set_database_user();
+        $dbBU        = new RNTBusinessUnit($smarty->connection);
+        $buList      = $dbBU->getBusinessUnitByRole('BUYER');
+        $hasAccess = false;
+        foreach ($buList as $k => $v)
+          {
+          if ($buList[$k]["BUSINESS_ID"] == $values["BUSINESS_ID"])
+            $hasAccess = true;
+          }
+        if ($hasAccess)
+          {
+           $dbEstimate = new RNTEstimate($smarty->connection);
+           $return_code = $dbEstimate->save2BU($values);
+           if ($return_code == '1') $message = 'Saved property to business unit';
+           elseif ($return_code == '2') $message = 'Updated existing estimate in business unit';
+           elseif ($return_code == '10') $message = 'Added estimate to existing property in business unit';
+           elseif ($return_code == '11') $message = 'Saved property and estimate to business unit';
+           else $message = '<span class="error"> Save failed.  A database error occurred</span>';
+           }
+        else
+          {$message = '<span class="error"> Save failed.  You do not have access to the selected business unit</span>';}
+         }
+      else
+         {$message = '<span class="error"> Save failed.  You are not logged in with a role of buyer</span>';}
+
+     $smarty->assign("skey", "1");
+     $smarty->assign("save2BUmsg", $message);
+    }

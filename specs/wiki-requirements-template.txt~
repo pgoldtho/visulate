@@ -1,0 +1,43 @@
+==Overview==
+
+<<toc>>
+===Problem Description===
+The URM extracts platform and platform version data from the bug database.  We need to record certifications and patch recommendations for Solaris OS versions.  The only way to do this at the moment is to register Solaris as a product with releases for each version.  This could produce redundant entries in the URM.  
+
+===Solution===
+High level description of the solution.
+===Business Need===
+Justify the project.
+===Bug Reference===
+List of high level tracking bugs
+==Requirements==
+  ===Functional Requirements===
+       ====1. Customer Requirement====
+       ====2. Use Cases====
+       ====3. Functionality and Feature Description====
+         =====Current behavior=====
+
+        
+         
+         =====New functionality=====
+         =====New concepts=====
+         =====User Interface=====
+       ====4. Preconditions and Assumptions====
+       ====5. Limitations====
+       ====6. Dependencies and Impact Analysis====
+       ====7. Known issues====
+  ===User Interface Requirements===
+  ===Performance Requirements===
+==Design==
+  ===Data Model===
+    ====Schema Changes====
+    ====Seed Data====
+    ====Data Upgrade====
+  ===Code===
+    ====APIs====
+    ====Non-API Code Changes====
+  ===User Interface===
+==Test Plans==
+
+
+

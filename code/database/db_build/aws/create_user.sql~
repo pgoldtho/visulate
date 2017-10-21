@@ -1,0 +1,32 @@
+create user rntmgr identified by &1
+default tablespace rnt_data
+temporary tablespace temp;
+
+alter user rntmgr1 quota unlimited on rnt_data;
+alter user rntmgr1 quota unlimited on mls_data;
+alter user rntmgr1 quota unlimited on mgt_data;
+alter user rntmgr1 quota unlimited on pr_property_data;
+alter user rntmgr1 quota unlimited on pr_corp_data;
+
+
+grant create session to rntmgr;
+grant create table to rntmgr;
+grant create procedure to rntmgr;
+grant create sequence to rntmgr;
+grant create view to rntmgr;	
+grant create type to rntmgr;
+grant create synonym to rntmgr;
+
+grant create trigger to rntmgr;
+grant create materialized view to rntmgr;
+grant execute on DBMS_CRYPTO to rntmgr;
+
+GRANT EXECUTE ON CTX_CLS    TO rntmgr;
+GRANT EXECUTE ON CTX_DDL    TO rntmgr;
+GRANT EXECUTE ON CTX_DOC    TO rntmgr;
+GRANT EXECUTE ON CTX_OUTPUT TO rntmgr;
+GRANT EXECUTE ON CTX_QUERY  TO rntmgr;
+GRANT EXECUTE ON CTX_REPORT TO rntmgr;
+GRANT EXECUTE ON CTX_THES   TO rntmgr;
+
+GRANT READ, WRITE ON DIRECTORY dpump_dir to rntmgr;

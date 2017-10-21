@@ -1,0 +1,1 @@
+create index pr_properties_n3 on pr_properties(city)  tablespace  PR_PROPERTY_DATA2;

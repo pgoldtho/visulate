@@ -1,0 +1,11 @@
+body {margin:2px; font:normal 100% arial, sans-serif;}
+
+#title {background: rgba(33, 33, 33, 0.2); color:#fff; position: fixed; bottom: 0;}
+#title a {text-decoration: underline;}
+
+a {color:#177cde; text-decoration:none;}
+ul {margin-top: 5px;}
+ul li {margin:10px; position:relative; color: #336699; list-style-type:square;}
+
+#ad-footer {position: fixed; bottom: 0;}
+#main-img {width:100%;}

@@ -1,0 +1,33 @@
+update rnt_menu_pages
+set DISPLAY_SEQ = DISPLAY_SEQ + 0.2
+where sub_page='Buy to Rent';
+
+
+  rnt_menu_pages_pkg.insert_row
+                     ( X_TAB_NAME       => 'real_estate'
+                     , X_MENU_NAME      => 'location'
+                     , X_PAGE_NAME      => 'broward'
+                     , X_SUB_PAGE       => 'Buy to Rent'
+                     , X_PAGE_TITLE     => 'Broward County'
+                     , X_DISPLAY_SEQ    => 1.3
+                     , X_HEADER_CONTENT => xmltype('<head><title>Visulate - Broward County Buy-to-Rent</title>
+                     <meta name="keywords" content="Single family rental, buy to rent, florida, real estate, Broward County"/>
+                     <meta name="description" content="Broward County, Florida properties that show potential as buy-to-rent single family homes."/>
+
+                     
+                     </head>')
+                     , X_BODY_CONTENT   => '<h1>Buy to Rent in Brevard County</h1>');
+
+  rnt_menu_pages_pkg.insert_row
+                     ( X_TAB_NAME       => 'real_estate'
+                     , X_MENU_NAME      => 'location'
+                     , X_PAGE_NAME      => 'broward'
+                     , X_SUB_PAGE       => 'Latest Listings'
+                     , X_PAGE_TITLE     => 'Broward County'
+                     , X_DISPLAY_SEQ    => 1.2
+                     , X_HEADER_CONTENT => xmltype('<head><title>Visulate - Broward County Latest Listings</title>
+                     <meta name="keywords" content="Broward County, Florida, Real Estate, MLS"/>
+                     <meta name="description" content="Latest MLS listings for Broward County, Florida."/>
+                     </head>')
+                     , X_BODY_CONTENT   => '<h1>Latest Listings in Broward County</h1>');
+
