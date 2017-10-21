@@ -1,0 +1,62 @@
+
+SQL*Loader: Release 11.2.0.3.0 - Production on Sat Aug 4 09:29:11 2012
+
+Copyright (c) 1982, 2011, Oracle and/or its affiliates.  All rights reserved.
+
+Control File:   fmr.ctl
+Data File:      FY2012_FMRS_50_County.csv
+  Bad File:     FY2012_FMRS_50_County.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+
+Number to load: ALL
+Number to skip: 0
+Errors allowed: 50
+Bind array:     64 rows, maximum of 256000 bytes
+Continuation:    none specified
+Path used:      Conventional
+
+Table PR_FMR, loaded from every logical record.
+Insert option in effect for this table: TRUNCATE
+TRAILING NULLCOLS option in effect
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+FIPS                                FIRST     *   ,  O(") CHARACTER            
+RENT0                                NEXT     *   ,  O(") CHARACTER            
+RENT1                                NEXT     *   ,  O(") CHARACTER            
+RENT2                                NEXT     *   ,  O(") CHARACTER            
+RENT3                                NEXT     *   ,  O(") CHARACTER            
+RENT4                                NEXT     *   ,  O(") CHARACTER            
+COUNTY                               NEXT     *   ,  O(") CHARACTER            
+STATE                                NEXT     *   ,  O(") CHARACTER            
+COUSUB                               NEXT     *   ,  O(") CHARACTER            
+POP2000                              NEXT     *   ,  O(") CHARACTER            
+COUNTYNAME                           NEXT     *   ,  O(") CHARACTER            
+CBSASUB                              NEXT     *   ,  O(") CHARACTER            
+AREANAME                             NEXT     *   ,  O(") CHARACTER            
+COUNTY_TOWN_NAME                     NEXT     *   ,  O(") CHARACTER            
+STATE_ALPHA                          NEXT     *   ,  O(") CHARACTER            
+
+
+Table PR_FMR:
+  4765 Rows successfully loaded.
+  0 Rows not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Space allocated for bind array:                 247680 bytes(64 rows)
+Read   buffer bytes: 1048576
+
+Total logical records skipped:          0
+Total logical records read:          4765
+Total logical records rejected:         0
+Total logical records discarded:        0
+
+Run began on Sat Aug 04 09:29:11 2012
+Run ended on Sat Aug 04 09:29:13 2012
+
+Elapsed time was:     00:00:02.00
+CPU time was:         00:00:00.12

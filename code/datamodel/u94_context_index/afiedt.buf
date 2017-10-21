@@ -1,0 +1,10 @@
+select uc.description, sum(acreage)
+from pr_usage_codes uc
+, pr_property_usage pu
+, pr_properties p
+where uc.ucode = pu.ucode
+and pu.prop_id = p.prop_id
+and lower(description) like '%crop%'
+group by  uc.description
+order by 2 desc
+/

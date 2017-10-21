@@ -1,0 +1,220 @@
+
+SQL*Loader: Release 11.2.0.3.0 - Production on Sun Oct 21 10:15:21 2012
+
+Copyright (c) 1982, 2011, Oracle and/or its affiliates.  All rights reserved.
+
+Control File:   license.ctl
+
+There are 6 data files:
+Data File:      REALESTATE2501LICENSE_1.csv
+  Bad File:     REALESTATE2501LICENSE_1.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+Data File:      REALESTATE2501LICENSE_2.csv
+  Bad File:     REALESTATE2501LICENSE_2.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+Data File:      REALESTATE2501LICENSE_3.csv
+  Bad File:     REALESTATE2501LICENSE_3.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+Data File:      REALESTATE2501LICENSE_4.csv
+  Bad File:     REALESTATE2501LICENSE_4.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+Data File:      REALESTATE2501LICENSE_5.csv
+  Bad File:     REALESTATE2501LICENSE_5.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+Data File:      RealEstateCorpLicense.csv
+  Bad File:     RealEstateCorpLicense.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+
+Number to load: ALL
+Number to skip: 0
+Errors allowed: 300
+Bind array:     64 rows, maximum of 256000 bytes
+Continuation:    none specified
+Path used:      Conventional
+
+Table LDR_LICENSE, loaded from every logical record.
+Insert option in effect for this table: TRUNCATE
+TRAILING NULLCOLS option in effect
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+BOARD                               FIRST     *   ,  O(") CHARACTER            
+LICENSEE_NAME                        NEXT     *   ,  O(") CHARACTER            
+DBA_NAME                             NEXT     *   ,  O(") CHARACTER            
+NRANK                                NEXT     *   ,  O(") CHARACTER            
+ADDRESS1                             NEXT     *   ,  O(") CHARACTER            
+ADDRESS2                             NEXT     *   ,  O(") CHARACTER            
+ADDRESS3                             NEXT     *   ,  O(") CHARACTER            
+CITY                                 NEXT     *   ,  O(") CHARACTER            
+STATE                                NEXT     *   ,  O(") CHARACTER            
+ZIP                                  NEXT     *   ,  O(") CHARACTER            
+COUNTY                               NEXT     *   ,  O(") CHARACTER            
+LICENSE_NUMBER                       NEXT     *   ,  O(") CHARACTER            
+PRIMARY_STATUS                       NEXT     *   ,  O(") CHARACTER            
+SECONDARY_STATUS                     NEXT     *   ,  O(") CHARACTER            
+LICENSE_DATE                         NEXT     *   ,  O(") CHARACTER            
+EFFECTIVE_DATE                       NEXT     *   ,  O(") CHARACTER            
+EXPIRATION_DATE                      NEXT     *   ,  O(") CHARACTER            
+ALTERNATE_LICENSE_NUMBER             NEXT     *   ,  O(") CHARACTER            
+SOLE_PROPRIETOR                      NEXT     *   ,  O(") CHARACTER            
+EMPLOYER                             NEXT     *   ,  O(") CHARACTER            
+EMPLOYER_LICENSE_NUMBER              NEXT     *   ,  O(") CHARACTER            
+
+value used for ROWS parameter changed from 64 to 47
+
+Data File REALESTATE2501LICENSE_1.csv -
+
+Record 361: Rejected - Error on table LDR_LICENSE, column DBA_NAME.
+no terminator found after TERMINATED and ENCLOSED field
+Record 4078: Rejected - Error on table LDR_LICENSE, column ADDRESS2.
+no terminator found after TERMINATED and ENCLOSED field
+Record 19294: Rejected - Error on table LDR_LICENSE, column ADDRESS2.
+no terminator found after TERMINATED and ENCLOSED field
+Record 29427: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+Record 36497: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+Record 49856: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+Record 58745: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+Record 61260: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+
+Data File REALESTATE2501LICENSE_2.csv -
+
+Record 76902: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+Record 78060: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+Record 78916: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+Record 82021: Rejected - Error on table LDR_LICENSE, column ADDRESS2.
+no terminator found after TERMINATED and ENCLOSED field
+Record 93991: Rejected - Error on table LDR_LICENSE, column ADDRESS2.
+no terminator found after TERMINATED and ENCLOSED field
+Record 95268: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+Record 102678: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+Record 107220: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+Record 110572: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+Record 125067: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+
+Data File REALESTATE2501LICENSE_3.csv -
+
+Record 131379: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+Record 145322: Rejected - Error on table LDR_LICENSE, column EMPLOYER.
+no terminator found after TERMINATED and ENCLOSED field
+Record 148416: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+Record 155892: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+Record 159428: Rejected - Error on table LDR_LICENSE, column EMPLOYER.
+no terminator found after TERMINATED and ENCLOSED field
+Record 162344: Rejected - Error on table LDR_LICENSE, column DBA_NAME.
+no terminator found after TERMINATED and ENCLOSED field
+Record 164686: Rejected - Error on table LDR_LICENSE, column EMPLOYER.
+no terminator found after TERMINATED and ENCLOSED field
+Record 174735: Rejected - Error on table LDR_LICENSE, column EMPLOYER.
+no terminator found after TERMINATED and ENCLOSED field
+Record 178154: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+Record 182637: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+Record 193177: Rejected - Error on table LDR_LICENSE, column EMPLOYER.
+no terminator found after TERMINATED and ENCLOSED field
+
+Data File REALESTATE2501LICENSE_4.csv -
+
+Record 211398: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+Record 217564: Rejected - Error on table LDR_LICENSE, column EMPLOYER.
+no terminator found after TERMINATED and ENCLOSED field
+Record 217704: Rejected - Error on table LDR_LICENSE, column ADDRESS2.
+no terminator found after TERMINATED and ENCLOSED field
+Record 217968: Rejected - Error on table LDR_LICENSE, column EMPLOYER.
+no terminator found after TERMINATED and ENCLOSED field
+Record 228353: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+Record 236961: Rejected - Error on table LDR_LICENSE, column ADDRESS2.
+no terminator found after TERMINATED and ENCLOSED field
+Record 246762: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+Record 247170: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+Record 247171: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+Record 254237: Rejected - Error on table LDR_LICENSE, column DBA_NAME.
+no terminator found after TERMINATED and ENCLOSED field
+
+Data File REALESTATE2501LICENSE_5.csv -
+
+Record 264355: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+Record 282442: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+Record 288295: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+Record 289565: Rejected - Error on table LDR_LICENSE, column ADDRESS2.
+no terminator found after TERMINATED and ENCLOSED field
+
+Data File RealEstateCorpLicense.csv -
+
+Record 290084: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+Record 296453: Rejected - Error on table LDR_LICENSE, column DBA_NAME.
+no terminator found after TERMINATED and ENCLOSED field
+Record 296548: Rejected - Error on table LDR_LICENSE, column LICENSEE_NAME.
+no terminator found after TERMINATED and ENCLOSED field
+Record 297500: Rejected - Error on table LDR_LICENSE, column LICENSEE_NAME.
+no terminator found after TERMINATED and ENCLOSED field
+Record 301818: Rejected - Error on table LDR_LICENSE, column ADDRESS2.
+no terminator found after TERMINATED and ENCLOSED field
+Record 304655: Rejected - Error on table LDR_LICENSE, column ADDRESS2.
+no terminator found after TERMINATED and ENCLOSED field
+Record 313781: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+Record 314812: Rejected - Error on table LDR_LICENSE, column ADDRESS2.
+no terminator found after TERMINATED and ENCLOSED field
+Record 315483: Rejected - Error on table LDR_LICENSE, column LICENSEE_NAME.
+no terminator found after TERMINATED and ENCLOSED field
+Record 315968: Rejected - Error on table LDR_LICENSE, column ADDRESS1.
+no terminator found after TERMINATED and ENCLOSED field
+
+Table LDR_LICENSE:
+  317514 Rows successfully loaded.
+  53 Rows not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Space allocated for bind array:                 254646 bytes(47 rows)
+Read   buffer bytes: 1048576
+
+Total logical records skipped:          0
+Total logical records read:        317567
+Total logical records rejected:        53
+Total logical records discarded:        0
+
+Run began on Sun Oct 21 10:15:21 2012
+Run ended on Sun Oct 21 10:17:38 2012
+
+Elapsed time was:     00:02:16.67
+CPU time was:         00:00:08.50

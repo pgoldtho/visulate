@@ -1,0 +1,22 @@
+select c.county||' COUNTY, '||c.state   location
+                       ,      'CNTY'                           location_type
+                       ,      c.state                          location_context
+                       ,      initcap(c.county)||' County'     display_location
+                       ,      '12'                             zoom_level
+                       ,      c.county
+                       ,      c.state
+                       ,      max(listing_date), min(listing_date)
+                       ,      'ANY'                            agreement_id
+                       from rnt_cities            c
+                       ,    pr_city_zipcodes      z
+                       ,    pr_properties         p
+                       ,    mls_listings          ml
+                       where c.city_id        = z.city_id
+                       and c.state            = 'FL'
+                       and z.zipcode          = to_number(p.zipcode)
+                       and p.prop_id          = ml.prop_id
+                       and ml.idx_yn          = 'Y'
+                       and ml.listing_status  = 'ACTIVE'
+group by c.state, c.county
+                       order by c.state, c.county
+/

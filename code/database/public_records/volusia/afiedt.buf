@@ -1,0 +1,16 @@
+select /*+ordered*/
+ replace(initcap(c.name),'Llc', 'LLC') name
+,   c.corp_number
+FROM (select l.loc_id
+            FROM pr_locations l
+            WHERE sdo_nn
+                   ( geo_location
+                   , SDO_GEOMETRY(2001, 8307,
+                     SDO_POINT_TYPE (28.3197970972, -80.6819046086 ,NULL), NULL, NULL)
+                   , 'sdo_num_res=16', 1) = 'TRUE') p
+,    pr_corporate_locations cl
+,    pr_corporations c
+where cl.corp_number = c.corp_number
+and cl.loc_type = 'PRIN'
+and cl.loc_id = p.loc_id
+/

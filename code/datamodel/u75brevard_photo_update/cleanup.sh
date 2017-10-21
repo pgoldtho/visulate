@@ -1,0 +1,25 @@
+#/bin/bash!
+echo "20"
+rm brevard_pdf/20/*
+echo "21"
+rm brevard_pdf/21/*
+echo "22"
+rm brevard_pdf/22/*
+echo "23"
+rm brevard_pdf/23/*
+echo "24"
+rm brevard_pdf/24/*
+echo "25"
+rm brevard_pdf/25/*
+echo "26"
+rm brevard_pdf/26/*
+echo "27"
+rm brevard_pdf/27/*
+echo "28"
+rm brevard_pdf/28/*
+echo "29"
+rm brevard_pdf/29/*
+echo "30"
+rm brevard_pdf/30/*
+echo "merge"
+rm brevard_pdf/merge/*

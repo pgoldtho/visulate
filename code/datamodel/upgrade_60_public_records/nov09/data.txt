@@ -1,0 +1,89 @@
+create table brd_properties as 
+ select  *
+ from pr_brvd_properties_mv
+ where not exists (select 1 
+                   from pr_properties 
+                   where address1 =  rtrim("SiteHouseNo"||' '||"SiteStreetname"||' '||"SiteType"||' '||"SiteDir"))
+ and "SiteStreetname" is not null
+
+
+create table brd_buildings as 
+ select  *
+ from pr_brvd_building_mv
+ where "TaxAcct" in (select "TaxAcct" from brd_properties);
+
+
+create index pr_properties_fn on pr_properties(to_number(source_pk));
+
+create table brd_sales as 
+select s."TaxAcct"
+,      "BookPg"
+,      "SaleDate"
+,      "SaleAmount"
+,      "DeedType"
+,      "DeedQual"
+,      "SaleConfirm"
+,      "VorI"
+,      "PriorOwner"
+,      "DateAdded"
+,      "PhysChangeCode"
+,      "SalesId"
+,      pr_records_pkg.get_prop_id(to_char(s."TaxAcct")) prop_id
+,      "OwnerName"
+from pr_brvd_sales_mv s
+,    pr_brvd_properties_mv p
+where to_char("SaleDate", 'yyyy') = 2009
+and p."TaxAcct" = s."TaxAcct";
+
+
+
+export
+
+BRD_ACRES
+BRD_BUILDINGS
+BRD_PROPERTIES
+BRD_SALES
+
+
+
+
+
+@brevard2.sql
+@brevard5.sql
+-- @brevard6.sql
+@brevard8.sql
+@brevard10.sql
+
+
+alter table pr_properties modify acreage number;
+
+
+ create table brd_acres as
+ select p.prop_id
+ ,      b."Acreage"
+ from pr_properties p
+ ,    pr_brvd_properties_mv b
+ where b."TaxAcct" = p.source_pk
+
+
+declare
+  cursor cur_acres is
+  select prop_id
+  ,      "Acreage" acreage
+  from brd_acres;
+begin
+  for a_rec in cur_acres loop
+    update pr_properties
+    set acreage = a_rec.acreage
+    where prop_id = a_rec.prop_id;
+
+    commit;
+  end loop;
+end;
+/
+
+
+
+
+
+

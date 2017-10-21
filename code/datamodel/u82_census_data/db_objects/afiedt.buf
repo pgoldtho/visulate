@@ -1,0 +1,9 @@
+select ucode, p.puma, puma_percentile, rental_percentile
+    ,      rent_income_ratio, insurance, vacancy_rate    from pr_property_usage pu
+    ,    pr_properties p
+    ,    pr_pums_data pd
+    where p.prop_id = 6232548
+    and p.prop_id = pu.prop_id
+    and p.puma = pd.puma
+    and rownum = 1
+/

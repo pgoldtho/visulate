@@ -1,0 +1,79 @@
+Export pre-built tables from vis11 database
+
+orange_properties 
+vol_properties
+vol_sqft
+vol_sales
+BRD_BUILDINGS
+BRD_PROPERTIES
+BRD_SALES
+BRD_SALES_PROPERTIES
+
+
+Drop tables from production and then import
+
+drop table orange_properties  purge;
+drop table vol_properties  purge;
+drop table vol_sqft  purge;
+drop table vol_sales  purge;
+drop table BRD_BUILDINGS  purge;
+drop table BRD_PROPERTIES  purge;
+drop table BRD_SALES  purge;
+drop table BRD_SALES_PROPERTIES  purge;
+
+
+Run sql script to add bedroom and bath columns to pr_properties.
+alter table pr_properties add
+( total_bedrooms     number
+, total_bathrooms    number);
+
+install new version of  PR_RECORDS_PKG
+ @c:\visulate2\visulate\code\database\plsql\PR_RECORDS_PKG.sql
+ 
+====================================
+Orange County 
+==================================== 
+Need to correct city and zipcodes for some of the properties.  The old spreadsheet from Orange county did 
+not include these. Also need to include bed & bathroom count.
+
+@orange1_fix_city.sql
+@orange2_beds.sql
+
+Need to update the ucode for existing properties; use can change e.g. from vacant land to SFH
+@orange3_ucode.sql
+
+@orange1  -- Insert new properties
+@orange2  -- Record new sales
+@current_owner - Set current owner record
+
+==================================
+Volusia
+==================================
+ @@volusia1.sql
+ @@volusia2.sql
+ @@volusia3.sql
+ @@volusia4.sql
+ @@volusia4a.sql
+ @@volusia5.sql
+@current_owner - Set current owner record
+
+=================================
+Brevard
+=================================
+@brevard1.sql -- create properties
+@brevard2.sql -- Property Usage
+@brevard3.sql -- Buildings
+@brevard4.sql -- Sales
+@brevard5.sql -- Owner Addresses
+@brevard6.sql -- Property Owner
+
+begin
+  DBMS_MVIEW.REFRESH('PR_COMMERCIAL_SALES_MV', 'C');
+  DBMS_MVIEW.REFRESH('PR_COMMERCIAL_SUMMARY_MV', 'C'); 
+  DBMS_MVIEW.REFRESH('PR_SALES_MV', 'C'); 
+  DBMS_MVIEW.REFRESH('PR_SALES_SUMMARY_MV', 'C'); 
+  DBMS_MVIEW.REFRESH('PR_LAND_SALES_MV', 'C');
+  DBMS_MVIEW.REFRESH('PR_LAND_SUMMARY_MV', 'C');
+end;
+/
+

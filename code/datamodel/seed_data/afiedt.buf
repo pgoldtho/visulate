@@ -1,0 +1,38 @@
+declare
+cursor cur_expenses is
+select ap.payment_due_date
+,      p.address1
+,      pt.payment_type_name
+,      pe.description
+,      ap.amount
+,      s.name
+from rnt_accounts_payable ap
+,    rnt_properties p
+,    rnt_property_expenses pe
+,    rnt_payment_types pt
+,    rnt_suppliers_all s
+where pt.payment_type_id = ap.payment_type_id
+and ap.payment_property_id = p.property_id
+and ap.expense_id = pe.expense_id
+and ap.payment_due_date between '01-JAN-2008' and '31-DEC-2008'
+and s.supplier_id = ap.supplier_id
+order by p.address1, pt.payment_type_name, ap.payment_due_date;
+v_address    rnt_properties.address1%type := 'forceMe2diff';
+v_expense    rnt_payment_types.payment_type_name%type := 'forceMe2diff';
+begin
+for c_rec in cur_expenses loop
+  if c_rec.address1 != v_address then
+     v_address := c_rec.address1;
+     dbms_output.put_line('==============================================');
+     dbms_output.put_line(c_rec.address1);
+  end if;
+  if c_rec.payment_type_name != v_expense then
+     v_expense := c_rec.payment_type_name;
+     dbms_output.put_line('================');
+     dbms_output.put_line(c_rec.payment_type_name);
+     dbms_output.put_line('================');
+  end if;
+     dbms_output.put_line(c_rec.payment_due_date||' '||c_Rec.name||' - '||c_rec.description||' '||c_Rec.amount);
+end loop;
+end;
+/

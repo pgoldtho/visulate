@@ -1,0 +1,5 @@
+load data
+infile zipcode.dat
+into table zipcodes
+(ZIP_CODE,CITY,STATE,COUNTY_NAME)
+fields terminated by ',' optionally enclosed by '"'

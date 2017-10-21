@@ -1,0 +1,37 @@
+Run vol_tables.sql to drop and recreate extract tables.
+run volusia_functions.sql to install the volusia_functions package if necessary.
+Run extract1.sql to populate vol_properties
+
+Export:
+vol_properties
+vol_sqft
+vol_sales
+
+Drop tables in production database:
+
+drop table vol_properties purge;
+drop table vol_sqft purge;
+drop table vol_sales purge;
+
+Import the dump file
+
+@setup_volusia.sql 
+executes:
+ @@volusia1.sql
+ @@volusia2.sql
+ @@volusia3.sql
+ @@volusia4.sql
+ @@volusia4a.sql
+ @@volusia5.sql
+
+Refresh Reporting MV's
+
+begin
+  DBMS_MVIEW.REFRESH('PR_COMMERCIAL_SALES_MV', 'C');
+  DBMS_MVIEW.REFRESH('PR_COMMERCIAL_SUMMARY_MV', 'C'); 
+  DBMS_MVIEW.REFRESH('PR_SALES_MV', 'C'); 
+  DBMS_MVIEW.REFRESH('PR_SALES_SUMMARY_MV', 'C'); 
+  DBMS_MVIEW.REFRESH('PR_LAND_SALES_MV', 'C');
+  DBMS_MVIEW.REFRESH('PR_LAND_SUMMARY_MV', 'C');
+end;
+/

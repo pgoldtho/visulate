@@ -1,0 +1,105 @@
+SQL> @text_hc.sql
+Oracle Text Health Check Tool              08-23-2012 17:05:48                  
+.                                                                               
+**********************************************************************          
+Database:                                                                       
+**********************************************************************          
+--> name:                    VIS11                                              
+--> version:                 11.2.0.3.0                                         
+.                                                                               
+**********************************************************************          
+Database Components:                                                            
+**********************************************************************          
+--> OLAP Catalog                        11.2.0.3.0   VALID                      
+--> Oracle Application Express          3.2.1.00.1   VALID                      
+--> OLAP Analytic Workspace             11.2.0.3.0   VALID                      
+--> Oracle Database Catalog Views       11.2.0.3.0   VALID                      
+--> Oracle Database Java Packages       11.2.0.3.0   VALID                      
+--> Oracle Database Packages and Types  11.2.0.3.0   VALID                      
+--> Oracle Text                         11.2.0.3.0   VALID                      
+--> Oracle Enterprise Manager           11.2.0.3.0   VALID                      
+--> Oracle Expression Filter            11.2.0.3.0   VALID                      
+--> JServer JAVA Virtual Machine        11.2.0.3.0   VALID                      
+--> Oracle Multimedia                   11.2.0.3.0   VALID                      
+--> OWB                                 11.2.0.3.0   VALID                      
+--> Oracle Workspace Manager            11.2.0.3.0   VALID                      
+--> Oracle Rules Manager                11.2.0.3.0   VALID                      
+--> Spatial                             11.2.0.3.0   VALID                      
+--> Oracle XML Database                 11.2.0.3.0   VALID                      
+--> Oracle XDK                          11.2.0.3.0   VALID                      
+--> Oracle OLAP API                     11.2.0.3.0   VALID                      
+.                                                                               
+**********************************************************************          
+Oracle Text Status and Version:                                                 
+**********************************************************************          
+.. CTXSYS data dictionary version (Ver Dict) : 11.2.0.3.0                       
+.. Linked-in code version (Ver Code) : 11.2.0.3.0                               
+.. DRI Version : 11.2.0.3.0                                                     
+.                                                                               
+**********************************************************************          
+Invalid Objects in CTXSYS Schema:                                               
+**********************************************************************          
+There are no invalid objects in the CTXSYS schema                               
+.                                                                               
+**********************************************************************          
+Possible Text-related Objects under the SYS schema:                             
+**********************************************************************          
+There are no Text-related Objects under the SYS schema                          
+.                                                                               
+**********************************************************************          
+Summary count of CTXSYS schema objects:                                         
+**********************************************************************          
+.. FUNCTION           2                                                         
+.. INDEX             63                                                         
+.. INDEXTYPE          4                                                         
+.. LIBRARY            1                                                         
+.. LOB                2                                                         
+.. OPERATOR           6                                                         
+.. PACKAGE           74                                                         
+.. PACKAGE BODY      63                                                         
+.. PROCEDURE          2                                                         
+.. SEQUENCE           3                                                         
+.. TABLE             50                                                         
+.. TYPE              35                                                         
+.. TYPE BODY          6                                                         
+.. VIEW              77                                                         
+.                                                                               
+**********************************************************************          
+Text Indexes:                                                                   
+**********************************************************************          
+.. RNTMGR.PR_OWNER_X1 is VALID                                                  
+.... Table: RNTMGR.PR_OWNERS, Indexed Column: OWNER_NAME                        
+.... Index Type: CTXCAT                                                         
+.. RNTMGR.PR_PROPERTIES_X1 is INVALID                                           
+.... INDEX STATUS => VALID                                                      
+.... DOMAIN INDEX STATUS => VALID                                               
+.... DOMAIN INDEX OPERATION STATUS => FAILED                                    
+.... Table: RNTMGR.PR_PROPERTIES, Indexed Column: ADDRESS1                      
+.... Index Type: CTXCAT                                                         
+.                                                                               
+**********************************************************************          
+Ten (10) most recent text index errors (ctx_index_errors):                      
+**********************************************************************          
+There are no errors logged in CTX_INDEX_ERRORS                                  
+.                                                                               
+**********************************************************************          
+Testing Text Index Creation:                                                    
+**********************************************************************          
+..Creating user TEXT_HEALTHCHECK                                                
+....User TEXT_HEALTHCHECK created successfully                                  
+..Testing creation of Text index type CONTEXT                                   
+....Creating table TEXT_HC_TAB                                                  
+....Inserting test data                                                         
+....Creating text index TEXT_HC_IDX                                             
+....Text index TEXT_HC_IDX created successfully                                 
+                                                                                
+..Dropping user TEXT_HEALTHCHECK                                                
+....User TEXT_HEALTHCHECK dropped successfully                                  
+                                                                                
+Text Index Creation Test complete                                               
+.                                                                               
+**********************************************************************          
+
+PL/SQL procedure successfully completed.
+
+SQL> spool off

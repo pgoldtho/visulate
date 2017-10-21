@@ -1,0 +1,28 @@
+create or replace view RNT_PROPERTY_EXPENSES_V as
+select e.EXPENSE_ID
+,      e.PROPERTY_ID
+,      e.EVENT_DATE
+,      e.DESCRIPTION
+,      e.RECURRING_YN
+,      e.RECURRING_PERIOD
+,      e.RECURRING_ENDDATE
+,      e.UNIT_ID
+,      e.LOAN_ID
+,      rnt_sys_checksum_rec_pkg.get_checksum('EXPENSE_ID='||EXPENSE_ID||'PROPERTY_ID='||e.PROPERTY_ID
+                                            ||'EVENT_DATE='||EVENT_DATE||'DESCRIPTION='||e.DESCRIPTION
+											||'RECURRING_YN='||RECURRING_YN||'RECURRING_PERIOD='||RECURRING_PERIOD
+											||'RECURRING_ENDDATE='||RECURRING_ENDDATE||'UNIT_ID='||e.UNIT_ID
+											||'LOAN_ID='||LOAN_ID) as CHECKSUM
+,      u.UNIT_NAME
+from RNT_PROPERTY_EXPENSES e,
+     RNT_PROPERTY_UNITS u
+where e.UNIT_ID = u.UNIT_ID(+);
+
+create or replace view RNT_LOANS_V as
+select
+   LOAN_ID, PROPERTY_ID, POSITION,
+   LOAN_DATE, LOAN_AMOUNT,
+   TERM, INTEREST_RATE, CREDIT_LINE_YN,
+   ARM_YN, INTEREST_ONLY_YN, BALLOON_DATE, CLOSING_COSTS,
+   SETTLEMENT_DATE, RNT_LOANS_PKG.GET_CHECKSUM(LOAN_ID) as CHECKSUM
+from RNT_LOANS;

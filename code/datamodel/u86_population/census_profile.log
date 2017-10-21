@@ -1,0 +1,147 @@
+
+SQL*Loader: Release 11.2.0.3.0 - Production on Sat Dec 28 13:00:16 2013
+
+Copyright (c) 1982, 2011, Oracle and/or its affiliates.  All rights reserved.
+
+Control File:   census_profile.ldr
+Data File:      flgeo2010.dp
+  Bad File:     flgeo2010.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+
+Number to load: ALL
+Number to skip: 0
+Errors allowed: 50
+Bind array:     64 rows, maximum of 256000 bytes
+Continuation:    none specified
+Path used:      Conventional
+
+Table CENSUS2010PROFILE, loaded from every logical record.
+Insert option in effect for this table: TRUNCATE
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+FILEID                                1:6     6           CHARACTER            
+STUSAB                                7:8     2           CHARACTER            
+SUMLEV                               9:11     3           CHARACTER            
+GEOCOMP                             12:13     2           CHARACTER            
+CHARITER                            14:16     3           CHARACTER            
+CIFSN                               17:18     2           CHARACTER            
+LOGRECNO                            19:25     7           CHARACTER            
+REGION                              26:26     1           CHARACTER            
+DIVSION                             27:27     1           CHARACTER            
+STATE                               28:29     2           CHARACTER            
+COUNTY                              30:32     3           CHARACTER            
+COUNTYCC                            33:34     2           CHARACTER            
+COUNTYSC                            35:36     2           CHARACTER            
+COUSUB                              37:41     5           CHARACTER            
+COUSUBCC                            42:43     2           CHARACTER            
+COUSUBSC                            44:45     2           CHARACTER            
+PLACE                               46:50     5           CHARACTER            
+PLACECC                             51:52     2           CHARACTER            
+PLACESC                             53:54     2           CHARACTER            
+TRACT                               55:60     6           CHARACTER            
+BLKGRP                              61:61     1           CHARACTER            
+BLOCK                               62:65     4           CHARACTER            
+IUC                                 66:67     2           CHARACTER            
+CONCIT                              68:72     5           CHARACTER            
+CONCITCC                            73:74     2           CHARACTER            
+CONCITSC                            75:76     2           CHARACTER            
+AIANHH                              77:80     4           CHARACTER            
+AIANHHFP                            81:85     5           CHARACTER            
+AIANHHCC                            86:87     2           CHARACTER            
+AIHHTLI                             88:88     1           CHARACTER            
+AITSCE                              89:91     3           CHARACTER            
+AITS                                92:96     5           CHARACTER            
+AITSCC                              97:98     2           CHARACTER            
+TTRACT                             99:104     6           CHARACTER            
+TBLKGRP                           105:105     1           CHARACTER            
+ANRC                              106:110     5           CHARACTER            
+ANRCCC                            111:112     2           CHARACTER            
+CBSA                              113:117     5           CHARACTER            
+CBSASC                            118:119     2           CHARACTER            
+METDIV                            120:124     5           CHARACTER            
+CSA                               125:127     3           CHARACTER            
+NECTA                             128:132     5           CHARACTER            
+NECTASC                           133:134     2           CHARACTER            
+NECTADIV                          135:139     5           CHARACTER            
+CNECTA                            140:142     3           CHARACTER            
+CBSAPCI                           143:143     1           CHARACTER            
+NECTAPCI                          144:144     1           CHARACTER            
+UA                                145:149     5           CHARACTER            
+UASC                              150:151     2           CHARACTER            
+UATYPE                            152:152     1           CHARACTER            
+UR                                153:153     1           CHARACTER            
+CD                                154:155     2           CHARACTER            
+SLDU                              156:158     3           CHARACTER            
+SLDL                              159:161     3           CHARACTER            
+VTD                               162:167     6           CHARACTER            
+VTDI                              168:168     1           CHARACTER            
+RESERVE2                          169:171     3           CHARACTER            
+ZCTA5                             172:176     5           CHARACTER            
+SUBMCD                            177:181     5           CHARACTER            
+SUBMCDCC                          182:183     2           CHARACTER            
+SDELM                             184:188     5           CHARACTER            
+SDSEC                             189:193     5           CHARACTER            
+SDUNI                             194:198     5           CHARACTER            
+AREALAND                          199:212    14           CHARACTER            
+AREAWATR                          213:226    14           CHARACTER            
+NAME                              227:316    90           CHARACTER            
+FUNCSTAT                          317:317     1           CHARACTER            
+GCUNI                             318:318     1           CHARACTER            
+POP100                            319:327     9           CHARACTER            
+HU100                             328:336     9           CHARACTER            
+INTPTLAT                          337:347    11           CHARACTER            
+INTPTLON                          348:359    12           CHARACTER            
+LSADC                             360:361     2           CHARACTER            
+PARTFLAG                          362:362     1           CHARACTER            
+RESERVE3                          363:368     6           CHARACTER            
+UGA                               369:373     5           CHARACTER            
+STATENS                           374:381     8           CHARACTER            
+COUNTYNS                          382:389     8           CHARACTER            
+COUSUBNS                          390:397     8           CHARACTER            
+PLACENS                           398:405     8           CHARACTER            
+CONCITNS                          406:413     8           CHARACTER            
+AIANHHNS                          414:421     8           CHARACTER            
+AITSNS                            422:429     8           CHARACTER            
+ANRCNS                            430:437     8           CHARACTER            
+SUBMCDNS                          438:445     8           CHARACTER            
+CD113                             446:447     2           CHARACTER            
+CD114                             448:449     2           CHARACTER            
+CD115                             450:451     2           CHARACTER            
+SLDU2                             452:454     3           CHARACTER            
+SLDU3                             455:457     3           CHARACTER            
+SLDU4                             458:460     3           CHARACTER            
+SLDL2                             461:463     3           CHARACTER            
+SLDL3                             464:466     3           CHARACTER            
+SLDL4                             467:469     3           CHARACTER            
+AIANHHSC                          470:471     2           CHARACTER            
+CSASC                             472:473     2           CHARACTER            
+CNECTASC                          474:475     2           CHARACTER            
+MEMI                              476:476     1           CHARACTER            
+NMEMI                             477:477     1           CHARACTER            
+PUMA                              478:482     5           CHARACTER            
+RESERVED                          483:501    19           CHARACTER            
+
+
+Table CENSUS2010PROFILE:
+  1227 Rows successfully loaded.
+  0 Rows not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Space allocated for bind array:                  48384 bytes(64 rows)
+Read   buffer bytes: 1048576
+
+Total logical records skipped:          0
+Total logical records read:          1227
+Total logical records rejected:         0
+Total logical records discarded:        0
+
+Run began on Sat Dec 28 13:00:16 2013
+Run ended on Sat Dec 28 13:00:17 2013
+
+Elapsed time was:     00:00:01.33
+CPU time was:         00:00:00.17

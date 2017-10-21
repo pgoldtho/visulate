@@ -1,0 +1,3006 @@
+SQL> @@schema.sql
+SQL> create user rntmgr identified by rntmgr
+default tablespace users
+temporary tablespace temp
+User created.
+SQL> alter user rntmgr quota unlimited on users
+User altered.
+SQL> grant create session to rntmgr
+Grant complete.
+SQL> grant create table to rntmgr
+Grant complete.
+SQL> grant create procedure to rntmgr
+Grant complete.
+SQL> grant create sequence to rntmgr
+Grant complete.
+SQL> grant create view to rntmgr
+Grant complete.
+SQL> conn rntmgr/rntmgr
+Connected as RNTMGR@XE 
+SQL> @@tables.sql
+SQL> --
+SQL> -- Create Schema Script 
+SQL> --   Database Version   : 10.2.0.1.0 
+SQL> --   TOAD Version       : 9.0.0.160 
+SQL> --   DB Connect String  : XE 
+SQL> --   Schema             : RNTMGR 
+SQL> --   Script Created by  : RNTMGR 
+SQL> --   Script Created at  : 09.04.2007 22:58:37 
+SQL> --   Physical Location  :  
+SQL> --   Notes              :  
+SQL> --
+SQL> -- Object Counts: 
+SQL> --   Indexes: 32        Columns: 51         
+SQL> --   Tables: 18         Columns: 143        Constraints: 54     
+SQL> --
+SQL> -- RNT_BUSINESS_UNITS  (Table) 
+SQL> --
+SQL> CREATE TABLE RNT_BUSINESS_UNITS
+(
+  BUSINESS_ID    NUMBER                         NOT NULL,
+  NOTM           NUMBER                         DEFAULT 1                     NOT NULL,
+  BUSINESS_NAME  VARCHAR2(60 BYTE)              NOT NULL
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING
+Table created.
+SQL> COMMENT ON TABLE RNT_BUSINESS_UNITS IS 'Business units separate properties by ownership or usage.  Property managers who manage properties for more than one person can use business units to separate their properties by owner.    Single owner users may want to divide their properties into different classifications e.g. commercial and residential'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_BUSINESS_UNITS.BUSINESS_ID IS 'System generated primary key'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_BUSINESS_UNITS.BUSINESS_NAME IS 'A unique name for the business unit'
+Comment created.
+SQL> --
+SQL> -- RNT_LOOKUPS  (Table) 
+SQL> --
+SQL> CREATE TABLE RNT_LOOKUPS
+(
+  TABLE_NAME   VARCHAR2(32 BYTE)                NOT NULL,
+  COLUMN_NAME  VARCHAR2(32 BYTE)                NOT NULL,
+  VALID_VALUE  VARCHAR2(80 BYTE)                NOT NULL,
+  MEANING      VARCHAR2(80 BYTE)
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING
+Table created.
+SQL> COMMENT ON TABLE RNT_LOOKUPS IS 'Records valid values for drop down lists.  Used to generate check constraints and html code'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_LOOKUPS.TABLE_NAME IS 'The name of a database table'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_LOOKUPS.COLUMN_NAME IS 'The name of a column in that table'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_LOOKUPS.VALID_VALUE IS 'An allowable value for this column'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_LOOKUPS.MEANING IS 'A display value that corresponds to this value'
+Comment created.
+SQL> --
+SQL> -- RNT_LOOKUP_TYPES  (Table) 
+SQL> --
+SQL> CREATE TABLE RNT_LOOKUP_TYPES
+(
+  LOOKUP_TYPE_ID           NUMBER               NOT NULL,
+  LOOKUP_TYPE_CODE         VARCHAR2(30 BYTE)    NOT NULL,
+  LOOKUP_TYPE_DESCRIPTION  VARCHAR2(80 BYTE)    NOT NULL
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING
+Table created.
+SQL> --
+SQL> -- RNT_LOOKUP_VALUES  (Table) 
+SQL> --
+SQL> CREATE TABLE RNT_LOOKUP_VALUES
+(
+  LOOKUP_VALUE_ID  NUMBER                       NOT NULL,
+  LOOKUP_CODE      VARCHAR2(80 BYTE)            NOT NULL,
+  LOOKUP_VALUE     VARCHAR2(80 BYTE),
+  LOOKUP_TYPE_ID   NUMBER                       NOT NULL
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING
+Table created.
+SQL> --
+SQL> -- RNT_PAYMENT_TYPES  (Table) 
+SQL> --
+SQL> CREATE TABLE RNT_PAYMENT_TYPES
+(
+  PAYMENT_TYPE_ID    NUMBER                     NOT NULL,
+  NOTM               NUMBER                     DEFAULT 1                     NOT NULL,
+  PAYMENT_TYPE_NAME  VARCHAR2(30 BYTE)          NOT NULL,
+  DEPRECIATION_TERM  NUMBER,
+  DESCRIPTION        VARCHAR2(4000 BYTE)
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING
+Table created.
+SQL> COMMENT ON TABLE RNT_PAYMENT_TYPES IS 'Classification table for payments.  Payments must be classified for tax purposes.  This classification affects the period over which a payment can be depreciated.  This allows the cost of a capital improvement to be recognized over the life of the improvement.  For example, the cost of adding a new roof to a building might be depreciated over 10 years.'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PAYMENT_TYPES.PAYMENT_TYPE_ID IS 'System generated PK'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PAYMENT_TYPES.NOTM IS 'update counter'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PAYMENT_TYPES.PAYMENT_TYPE_NAME IS 'Payment classifier'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PAYMENT_TYPES.DEPRECIATION_TERM IS 'Tax depreciation term in years for payments of this type'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PAYMENT_TYPES.DESCRIPTION IS 'Short description'
+Comment created.
+SQL> --
+SQL> -- RNT_PROPERTIES  (Table) 
+SQL> --
+SQL> CREATE TABLE RNT_PROPERTIES
+(
+  PROPERTY_ID        NUMBER                     NOT NULL,
+  BUSINESS_ID        NUMBER                     NOT NULL,
+  UNITS              NUMBER                     DEFAULT 1                     NOT NULL,
+  ADDRESS1           VARCHAR2(60 BYTE)          NOT NULL,
+  ADDRESS2           VARCHAR2(60 BYTE),
+  CITY               VARCHAR2(60 BYTE)          NOT NULL,
+  STATE              VARCHAR2(2 BYTE)           NOT NULL,
+  ZIPCODE            NUMBER                     NOT NULL,
+  DATE_PURCHASED     DATE                       NOT NULL,
+  PURCHASE_PRICE     NUMBER                     NOT NULL,
+  LAND_VALUE         NUMBER                     NOT NULL,
+  DEPRECIATION_TERM  NUMBER                     DEFAULT 27.5                  NOT NULL,
+  YEAR_BUILT         NUMBER,
+  BUILDING_SIZE      NUMBER,
+  LOT_SIZE           NUMBER,
+  DATE_SOLD          DATE,
+  SALE_AMOUNT        NUMBER,
+  NOTE_YN            VARCHAR2(1 BYTE)
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING
+Table created.
+SQL> COMMENT ON TABLE RNT_PROPERTIES IS 'Record details of buildings that are managed in the system.  Residential properties may contain multiple rentable units'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTIES.PROPERTY_ID IS 'System generated PK'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTIES.BUSINESS_ID IS 'Foreign key to RNT_BUSINESS_UNITS'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTIES.UNITS IS '!may be deleted - we calculate count. A count of the total number of rentable units in the property'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTIES.ADDRESS1 IS 'Address line 1'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTIES.ADDRESS2 IS 'Address line 2'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTIES.DATE_PURCHASED IS 'Date that the property was purchased'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTIES.PURCHASE_PRICE IS 'Price paid'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTIES.LAND_VALUE IS 'Land value at time of purchase'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTIES.DEPRECIATION_TERM IS 'Depreciation term in years, typically 27.5 for residential properties and 39 years for commercial'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTIES.YEAR_BUILT IS 'The year that the property was constructed'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTIES.BUILDING_SIZE IS 'Total conditioned space in square feet'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTIES.LOT_SIZE IS 'in acres e.g. 0.25, 0.125 etc'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTIES.DATE_SOLD IS 'The date this property was sold to another party'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTIES.SALE_AMOUNT IS 'The amount it sold for'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTIES.NOTE_YN IS 'Is there a loan associcate with this sale?'
+Comment created.
+SQL> --
+SQL> -- RNT_PROPERTY_UNITS  (Table) 
+SQL> --
+SQL> CREATE TABLE RNT_PROPERTY_UNITS
+(
+  UNIT_ID      NUMBER                           NOT NULL,
+  PROPERTY_ID  NUMBER                           NOT NULL,
+  UNIT_NAME    VARCHAR2(32 BYTE)                DEFAULT 'Unit 1'              NOT NULL,
+  UNIT_SIZE    NUMBER,
+  BEDROOMS     NUMBER,
+  BATHROOMS    NUMBER
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING
+Table created.
+SQL> COMMENT ON TABLE RNT_PROPERTY_UNITS IS 'A rentable unit in a building'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTY_UNITS.UNIT_ID IS 'System generated PK'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTY_UNITS.PROPERTY_ID IS 'The property that this unit exists in'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTY_UNITS.UNIT_NAME IS 'Name of the unit e.g. Unit 1'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTY_UNITS.UNIT_SIZE IS 'Living space in square feet'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTY_UNITS.BEDROOMS IS 'Total of the number of bedrooms in the unit'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTY_UNITS.BATHROOMS IS 'Number of bathrooms'
+Comment created.
+SQL> --
+SQL> -- RNT_PROPERTY_VALUE  (Table) 
+SQL> --
+SQL> CREATE TABLE RNT_PROPERTY_VALUE
+(
+  VALUE_ID      NUMBER(8)                       NOT NULL,
+  NOTM          NUMBER                          DEFAULT 1                     NOT NULL,
+  PROPERTY_ID   NUMBER                          NOT NULL,
+  VALUE_DATE    DATE                            NOT NULL,
+  VALUE_METHOD  VARCHAR2(30 BYTE)               NOT NULL,
+  VALUE         NUMBER                          NOT NULL,
+  CAP_RATE      NUMBER
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING
+Table created.
+SQL> COMMENT ON TABLE RNT_PROPERTY_VALUE IS 'Records the value of a property over time.  Values may be calculated, estimated or actual.  An actual value reflects the price that a property sold for on a given date.  Estimates are produced by evaluating the sale price of similar comparable properties often reffered to as "Comps".  Values can be calculated by  dividing the net operating income by a percentage value known as the capitialization or "CAP" rate.'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTY_VALUE.VALUE_ID IS 'System generated PK'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTY_VALUE.NOTM IS 'update counter'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTY_VALUE.PROPERTY_ID IS 'FK to RNT_PROPERTIES'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTY_VALUE.VALUE_DATE IS 'Date of the valuation'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTY_VALUE.VALUE_METHOD IS 'Method used to evaluate the property value.  Valid values are Sale, Estimate, Cap Rate'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTY_VALUE.VALUE IS 'Estimated value'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTY_VALUE.CAP_RATE IS 'The  cap rate used to calculate the value'
+Comment created.
+SQL> --
+SQL> -- RNT_SUPPLIERS  (Table) 
+SQL> --
+SQL> CREATE TABLE RNT_SUPPLIERS
+(
+  SUPPLIER_ID    NUMBER                         NOT NULL,
+  NOTM           NUMBER                         DEFAULT 1                     NOT NULL,
+  NAME           VARCHAR2(60 BYTE)              NOT NULL,
+  PHONE1         VARCHAR2(30 BYTE)              NOT NULL,
+  PHONE2         VARCHAR2(30 BYTE),
+  ADDRESS1       VARCHAR2(60 BYTE),
+  ADDRESS2       VARCHAR2(60 BYTE),
+  CITY           VARCHAR2(30 BYTE),
+  STATE          VARCHAR2(2 BYTE),
+  ZIPCODE        NUMBER,
+  SSN            VARCHAR2(11 BYTE),
+  EMAIL_ADDRESS  VARCHAR2(100 BYTE),
+  COMMENTS       VARCHAR2(4000 BYTE)
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING
+Table created.
+SQL> COMMENT ON TABLE RNT_SUPPLIERS IS 'RNT_SUPPLIERS records details of contractors, and service suppliers.  '
+Comment created.
+SQL> COMMENT ON COLUMN RNT_SUPPLIERS.SUPPLIER_ID IS 'System generated PK'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_SUPPLIERS.NOTM IS 'update counter'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_SUPPLIERS.NAME IS 'Contractor Name'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_SUPPLIERS.PHONE1 IS 'Primary phone number'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_SUPPLIERS.PHONE2 IS 'Alternate phone number'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_SUPPLIERS.ADDRESS1 IS 'Address line 1'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_SUPPLIERS.ADDRESS2 IS 'Address line 2'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_SUPPLIERS.CITY IS 'City'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_SUPPLIERS.STATE IS 'State'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_SUPPLIERS.ZIPCODE IS 'Zipcode'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_SUPPLIERS.SSN IS 'SSN for non incorporated contractor'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_SUPPLIERS.EMAIL_ADDRESS IS 'email address'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_SUPPLIERS.COMMENTS IS 'Notes and comments'
+Comment created.
+SQL> --
+SQL> -- RNT_TENANCY_AGREEMENT  (Table) 
+SQL> --
+SQL> CREATE TABLE RNT_TENANCY_AGREEMENT
+(
+  AGREEMENT_ID     NUMBER                       NOT NULL,
+  UNIT_ID          NUMBER                       NOT NULL,
+  AGREEMENT_DATE   DATE                         NOT NULL,
+  TERM             NUMBER                       NOT NULL,
+  AMOUNT           NUMBER                       NOT NULL,
+  AMOUNT_PERIOD    VARCHAR2(30 BYTE)            NOT NULL,
+  EFFECTIVE_DATE   DATE                         NOT NULL,
+  DEPOSIT          NUMBER,
+  LAST_MONTH       NUMBER,
+  DISCOUNT_AMOUNT  NUMBER,
+  DISCOUNT_TYPE    VARCHAR2(30 BYTE),
+  DISCOUNT_PERIOD  NUMBER
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING
+Table created.
+SQL> COMMENT ON TABLE RNT_TENANCY_AGREEMENT IS 'An agreement between two or more parties to rent a building or a unit in a building.  Agreements are typically fixed length 12 month agreements or month to month.  A  discount may be applied for prompt payment.  Alternatively, a late fee could be charged if a payment id overdue.  The discount amount column records the value of this charge and the discount type identifies the type Fee or Discount'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_TENANCY_AGREEMENT.AGREEMENT_ID IS 'System generated PK'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_TENANCY_AGREEMENT.UNIT_ID IS 'fk to identify unit rented'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_TENANCY_AGREEMENT.AGREEMENT_DATE IS 'Date that the agreement was signed '
+Comment created.
+SQL> COMMENT ON COLUMN RNT_TENANCY_AGREEMENT.TERM IS 'Duration of the agreement in months'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_TENANCY_AGREEMENT.AMOUNT IS 'Rent amount'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_TENANCY_AGREEMENT.AMOUNT_PERIOD IS 'period that rent is due '
+Comment created.
+SQL> COMMENT ON COLUMN RNT_TENANCY_AGREEMENT.DEPOSIT IS 'The required deposit amount'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_TENANCY_AGREEMENT.LAST_MONTH IS 'Requied last month amount'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_TENANCY_AGREEMENT.DISCOUNT_AMOUNT IS 'Prompt payment discount or late fee amount'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_TENANCY_AGREEMENT.DISCOUNT_TYPE IS 'Discount or late fee'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_TENANCY_AGREEMENT.DISCOUNT_PERIOD IS 'Number of days before adjustement is applied'
+Comment created.
+SQL> --
+SQL> -- RNT_TENANT  (Table) 
+SQL> --
+SQL> CREATE TABLE RNT_TENANT
+(
+  TENANT_ID           NUMBER                    NOT NULL,
+  FIRST_NAME          VARCHAR2(30 BYTE)         NOT NULL,
+  LAST_NAME           VARCHAR2(30 BYTE)         NOT NULL,
+  UNIT_APPLIED_FOR    NUMBER                    NOT NULL,
+  AGREEMENT_ID        NUMBER,
+  STATUS              VARCHAR2(30 BYTE)         NOT NULL,
+  DEPOSIT_BALANCE     NUMBER                    NOT NULL,
+  LAST_MONTH_BALANCE  NUMBER                    NOT NULL,
+  PHONE1              VARCHAR2(16 BYTE),
+  PHONE2              VARCHAR2(16 BYTE),
+  EMAIL_ADDRESS       VARCHAR2(100 BYTE),
+  SSN                 VARCHAR2(11 BYTE),
+  DRIVERS_LICENSE     VARCHAR2(100 BYTE)
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING
+Table created.
+SQL> COMMENT ON TABLE RNT_TENANT IS 'Records details of current and past tenants plus applications received'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_TENANT.TENANT_ID IS 'System generated pk'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_TENANT.FIRST_NAME IS 'First of given name'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_TENANT.LAST_NAME IS 'Surname'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_TENANT.UNIT_APPLIED_FOR IS 'FK to unit applied for'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_TENANT.AGREEMENT_ID IS 'FK to rental agreement'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_TENANT.STATUS IS 'E.g. active, former'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_TENANT.DEPOSIT_BALANCE IS 'Total current deposit balance'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_TENANT.LAST_MONTH_BALANCE IS 'Total of last month balance'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_TENANT.PHONE1 IS 'Primary phone number'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_TENANT.PHONE2 IS 'Secondary phone number'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_TENANT.EMAIL_ADDRESS IS 'Email address'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_TENANT.SSN IS 'SSN '
+Comment created.
+SQL> COMMENT ON COLUMN RNT_TENANT.DRIVERS_LICENSE IS 'DL number'
+Comment created.
+SQL> --
+SQL> -- RNT_TENANT_UK1  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_TENANT_UK1 ON RNT_TENANT
+(FIRST_NAME, LAST_NAME)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_TENANT_PK  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_TENANT_PK ON RNT_TENANT
+(TENANT_ID)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_TENANCY_AGREEMENT_UK1  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_TENANCY_AGREEMENT_UK1 ON RNT_TENANCY_AGREEMENT
+(UNIT_ID, AGREEMENT_DATE)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_TENANCY_AGREEMENT_PK  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_TENANCY_AGREEMENT_PK ON RNT_TENANCY_AGREEMENT
+(AGREEMENT_ID)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_CONTRACTORS_UK1  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_CONTRACTORS_UK1 ON RNT_SUPPLIERS
+(NAME)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_CONTRACTORS_PK  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_CONTRACTORS_PK ON RNT_SUPPLIERS
+(SUPPLIER_ID)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_PROPERTY_VALUE_UK1  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_PROPERTY_VALUE_UK1 ON RNT_PROPERTY_VALUE
+(PROPERTY_ID, VALUE_DATE, VALUE_METHOD)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_PROPERTY_VALUE_PK  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_PROPERTY_VALUE_PK ON RNT_PROPERTY_VALUE
+(VALUE_ID)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_PROPERTY_UNITS_UK1  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_PROPERTY_UNITS_UK1 ON RNT_PROPERTY_UNITS
+(PROPERTY_ID, UNIT_NAME)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_PROPERTY_UNITS_PK  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_PROPERTY_UNITS_PK ON RNT_PROPERTY_UNITS
+(UNIT_ID)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_PROPERTIES_UK1  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_PROPERTIES_UK1 ON RNT_PROPERTIES
+(ADDRESS1, ADDRESS2, CITY, STATE, ZIPCODE)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_PROPERTIES_PK  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_PROPERTIES_PK ON RNT_PROPERTIES
+(PROPERTY_ID)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_PAYMENT_TYPES_UK1  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_PAYMENT_TYPES_UK1 ON RNT_PAYMENT_TYPES
+(PAYMENT_TYPE_NAME)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_PAYMENT_TYPES_PK  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_PAYMENT_TYPES_PK ON RNT_PAYMENT_TYPES
+(PAYMENT_TYPE_ID)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_LOOKUP_VALUES_U1  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_LOOKUP_VALUES_U1 ON RNT_LOOKUP_VALUES
+(LOOKUP_TYPE_ID, LOOKUP_CODE)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_LOOKUP_VALUES_PK  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_LOOKUP_VALUES_PK ON RNT_LOOKUP_VALUES
+(LOOKUP_VALUE_ID)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_LOOKUP_TYPES_U1  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_LOOKUP_TYPES_U1 ON RNT_LOOKUP_TYPES
+(LOOKUP_TYPE_CODE)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_LOOKUP_TYPES_PK  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_LOOKUP_TYPES_PK ON RNT_LOOKUP_TYPES
+(LOOKUP_TYPE_ID)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_LOOKUPS_PK  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_LOOKUPS_PK ON RNT_LOOKUPS
+(TABLE_NAME, COLUMN_NAME, VALID_VALUE)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_BUSINESS_UNITS_UK1  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_BUSINESS_UNITS_UK1 ON RNT_BUSINESS_UNITS
+(BUSINESS_NAME)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_BUSINESS_UNITS_PK  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_BUSINESS_UNITS_PK ON RNT_BUSINESS_UNITS
+(BUSINESS_ID)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_AGREEMENT_ACTIONS  (Table) 
+SQL> --
+SQL> CREATE TABLE RNT_AGREEMENT_ACTIONS
+(
+  ACTION_ID     NUMBER                          NOT NULL,
+  NOTM          NUMBER                          DEFAULT 1                     NOT NULL,
+  AGREEMENT_ID  NUMBER                          NOT NULL,
+  ACTION_DATE   DATE                            NOT NULL,
+  ACTION_TYPE   VARCHAR2(30 BYTE)               NOT NULL,
+  COMMENTS      VARCHAR2(4000 BYTE)
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING
+Table created.
+SQL> COMMENT ON TABLE RNT_AGREEMENT_ACTIONS IS 'Evictions and court orders associated with a tenancy agreement'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_AGREEMENT_ACTIONS.ACTION_ID IS 'System generated PK'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_AGREEMENT_ACTIONS.NOTM IS 'update counter'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_AGREEMENT_ACTIONS.AGREEMENT_ID IS 'FK to RNT_TENANCY_AGREEMENT'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_AGREEMENT_ACTIONS.ACTION_DATE IS 'Date that action was performed'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_AGREEMENT_ACTIONS.ACTION_TYPE IS 'Action Classification'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_AGREEMENT_ACTIONS.COMMENTS IS 'Short description'
+Comment created.
+SQL> --
+SQL> -- RNT_LOANS  (Table) 
+SQL> --
+SQL> CREATE TABLE RNT_LOANS
+(
+  LOAN_ID             NUMBER                    NOT NULL,
+  PROPERTY_ID         NUMBER                    NOT NULL,
+  POSITION            NUMBER                    NOT NULL,
+  LOAN_DATE           DATE                      NOT NULL,
+  LOAN_AMOUNT         NUMBER                    NOT NULL,
+  TERM                NUMBER                    NOT NULL,
+  INTEREST_RATE       NUMBER                    NOT NULL,
+  CREDIT_LINE_YN      VARCHAR2(1 BYTE)          NOT NULL,
+  ARM_YN              VARCHAR2(1 BYTE)          NOT NULL,
+  BALLOON_DATE        DATE,
+  AMORTIZATION_START  DATE,
+  SETTLEMENT_DATE     DATE
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING
+Table created.
+SQL> COMMENT ON TABLE RNT_LOANS IS 'Properties are typically purchased using using loans which are secured against the property.  Credit lines may be extended against properties which are already owned to release equity for other purchases.    Loans can be adjustable rate (ARM) or fixed rate mortgages.  Balloon mortgages are loans where the balance of the loan becomes due before the the end of the term.  '
+Comment created.
+SQL> COMMENT ON COLUMN RNT_LOANS.LOAN_ID IS 'System generate PK'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_LOANS.PROPERTY_ID IS 'The property that this loan was secured against'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_LOANS.POSITION IS 'Is this the 1st, 2nd or 3rd loan secured against this property'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_LOANS.LOAN_DATE IS 'Date that the loan was made'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_LOANS.LOAN_AMOUNT IS 'Amount borrowed'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_LOANS.TERM IS 'The time in years that the loan must be repaid'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_LOANS.INTEREST_RATE IS 'The current interest rate for the loan'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_LOANS.CREDIT_LINE_YN IS 'Is this loan a line of credit?'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_LOANS.ARM_YN IS 'Is the interest rate adjustable?'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_LOANS.BALLOON_DATE IS 'The date that the full amount of this loan becomes due for a balloon mortgage'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_LOANS.AMORTIZATION_START IS 'The data that amortization of this loan will begin'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_LOANS.SETTLEMENT_DATE IS 'The date that this loan was settled'
+Comment created.
+SQL> --
+SQL> -- RNT_PAYMENTS  (Table) 
+SQL> --
+SQL> CREATE TABLE RNT_PAYMENTS
+(
+  PAYMENT_ID        NUMBER                      NOT NULL,
+  PAYMENT_DATE      DATE                        NOT NULL,
+  DESCRIPTION       VARCHAR2(256 BYTE)          NOT NULL,
+  PAID_OR_RECEIVED  VARCHAR2(16 BYTE)           DEFAULT 'PAID'                NOT NULL,
+  AMOUNT            NUMBER                      NOT NULL,
+  TENANT_ID         NUMBER
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING
+Table created.
+SQL> COMMENT ON TABLE RNT_PAYMENTS IS 'Records details of payments made or received for allocation to an account.  This allows a single payment to be divided into multiple accounts.  It also provides a holding area for payments that cannot be allocated immediately.  Examples:  Contractor presents a single invoice for work performed on multiple properties.   Tenant makes a rent payment into the bank without identifying the property that it applies to.   Home Depot or Lowes Receipt lists supplies for multiple properties.  Unused supplies are return to a store for a credit refund  Transfer payments can be made to remove funds from the last month or deposit balance for a tenant. '
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PAYMENTS.PAYMENT_ID IS 'System generated primary key'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PAYMENTS.PAYMENT_DATE IS 'The date this payment was made or received'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PAYMENTS.DESCRIPTION IS 'e.g. Home Depot receipt, Bank Payment'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PAYMENTS.PAID_OR_RECEIVED IS 'Does this payment releate to a payment made or an amount received?'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PAYMENTS.AMOUNT IS 'The value of the payment'
+Comment created.
+SQL> --
+SQL> -- RNT_PROPERTY_EXPENSES  (Table) 
+SQL> --
+SQL> CREATE TABLE RNT_PROPERTY_EXPENSES
+(
+  EXPENSE_ID         NUMBER                     NOT NULL,
+  NOTM               NUMBER                     DEFAULT 1                     NOT NULL,
+  PROPERTY_ID        NUMBER                     NOT NULL,
+  EVENT_DATE         DATE                       NOT NULL,
+  DESCRIPTION        VARCHAR2(4000 BYTE)        NOT NULL,
+  RECURRING_YN       VARCHAR2(1 BYTE)           DEFAULT 'N'                   NOT NULL,
+  RECURRING_PERIOD   VARCHAR2(20 BYTE)          DEFAULT 'N/A',
+  RECURRING_ENDDATE  DATE,
+  UNIT_ID            NUMBER
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING
+Table created.
+SQL> COMMENT ON TABLE RNT_PROPERTY_EXPENSES IS 'Records details of property event occurrences.  These could include repairs and maintenance, scheduled services like lawn care or pest control.  All actions that result in a property expense should have an entry in this table.  Some expenses are recurring.  They reoccur on a regular bases.  Examples could include lawn care or pest control '
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTY_EXPENSES.EXPENSE_ID IS 'System generated PK'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTY_EXPENSES.NOTM IS 'Update counter'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTY_EXPENSES.PROPERTY_ID IS 'FK to RNT_PROPERTIES'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTY_EXPENSES.EVENT_DATE IS 'Date that event occurred'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTY_EXPENSES.DESCRIPTION IS 'Event description'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTY_EXPENSES.RECURRING_YN IS 'Is this a recurring expense?'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTY_EXPENSES.RECURRING_PERIOD IS 'Time to next ocurrence of this event.  System uses this to generate next payment in Accounts Payable'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTY_EXPENSES.RECURRING_ENDDATE IS 'The final date for a recurring event'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PROPERTY_EXPENSES.UNIT_ID IS 'FK to Unit for multi unit properties'
+Comment created.
+SQL> --
+SQL> -- RNT_PROPERTY_HISTORY_UK1  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_PROPERTY_HISTORY_UK1 ON RNT_PROPERTY_EXPENSES
+(PROPERTY_ID, EVENT_DATE, UNIT_ID, DESCRIPTION)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_PROPERTY_EXPENSES_PK  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_PROPERTY_EXPENSES_PK ON RNT_PROPERTY_EXPENSES
+(EXPENSE_ID)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_PAYMENTS_UK1  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_PAYMENTS_UK1 ON RNT_PAYMENTS
+(PAYMENT_DATE, DESCRIPTION)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_PAYMENTS_PK  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_PAYMENTS_PK ON RNT_PAYMENTS
+(PAYMENT_ID)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_LOANS_UK2  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_LOANS_UK2 ON RNT_LOANS
+(PROPERTY_ID, POSITION)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_LOANS_PK  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_LOANS_PK ON RNT_LOANS
+(LOAN_ID)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_AGREEMENT_ACTIONS_UK1  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_AGREEMENT_ACTIONS_UK1 ON RNT_AGREEMENT_ACTIONS
+(AGREEMENT_ID, ACTION_DATE, ACTION_TYPE)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_AGREEMENT_ACTIONS_PK  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_AGREEMENT_ACTIONS_PK ON RNT_AGREEMENT_ACTIONS
+(ACTION_ID)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_ACCOUNTS_PAYABLE  (Table) 
+SQL> --
+SQL> CREATE TABLE RNT_ACCOUNTS_PAYABLE
+(
+  AP_ID             NUMBER                      NOT NULL,
+  NOTM              NUMBER                      DEFAULT 1                     NOT NULL,
+  PAYMENT_DUE_DATE  DATE                        NOT NULL,
+  AMOUNT            NUMBER                      NOT NULL,
+  PAYMENT_TYPE_ID   NUMBER                      NOT NULL,
+  EXPENSE_ID        NUMBER                      NOT NULL,
+  LOAN_ID           NUMBER,
+  SUPPLIER_ID       NUMBER
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING
+Table created.
+SQL> COMMENT ON TABLE RNT_ACCOUNTS_PAYABLE IS 'Amounts owed by us for goods or services.  Each payment must be classified by payment type and associated with a property expense.'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_ACCOUNTS_PAYABLE.AP_ID IS 'System generated PK'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_ACCOUNTS_PAYABLE.NOTM IS 'Record update counter'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_ACCOUNTS_PAYABLE.PAYMENT_DUE_DATE IS 'The date that a payment is due'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_ACCOUNTS_PAYABLE.AMOUNT IS 'Amount due'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_ACCOUNTS_PAYABLE.PAYMENT_TYPE_ID IS 'Foreign key to RNT_PAYMENT_TYPES'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_ACCOUNTS_PAYABLE.EXPENSE_ID IS 'Foreign key to RNT_PROPERTY_EXPENSES'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_ACCOUNTS_PAYABLE.LOAN_ID IS 'FK to RNT_LOANS'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_ACCOUNTS_PAYABLE.SUPPLIER_ID IS 'Foreign key to RNT_SUPPLIERS'
+Comment created.
+SQL> --
+SQL> -- RNT_ACCOUNTS_RECEIVABLE  (Table) 
+SQL> --
+SQL> CREATE TABLE RNT_ACCOUNTS_RECEIVABLE
+(
+  AR_ID             NUMBER                      NOT NULL,
+  NOTM              NUMBER                      DEFAULT 1                     NOT NULL,
+  PAYMENT_DUE_DATE  DATE                        NOT NULL,
+  AMOUNT            NUMBER                      NOT NULL,
+  PAYMENT_TYPE      NUMBER,
+  TENANT_ID         NUMBER,
+  AGREEMENT_ID      NUMBER,
+  LOAN_ID           NUMBER
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING
+Table created.
+SQL> COMMENT ON TABLE RNT_ACCOUNTS_RECEIVABLE IS 'Records details of payments due to us.  These could be directly from tenants for deposits and last months rent.  They can also be rent payments in connection with a tenancy agreeement.  The system generates AR records automatically based on the terms of the tenancy agreement.  '
+Comment created.
+SQL> COMMENT ON COLUMN RNT_ACCOUNTS_RECEIVABLE.AR_ID IS 'System Generated PK'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_ACCOUNTS_RECEIVABLE.NOTM IS 'Update counter '
+Comment created.
+SQL> COMMENT ON COLUMN RNT_ACCOUNTS_RECEIVABLE.PAYMENT_DUE_DATE IS 'Date the payment is due'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_ACCOUNTS_RECEIVABLE.AMOUNT IS 'Amount due'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_ACCOUNTS_RECEIVABLE.PAYMENT_TYPE IS 'FK to RNT_PAYMENT_TYPES'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_ACCOUNTS_RECEIVABLE.TENANT_ID IS 'FK to RNT_TENTANTS'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_ACCOUNTS_RECEIVABLE.AGREEMENT_ID IS 'FK to RNT_TENANCY_AGREEMENT used to record deposit, last month etc'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_ACCOUNTS_RECEIVABLE.LOAN_ID IS 'FK to RNT_LOANS for Mortgage notes'
+Comment created.
+SQL> --
+SQL> -- RNT_PAYMENT_ALLOCATIONS  (Table) 
+SQL> --
+SQL> CREATE TABLE RNT_PAYMENT_ALLOCATIONS
+(
+  PAY_ALLOC_ID  NUMBER                          NOT NULL,
+  PAYMENT_DATE  DATE                            NOT NULL,
+  AMOUNT        NUMBER,
+  AR_ID         NUMBER,
+  AP_ID         NUMBER,
+  PAYMENT_ID    NUMBER
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING
+Table created.
+SQL> COMMENT ON TABLE RNT_PAYMENT_ALLOCATIONS IS 'Records the payment of AR and AP entries.  Each AR or AP entry may have more than one payment allocation.  Tenants may make partial payments against rent due.'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PAYMENT_ALLOCATIONS.PAY_ALLOC_ID IS 'System generated PK'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PAYMENT_ALLOCATIONS.PAYMENT_DATE IS 'Date the payment was made'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PAYMENT_ALLOCATIONS.AMOUNT IS 'Amount Paid'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PAYMENT_ALLOCATIONS.AR_ID IS 'Payment for Accounts Receivable ID'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PAYMENT_ALLOCATIONS.AP_ID IS 'Payment of Accounts Payable ID'
+Comment created.
+SQL> COMMENT ON COLUMN RNT_PAYMENT_ALLOCATIONS.PAYMENT_ID IS 'Foreign key to RNT_PAYMENTS'
+Comment created.
+SQL> --
+SQL> -- RNT_PAYMENT_ALLOC_PK  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_PAYMENT_ALLOC_PK ON RNT_PAYMENT_ALLOCATIONS
+(PAY_ALLOC_ID)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_ACCOUNTS_RECEIVABLE_PK  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_ACCOUNTS_RECEIVABLE_PK ON RNT_ACCOUNTS_RECEIVABLE
+(AR_ID)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> --
+SQL> -- RNT_ACCOUNTS_PAYABLE_PK  (Index) 
+SQL> --
+SQL> CREATE UNIQUE INDEX RNT_ACCOUNTS_PAYABLE_PK ON RNT_ACCOUNTS_PAYABLE
+(AP_ID)
+LOGGING
+NOPARALLEL
+Index created.
+SQL> -- 
+SQL> -- Non Foreign Key Constraints for Table RNT_BUSINESS_UNITS 
+SQL> -- 
+SQL> ALTER TABLE RNT_BUSINESS_UNITS ADD (
+  CONSTRAINT RNT_BUSINESS_UNITS_PK
+ PRIMARY KEY
+ (BUSINESS_ID),
+  CONSTRAINT RNT_BUSINESS_UNITS_UK1
+ UNIQUE (BUSINESS_NAME))
+Table altered.
+SQL> -- 
+SQL> -- Non Foreign Key Constraints for Table RNT_LOOKUPS 
+SQL> -- 
+SQL> ALTER TABLE RNT_LOOKUPS ADD (
+  CONSTRAINT RNT_LOOKUPS_PK
+ PRIMARY KEY
+ (TABLE_NAME, COLUMN_NAME, VALID_VALUE))
+Table altered.
+SQL> -- 
+SQL> -- Non Foreign Key Constraints for Table RNT_LOOKUP_TYPES 
+SQL> -- 
+SQL> ALTER TABLE RNT_LOOKUP_TYPES ADD (
+  CONSTRAINT RNT_LOOKUP_TYPES_PK
+ PRIMARY KEY
+ (LOOKUP_TYPE_ID))
+Table altered.
+SQL> -- 
+SQL> -- Non Foreign Key Constraints for Table RNT_LOOKUP_VALUES 
+SQL> -- 
+SQL> ALTER TABLE RNT_LOOKUP_VALUES ADD (
+  CONSTRAINT RNT_LOOKUP_VALUES_PK
+ PRIMARY KEY
+ (LOOKUP_VALUE_ID))
+Table altered.
+SQL> -- 
+SQL> -- Non Foreign Key Constraints for Table RNT_PAYMENT_TYPES 
+SQL> -- 
+SQL> ALTER TABLE RNT_PAYMENT_TYPES ADD (
+  CONSTRAINT RNT_PAYMENT_TYPES_PK
+ PRIMARY KEY
+ (PAYMENT_TYPE_ID),
+  CONSTRAINT RNT_PAYMENT_TYPES_UK1
+ UNIQUE (PAYMENT_TYPE_NAME))
+Table altered.
+SQL> -- 
+SQL> -- Non Foreign Key Constraints for Table RNT_PROPERTIES 
+SQL> -- 
+SQL> ALTER TABLE RNT_PROPERTIES ADD (
+  CONSTRAINT RNT_PROPERTIES_CK1
+ CHECK (state in ('FL', 'NC')),
+  CONSTRAINT RNT_PROPERTIES_PK
+ PRIMARY KEY
+ (PROPERTY_ID),
+  CONSTRAINT RNT_PROPERTIES_UK1
+ UNIQUE (ADDRESS1, ADDRESS2, CITY, STATE, ZIPCODE))
+Table altered.
+SQL> -- 
+SQL> -- Non Foreign Key Constraints for Table RNT_PROPERTY_UNITS 
+SQL> -- 
+SQL> ALTER TABLE RNT_PROPERTY_UNITS ADD (
+  CONSTRAINT RNT_PROPERTY_UNITS_PK
+ PRIMARY KEY
+ (UNIT_ID),
+  CONSTRAINT RNT_PROPERTY_UNITS_UK1
+ UNIQUE (PROPERTY_ID, UNIT_NAME))
+Table altered.
+SQL> -- 
+SQL> -- Non Foreign Key Constraints for Table RNT_PROPERTY_VALUE 
+SQL> -- 
+SQL> ALTER TABLE RNT_PROPERTY_VALUE ADD (
+  CONSTRAINT RNT_PROPERTY_VALUE_PK
+ PRIMARY KEY
+ (VALUE_ID),
+  CONSTRAINT RNT_PROPERTY_VALUE_UK1
+ UNIQUE (PROPERTY_ID, VALUE_DATE, VALUE_METHOD))
+Table altered.
+SQL> -- 
+SQL> -- Non Foreign Key Constraints for Table RNT_SUPPLIERS 
+SQL> -- 
+SQL> ALTER TABLE RNT_SUPPLIERS ADD (
+  CONSTRAINT RNT_CONTRACTORS_PK
+ PRIMARY KEY
+ (SUPPLIER_ID),
+  CONSTRAINT RNT_CONTRACTORS_UK1
+ UNIQUE (NAME))
+Table altered.
+SQL> -- 
+SQL> -- Non Foreign Key Constraints for Table RNT_TENANCY_AGREEMENT 
+SQL> -- 
+SQL> ALTER TABLE RNT_TENANCY_AGREEMENT ADD (
+  CONSTRAINT RNT_TENANCY_AGREEMENT_PK
+ PRIMARY KEY
+ (AGREEMENT_ID),
+  CONSTRAINT RNT_TENANCY_AGREEMENT_UK1
+ UNIQUE (UNIT_ID, AGREEMENT_DATE))
+Table altered.
+SQL> -- 
+SQL> -- Non Foreign Key Constraints for Table RNT_TENANT 
+SQL> -- 
+SQL> ALTER TABLE RNT_TENANT ADD (
+  CONSTRAINT RNT_TENANT_PK
+ PRIMARY KEY
+ (TENANT_ID),
+  CONSTRAINT RNT_TENANT_UK1
+ UNIQUE (FIRST_NAME, LAST_NAME))
+Table altered.
+SQL> -- 
+SQL> -- Non Foreign Key Constraints for Table RNT_AGREEMENT_ACTIONS 
+SQL> -- 
+SQL> ALTER TABLE RNT_AGREEMENT_ACTIONS ADD (
+  CONSTRAINT RNT_AGREEMENT_ACTIONS_PK
+ PRIMARY KEY
+ (ACTION_ID),
+  CONSTRAINT RNT_AGREEMENT_ACTIONS_UK1
+ UNIQUE (AGREEMENT_ID, ACTION_DATE, ACTION_TYPE))
+Table altered.
+SQL> -- 
+SQL> -- Non Foreign Key Constraints for Table RNT_LOANS 
+SQL> -- 
+SQL> ALTER TABLE RNT_LOANS ADD (
+  CONSTRAINT RNT_LOANS_PK
+ PRIMARY KEY
+ (LOAN_ID),
+  CONSTRAINT RNT_LOANS_UK2
+ UNIQUE (PROPERTY_ID, POSITION))
+Table altered.
+SQL> -- 
+SQL> -- Non Foreign Key Constraints for Table RNT_PAYMENTS 
+SQL> -- 
+SQL> ALTER TABLE RNT_PAYMENTS ADD (
+  CONSTRAINT RNT_PAYMENTS_PK
+ PRIMARY KEY
+ (PAYMENT_ID),
+  CONSTRAINT RNT_PAYMENTS_UK1
+ UNIQUE (PAYMENT_DATE, DESCRIPTION))
+Table altered.
+SQL> -- 
+SQL> -- Non Foreign Key Constraints for Table RNT_PROPERTY_EXPENSES 
+SQL> -- 
+SQL> ALTER TABLE RNT_PROPERTY_EXPENSES ADD (
+  CONSTRAINT RNT_PROPERTY_EXPENSES_PK
+ PRIMARY KEY
+ (EXPENSE_ID),
+  CONSTRAINT RNT_PROPERTY_HISTORY_UK1
+ UNIQUE (PROPERTY_ID, EVENT_DATE, UNIT_ID, DESCRIPTION))
+Table altered.
+SQL> -- 
+SQL> -- Non Foreign Key Constraints for Table RNT_ACCOUNTS_PAYABLE 
+SQL> -- 
+SQL> ALTER TABLE RNT_ACCOUNTS_PAYABLE ADD (
+  CONSTRAINT RNT_ACCOUNTS_PAYABLE_PK
+ PRIMARY KEY
+ (AP_ID))
+Table altered.
+SQL> -- 
+SQL> -- Non Foreign Key Constraints for Table RNT_ACCOUNTS_RECEIVABLE 
+SQL> -- 
+SQL> ALTER TABLE RNT_ACCOUNTS_RECEIVABLE ADD (
+  CONSTRAINT RNT_ACCOUNTS_RECEIVABLE_PK
+ PRIMARY KEY
+ (AR_ID))
+Table altered.
+SQL> -- 
+SQL> -- Non Foreign Key Constraints for Table RNT_PAYMENT_ALLOCATIONS 
+SQL> -- 
+SQL> ALTER TABLE RNT_PAYMENT_ALLOCATIONS ADD (
+  CONSTRAINT RNT_PAYMENT_ALLOC_PK
+ PRIMARY KEY
+ (PAY_ALLOC_ID))
+Table altered.
+SQL> -- 
+SQL> -- Foreign Key Constraints for Table RNT_LOOKUP_VALUES 
+SQL> -- 
+SQL> ALTER TABLE RNT_LOOKUP_VALUES ADD (
+  CONSTRAINT RNT_LOOKUP_VALUES_FK 
+ FOREIGN KEY (LOOKUP_TYPE_ID) 
+ REFERENCES RNT_LOOKUP_TYPES (LOOKUP_TYPE_ID))
+Table altered.
+SQL> -- 
+SQL> -- Foreign Key Constraints for Table RNT_PROPERTIES 
+SQL> -- 
+SQL> ALTER TABLE RNT_PROPERTIES ADD (
+  CONSTRAINT RNT_PROPERTIES_FK 
+ FOREIGN KEY (BUSINESS_ID) 
+ REFERENCES RNT_BUSINESS_UNITS (BUSINESS_ID))
+Table altered.
+SQL> -- 
+SQL> -- Foreign Key Constraints for Table RNT_PROPERTY_UNITS 
+SQL> -- 
+SQL> ALTER TABLE RNT_PROPERTY_UNITS ADD (
+  CONSTRAINT RNT_PROPERTY_UNITS_FK1 
+ FOREIGN KEY (PROPERTY_ID) 
+ REFERENCES RNT_PROPERTIES (PROPERTY_ID))
+Table altered.
+SQL> -- 
+SQL> -- Foreign Key Constraints for Table RNT_PROPERTY_VALUE 
+SQL> -- 
+SQL> ALTER TABLE RNT_PROPERTY_VALUE ADD (
+  CONSTRAINT RNT_PROPERTY_VALUE_FK 
+ FOREIGN KEY (PROPERTY_ID) 
+ REFERENCES RNT_PROPERTIES (PROPERTY_ID))
+Table altered.
+SQL> -- 
+SQL> -- Foreign Key Constraints for Table RNT_TENANCY_AGREEMENT 
+SQL> -- 
+SQL> ALTER TABLE RNT_TENANCY_AGREEMENT ADD (
+  CONSTRAINT RNT_TENANCY_AGREEMENT_FK 
+ FOREIGN KEY (UNIT_ID) 
+ REFERENCES RNT_PROPERTY_UNITS (UNIT_ID))
+Table altered.
+SQL> -- 
+SQL> -- Foreign Key Constraints for Table RNT_TENANT 
+SQL> -- 
+SQL> ALTER TABLE RNT_TENANT ADD (
+  CONSTRAINT RNT_TENANT_FK 
+ FOREIGN KEY (AGREEMENT_ID) 
+ REFERENCES RNT_TENANCY_AGREEMENT (AGREEMENT_ID),
+  CONSTRAINT RNT_TENANT_FK2 
+ FOREIGN KEY (UNIT_APPLIED_FOR) 
+ REFERENCES RNT_PROPERTY_UNITS (UNIT_ID))
+Table altered.
+SQL> -- 
+SQL> -- Foreign Key Constraints for Table RNT_AGREEMENT_ACTIONS 
+SQL> -- 
+SQL> ALTER TABLE RNT_AGREEMENT_ACTIONS ADD (
+  CONSTRAINT RNT_AGREEMENT_ACTIONS_FK 
+ FOREIGN KEY (AGREEMENT_ID) 
+ REFERENCES RNT_TENANCY_AGREEMENT (AGREEMENT_ID))
+Table altered.
+SQL> -- 
+SQL> -- Foreign Key Constraints for Table RNT_LOANS 
+SQL> -- 
+SQL> ALTER TABLE RNT_LOANS ADD (
+  CONSTRAINT RNT_LOANS_FK 
+ FOREIGN KEY (PROPERTY_ID) 
+ REFERENCES RNT_PROPERTIES (PROPERTY_ID))
+Table altered.
+SQL> -- 
+SQL> -- Foreign Key Constraints for Table RNT_PAYMENTS 
+SQL> -- 
+SQL> ALTER TABLE RNT_PAYMENTS ADD (
+  CONSTRAINT RNT_PAYMENTS_RNT_TENANT_FK 
+ FOREIGN KEY (TENANT_ID) 
+ REFERENCES RNT_TENANT (TENANT_ID))
+Table altered.
+SQL> -- 
+SQL> -- Foreign Key Constraints for Table RNT_PROPERTY_EXPENSES 
+SQL> -- 
+SQL> ALTER TABLE RNT_PROPERTY_EXPENSES ADD (
+  CONSTRAINT RNT_PROPERTY_HISTORY_FK2 
+ FOREIGN KEY (UNIT_ID) 
+ REFERENCES RNT_PROPERTY_UNITS (UNIT_ID),
+  CONSTRAINT RNT_PROPERTY_HISTORY_FK 
+ FOREIGN KEY (PROPERTY_ID) 
+ REFERENCES RNT_PROPERTIES (PROPERTY_ID))
+Table altered.
+SQL> -- 
+SQL> -- Foreign Key Constraints for Table RNT_ACCOUNTS_PAYABLE 
+SQL> -- 
+SQL> ALTER TABLE RNT_ACCOUNTS_PAYABLE ADD (
+  CONSTRAINT RNT_ACCOUNTS_PAYABLE_FK 
+ FOREIGN KEY (PAYMENT_TYPE_ID) 
+ REFERENCES RNT_PAYMENT_TYPES (PAYMENT_TYPE_ID),
+  CONSTRAINT RNT_ACCOUNTS_PAYABLE_FK4 
+ FOREIGN KEY (LOAN_ID) 
+ REFERENCES RNT_LOANS (LOAN_ID),
+  CONSTRAINT RNT_ACCOUNTS_PAYABLE_FK1 
+ FOREIGN KEY (EXPENSE_ID) 
+ REFERENCES RNT_PROPERTY_EXPENSES (EXPENSE_ID),
+  CONSTRAINT RNT_ACCOUNTS_PAYABLE_FK2 
+ FOREIGN KEY (SUPPLIER_ID) 
+ REFERENCES RNT_SUPPLIERS (SUPPLIER_ID))
+Table altered.
+SQL> -- 
+SQL> -- Foreign Key Constraints for Table RNT_ACCOUNTS_RECEIVABLE 
+SQL> -- 
+SQL> ALTER TABLE RNT_ACCOUNTS_RECEIVABLE ADD (
+  CONSTRAINT RNT_ACCOUNTS_RECEIVABLE_FK 
+ FOREIGN KEY (TENANT_ID) 
+ REFERENCES RNT_TENANT (TENANT_ID),
+  CONSTRAINT RNT_ACCOUNTS_RECEIVABLE_FK3 
+ FOREIGN KEY (LOAN_ID) 
+ REFERENCES RNT_LOANS (LOAN_ID),
+  CONSTRAINT RNT_ACCOUNTS_RECEIVABLE_FK4 
+ FOREIGN KEY (PAYMENT_TYPE) 
+ REFERENCES RNT_PAYMENT_TYPES (PAYMENT_TYPE_ID),
+  CONSTRAINT RNT_ACCOUNTS_RECEIVABLE_FK2 
+ FOREIGN KEY (AGREEMENT_ID) 
+ REFERENCES RNT_TENANCY_AGREEMENT (AGREEMENT_ID))
+Table altered.
+SQL> -- 
+SQL> -- Foreign Key Constraints for Table RNT_PAYMENT_ALLOCATIONS 
+SQL> -- 
+SQL> ALTER TABLE RNT_PAYMENT_ALLOCATIONS ADD (
+  CONSTRAINT RNT_PAYMENTS_RNT_ACCOUNTS_FK2 
+ FOREIGN KEY (AR_ID) 
+ REFERENCES RNT_ACCOUNTS_RECEIVABLE (AR_ID),
+  CONSTRAINT RNT_PAYMENTS_RNT_ACCOUNTS_FK1 
+ FOREIGN KEY (AP_ID) 
+ REFERENCES RNT_ACCOUNTS_PAYABLE (AP_ID),
+  CONSTRAINT RNT_PAYMENT_ALLOCATIONS_FK 
+ FOREIGN KEY (PAYMENT_ID) 
+ REFERENCES RNT_PAYMENTS (PAYMENT_ID))
+Table altered.
+SQL> @@sequences.sql
+SQL> --
+SQL> -- Create Schema Script 
+SQL> --   Database Version   : 10.2.0.1.0 
+SQL> --   TOAD Version       : 9.0.0.160 
+SQL> --   DB Connect String  : XE 
+SQL> --   Schema             : RNTMGR 
+SQL> --   Script Created by  : RNTMGR 
+SQL> --   Script Created at  : 09.04.2007 22:59:58 
+SQL> --   Physical Location  :  
+SQL> --   Notes              :  
+SQL> --
+SQL> -- Object Counts: 
+SQL> --   Sequences: 15 
+SQL> --
+SQL> -- RNT_BUSINESS_UNITS_SEQ  (Sequence) 
+SQL> --
+SQL> CREATE SEQUENCE RNT_BUSINESS_UNITS_SEQ
+  START WITH 1
+  MAXVALUE 999999999999999999999999999
+  MINVALUE 1
+  NOCYCLE
+  NOCACHE
+  NOORDER
+Sequence created.
+SQL> --
+SQL> -- RNT_PROPERTIES_SEQ  (Sequence) 
+SQL> --
+SQL> CREATE SEQUENCE RNT_PROPERTIES_SEQ
+  START WITH 221
+  MAXVALUE 999999999999999999999999999
+  MINVALUE 1
+  NOCYCLE
+  CACHE 20
+  NOORDER
+Sequence created.
+SQL> --
+SQL> -- RNT_PROPERTY_VALUE_SEQ  (Sequence) 
+SQL> --
+SQL> CREATE SEQUENCE RNT_PROPERTY_VALUE_SEQ
+  START WITH 1
+  MAXVALUE 999999999999999999999999999
+  MINVALUE 1
+  NOCYCLE
+  CACHE 20
+  NOORDER
+Sequence created.
+SQL> --
+SQL> -- RNT_PROPERTY_UNITS_SEQ  (Sequence) 
+SQL> --
+SQL> CREATE SEQUENCE RNT_PROPERTY_UNITS_SEQ
+  START WITH 41
+  MAXVALUE 999999999999999999999999999
+  MINVALUE 1
+  NOCYCLE
+  NOCACHE
+  NOORDER
+Sequence created.
+SQL> --
+SQL> -- RNT_PROPERTY_EXPENSES_SEQ  (Sequence) 
+SQL> --
+SQL> CREATE SEQUENCE RNT_PROPERTY_EXPENSES_SEQ
+  START WITH 1
+  MAXVALUE 999999999999999999999999999
+  MINVALUE 1
+  NOCYCLE
+  CACHE 20
+  NOORDER
+Sequence created.
+SQL> --
+SQL> -- RNT_PAYMENT_TYPES_SEQ  (Sequence) 
+SQL> --
+SQL> CREATE SEQUENCE RNT_PAYMENT_TYPES_SEQ
+  START WITH 1
+  MAXVALUE 999999999999999999999999999
+  MINVALUE 1
+  NOCYCLE
+  CACHE 20
+  NOORDER
+Sequence created.
+SQL> --
+SQL> -- RNT_TENANT_SEQ  (Sequence) 
+SQL> --
+SQL> CREATE SEQUENCE RNT_TENANT_SEQ
+  START WITH 21
+  MAXVALUE 999999999999999999999999999
+  MINVALUE 1
+  NOCYCLE
+  CACHE 20
+  NOORDER
+Sequence created.
+SQL> --
+SQL> -- RNT_TENANCY_AGREEMENT_SEQ  (Sequence) 
+SQL> --
+SQL> CREATE SEQUENCE RNT_TENANCY_AGREEMENT_SEQ
+  START WITH 101
+  MAXVALUE 999999999999999999999999999
+  MINVALUE 1
+  NOCYCLE
+  CACHE 20
+  NOORDER
+Sequence created.
+SQL> --
+SQL> -- RNT_LOANS_SEQ  (Sequence) 
+SQL> --
+SQL> CREATE SEQUENCE RNT_LOANS_SEQ
+  START WITH 41
+  MAXVALUE 999999999999999999999999999
+  MINVALUE 1
+  NOCYCLE
+  CACHE 20
+  NOORDER
+Sequence created.
+SQL> --
+SQL> -- RNT_SUPPLIERS_SEQ  (Sequence) 
+SQL> --
+SQL> CREATE SEQUENCE RNT_SUPPLIERS_SEQ
+  START WITH 1
+  MAXVALUE 999999999999999999999999999
+  MINVALUE 1
+  NOCYCLE
+  CACHE 20
+  NOORDER
+Sequence created.
+SQL> --
+SQL> -- RNT_PAYMENTS_SEQ  (Sequence) 
+SQL> --
+SQL> CREATE SEQUENCE RNT_PAYMENTS_SEQ
+  START WITH 1
+  MAXVALUE 999999999999999999999999999
+  MINVALUE 1
+  NOCYCLE
+  CACHE 20
+  NOORDER
+Sequence created.
+SQL> --
+SQL> -- RNT_ACCOUNTS_RECEIVABLE_SEQ  (Sequence) 
+SQL> --
+SQL> CREATE SEQUENCE RNT_ACCOUNTS_RECEIVABLE_SEQ
+  START WITH 1
+  MAXVALUE 999999999999999999999999999
+  MINVALUE 1
+  NOCYCLE
+  CACHE 20
+  NOORDER
+Sequence created.
+SQL> --
+SQL> -- RNT_ACCOUNTS_PAYABLE_SEQ  (Sequence) 
+SQL> --
+SQL> CREATE SEQUENCE RNT_ACCOUNTS_PAYABLE_SEQ
+  START WITH 1
+  MAXVALUE 999999999999999999999999999
+  MINVALUE 1
+  NOCYCLE
+  CACHE 20
+  NOORDER
+Sequence created.
+SQL> --
+SQL> -- RNT_AGREEMENT_ACTIONS_SEQ  (Sequence) 
+SQL> --
+SQL> CREATE SEQUENCE RNT_AGREEMENT_ACTIONS_SEQ
+  START WITH 1
+  MAXVALUE 999999999999999999999999999
+  MINVALUE 1
+  NOCYCLE
+  CACHE 20
+  NOORDER
+Sequence created.
+SQL> --
+SQL> -- RNT_PAYMENT_ALLOCATIONS_SEQ  (Sequence) 
+SQL> --
+SQL> CREATE SEQUENCE RNT_PAYMENT_ALLOCATIONS_SEQ
+  START WITH 1
+  MAXVALUE 999999999999999999999999999
+  MINVALUE 1
+  NOCYCLE
+  CACHE 20
+  NOORDER
+Sequence created.
+SQL> @@views.sql
+SQL> --
+SQL> -- Create Schema Script 
+SQL> --   Database Version   : 10.2.0.1.0 
+SQL> --   TOAD Version       : 9.0.0.160 
+SQL> --   DB Connect String  : XE 
+SQL> --   Schema             : RNTMGR 
+SQL> --   Script Created by  : RNTMGR 
+SQL> --   Script Created at  : 09.04.2007 22:59:31 
+SQL> --   Physical Location  :  
+SQL> --   Notes              :  
+SQL> --
+SQL> -- Object Counts: 
+SQL> --   Views: 5           
+SQL> --
+SQL> -- RNT_LOOKUP_VALUES_V  (View) 
+SQL> --
+SQL> CREATE OR REPLACE FORCE VIEW RNT_LOOKUP_VALUES_V
+AS 
+select t.LOOKUP_TYPE_ID, 
+       t.LOOKUP_TYPE_CODE,
+       v.LOOKUP_VALUE_ID, 
+       v.LOOKUP_CODE, 
+       v.LOOKUP_VALUE 
+from RNT_LOOKUP_TYPES t,
+     RNT_LOOKUP_VALUES v
+where t.LOOKUP_TYPE_ID = v.LOOKUP_TYPE_ID
+View created.
+SQL> --
+SQL> -- RNT_PROPERTY_UNITS_V  (View) 
+SQL> --
+SQL> CREATE OR REPLACE FORCE VIEW RNT_PROPERTY_UNITS_V
+AS 
+select UNIT_ID, 
+       PROPERTY_ID, 
+       UNIT_NAME, UNIT_SIZE, BEDROOMS, 
+       BATHROOMS,
+       RNT_PROPERTY_UNITS_PKG.GET_CHECKSUM(UNIT_ID) as CHECKSUM
+from RNT_PROPERTY_UNITS
+order by UNIT_NAME
+ORA-24344: success with compilation error
+0/0     ORA-00904: "RNT_PROPERTY_UNITS_PKG"."GET_CHECKSUM": invalid identifier
+SQL> --
+SQL> -- RNT_LOANS_V  (View) 
+SQL> --
+SQL> CREATE OR REPLACE FORCE VIEW RNT_LOANS_V
+AS 
+select 
+   LOAN_ID, PROPERTY_ID, POSITION, 
+   LOAN_DATE, LOAN_AMOUNT, 
+   TERM, INTEREST_RATE, CREDIT_LINE_YN, 
+   ARM_YN, BALLOON_DATE, AMORTIZATION_START, 
+   SETTLEMENT_DATE, RNT_LOANS_PKG.GET_CHECKSUM(LOAN_ID) as CHECKSUM
+from RNT_LOANS
+ORA-24344: success with compilation error
+0/0     ORA-00904: "RNT_LOANS_PKG"."GET_CHECKSUM": invalid identifier
+SQL> --
+SQL> -- RNT_PROPERTIES_V  (View) 
+SQL> --
+SQL> CREATE OR REPLACE FORCE VIEW RNT_PROPERTIES_V
+AS 
+select 
+   p.PROPERTY_ID, 
+   p.BUSINESS_ID,
+   u.BUSINESS_NAME,
+   p.UNITS,
+   p.ADDRESS1, 
+   p.ADDRESS2, 
+   p.CITY, 
+   p.STATE,
+   v.LOOKUP_VALUE as STATE_NAME, 
+   p.ZIPCODE, 
+   p.DATE_PURCHASED, 
+   p.PURCHASE_PRICE, 
+   p.LAND_VALUE, 
+   p.DEPRECIATION_TERM, 
+   p.YEAR_BUILT, 
+   p.BUILDING_SIZE, 
+   p.LOT_SIZE, 
+   p.DATE_SOLD, 
+   p.SALE_AMOUNT, 
+   p.NOTE_YN,
+   (select count(*)  
+    from RNT_PROPERTY_UNITS 
+    where PROPERTY_ID = p.PROPERTY_ID
+   ) as COUNT_UNITS,
+   RNT_PROPERTIES_PKG.GET_CKECKSUM(p.PROPERTY_ID) as CHECKSUM 
+from RNT_PROPERTIES p,
+     RNT_BUSINESS_UNITS u,
+     RNT_LOOKUP_VALUES_V v
+where p.BUSINESS_ID = u.BUSINESS_ID
+  and v.LOOKUP_TYPE_CODE = 'STATES'
+  and v.LOOKUP_CODE = p.STATE
+ORA-24344: success with compilation error
+0/0     ORA-00904: "RNT_PROPERTIES_PKG"."GET_CKECKSUM": invalid identifier
+SQL> --
+SQL> -- RNT_TENANCY_AGREEMENT_V  (View) 
+SQL> --
+SQL> CREATE OR REPLACE FORCE VIEW RNT_TENANCY_AGREEMENT_V
+AS 
+select 
+   a.AGREEMENT_ID, 
+   a.UNIT_ID, 
+   a.AGREEMENT_DATE, 
+   a.TERM, 
+   a.AMOUNT, 
+   a.AMOUNT_PERIOD, 
+   a.EFFECTIVE_DATE, 
+   a.DEPOSIT, 
+   a.LAST_MONTH, 
+   a.DISCOUNT_AMOUNT, 
+   a.DISCOUNT_TYPE, 
+   a.DISCOUNT_PERIOD,
+   u.PROPERTY_ID,
+   u.UNIT_NAME,
+   lv.LOOKUP_VALUE as AMOUNTH_PERIOD_NAME,
+   dt.LOOKUP_VALUE as DISCOUNT_TYPE_NAME,
+   RNT_TENANCY_AGREEMENT_PKG.GET_CHECKSUM(a.AGREEMENT_ID) as CHECKSUM
+from RNT_TENANCY_AGREEMENT a,
+     RNT_PROPERTY_UNITS u,
+     RNT_LOOKUP_VALUES_V lv,
+     (select LOOKUP_CODE, LOOKUP_VALUE from RNT_LOOKUP_VALUES_V where LOOKUP_TYPE_CODE = 'FEE_TYPE') dt
+where u.UNIT_ID = a.UNIT_ID
+  and lv.LOOKUP_TYPE_CODE = 'RENT_PERIOD'
+  and lv.LOOKUP_CODE = a.AMOUNT_PERIOD     
+  and dt.LOOKUP_CODE(+) = a.DISCOUNT_TYPE
+ORA-24344: success with compilation error
+0/0     ORA-00904: "RNT_TENANCY_AGREEMENT_PKG"."GET_CHECKSUM": invalid identifier
+SQL> @@packages.sql
+SQL> --
+SQL> -- Create Schema Script 
+SQL> --   Database Version   : 10.2.0.1.0 
+SQL> --   TOAD Version       : 9.0.0.160 
+SQL> --   DB Connect String  : XE 
+SQL> --   Schema             : RNTMGR 
+SQL> --   Script Created by  : RNTMGR 
+SQL> --   Script Created at  : 09.04.2007 23:01:23 
+SQL> --   Physical Location  :  
+SQL> --   Notes              :  
+SQL> --
+SQL> -- Object Counts: 
+SQL> --   Packages: 5        Lines of Code: 225 
+SQL> --   Package Bodies: 5  Lines of Code: 747 
+SQL> --
+SQL> -- RNT_SYS_CHECKSUM_REC_PKG  (Package) 
+SQL> --
+SQL> CREATE OR REPLACE PACKAGE RNT_SYS_CHECKSUM_REC_PKG AS
+/******************************************************************************
+   NAME:       RNT_SYS_CHECKSUM_REC_PKG
+   PURPOSE: Calculate checksum for record.
+
+   REVISIONS:
+   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        28.03.2007             1. Created this package.
+******************************************************************************/
+
+/* Raise when length of internal value > 32760.
+If it meaning then you can use next code:
+  rnt_sys_checksum_rec_pkg.init;
+  rnt_sys_checksum_rec_pkg.append(<very long string about 32000>);
+  x1 := rnt_sys_checksum_rec_pkg.get_checksum();
+  
+  rnt_sys_checksum_rec_pkg.init;
+  rnt_sys_checksum_rec_pkg.append(<another very long string about 32000>);
+  x2 := rnt_sys_checksum_rec_pkg.get_checksum();
+  
+  rnt_sys_checksum_rec_pkg.init;
+  rnt_sys_checksum_rec_pkg.append(x1);
+  rnt_sys_checksum_rec_pkg.append(x2);
+  
+  dbms_output.put_line(rnt_sys_checksum_rec_pkg.get_checksum());
+*/   
+E_BOUNDARY_ERROR EXCEPTION;
+
+PRAGMA EXCEPTION_INIT (E_BOUNDARY_ERROR, -20001);
+
+-- inital package state
+procedure init;
+
+-- append field value to checksum
+procedure append(p_char VARCHAR2);
+procedure append(p_number NUMBER);
+procedure append(p_date DATE);
+
+
+-- return internal value. Length of return value 32 bytes. 
+function get_internal_value return varchar2;
+
+-- set internal value
+procedure set_internal_value(val varchar2);
+
+-- return checksum
+function get_checksum return varchar2; 
+
+END RNT_SYS_CHECKSUM_REC_PKG;
+Package created.
+SQL> SHOW ERRORS
+No errors.
+SQL> --
+SQL> -- RNT_TENANCY_AGREEMENT_PKG  (Package) 
+SQL> --
+SQL> CREATE OR REPLACE PACKAGE        RNT_TENANCY_AGREEMENT_PKG AS
+/******************************************************************************
+   NAME:       RNT_TENANCY_AGREEMENT_PKG
+   PURPOSE:
+
+   REVISIONS:
+   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        06.04.2007             1. Created this package.
+******************************************************************************/
+
+function get_checksum(X_AGREEMENT_ID RNT_TENANCY_AGREEMENT.AGREEMENT_ID%TYPE) return VARCHAR2;
+procedure lock_row(X_AGREEMENT_ID RNT_TENANCY_AGREEMENT.AGREEMENT_ID%TYPE);
+
+procedure update_row(X_AGREEMENT_ID RNT_TENANCY_AGREEMENT.AGREEMENT_ID%TYPE,
+                     X_UNIT_ID RNT_TENANCY_AGREEMENT.UNIT_ID%TYPE,
+                     X_AGREEMENT_DATE RNT_TENANCY_AGREEMENT.AGREEMENT_DATE%TYPE,
+                     X_TERM RNT_TENANCY_AGREEMENT.TERM%TYPE,
+                     X_AMOUNT RNT_TENANCY_AGREEMENT.AMOUNT%TYPE,
+                     X_AMOUNT_PERIOD RNT_TENANCY_AGREEMENT.AMOUNT_PERIOD%TYPE,
+                     X_EFFECTIVE_DATE RNT_TENANCY_AGREEMENT.EFFECTIVE_DATE%TYPE,
+                     X_DEPOSIT RNT_TENANCY_AGREEMENT.DEPOSIT%TYPE,
+                     X_LAST_MONTH RNT_TENANCY_AGREEMENT.LAST_MONTH%TYPE,
+                     X_DISCOUNT_AMOUNT RNT_TENANCY_AGREEMENT.DISCOUNT_AMOUNT%TYPE,
+                     X_DISCOUNT_TYPE RNT_TENANCY_AGREEMENT.DISCOUNT_TYPE%TYPE,
+                     X_DISCOUNT_PERIOD RNT_TENANCY_AGREEMENT.DISCOUNT_PERIOD%TYPE,
+                     X_CHECKSUM VARCHAR2
+                     );
+
+function insert_row(X_UNIT_ID RNT_TENANCY_AGREEMENT.UNIT_ID%TYPE,
+                     X_AGREEMENT_DATE RNT_TENANCY_AGREEMENT.AGREEMENT_DATE%TYPE,
+                     X_TERM RNT_TENANCY_AGREEMENT.TERM%TYPE,
+                     X_AMOUNT RNT_TENANCY_AGREEMENT.AMOUNT%TYPE,
+                     X_AMOUNT_PERIOD RNT_TENANCY_AGREEMENT.AMOUNT_PERIOD%TYPE,
+                     X_EFFECTIVE_DATE RNT_TENANCY_AGREEMENT.EFFECTIVE_DATE%TYPE,
+                     X_DEPOSIT RNT_TENANCY_AGREEMENT.DEPOSIT%TYPE,
+                     X_LAST_MONTH RNT_TENANCY_AGREEMENT.LAST_MONTH%TYPE,
+                     X_DISCOUNT_AMOUNT RNT_TENANCY_AGREEMENT.DISCOUNT_AMOUNT%TYPE,
+                     X_DISCOUNT_TYPE RNT_TENANCY_AGREEMENT.DISCOUNT_TYPE%TYPE,
+                     X_DISCOUNT_PERIOD RNT_TENANCY_AGREEMENT.DISCOUNT_PERIOD%TYPE
+                     ) return RNT_TENANCY_AGREEMENT.AGREEMENT_ID%TYPE;
+
+END RNT_TENANCY_AGREEMENT_PKG;
+Package created.
+SQL> SHOW ERRORS
+No errors.
+SQL> --
+SQL> -- RNT_SYS_CHECKSUM_REC_PKG  (Package Body) 
+SQL> --
+SQL> CREATE OR REPLACE PACKAGE BODY RNT_SYS_CHECKSUM_REC_PKG AS
+/******************************************************************************
+   NAME:       RNT_SYS_CHECKSUM_REC_PKG
+   PURPOSE:
+
+   REVISIONS:
+   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        28.03.2007             1. Created this package body.
+******************************************************************************/
+
+g_columns_value VARCHAR2(32760); 
+g_boundary  CONSTANT VARCHAR2(20):= 'aguk@lan.aommz.com';
+
+procedure init
+is
+begin
+    g_columns_value := '';  
+end;
+
+procedure append(p_char varchar2)
+is
+begin
+   -- append field separator, if first field value was adding
+   if g_columns_value is not null then
+      if  length(g_columns_value) + length(g_boundary) > 32760 then
+         raise E_BOUNDARY_ERROR;
+      end if;
+      g_columns_value := g_columns_value||g_boundary;
+   end if;
+   
+   if length(g_columns_value) + length(p_char) > 32760 then
+      raise E_BOUNDARY_ERROR;
+   end if;
+      
+   g_columns_value := g_columns_value||p_char;    
+end;
+
+procedure append(p_number NUMBER)
+is
+begin
+  append(to_char(p_number));
+end;
+
+procedure append(p_date DATE)
+is
+begin
+  append('RRRRMMDDHH24MISS');
+end;
+
+
+function get_checksum return varchar2
+is
+  x_field varchar2(32760) := '';
+  x_key_string varchar2(16) := 'VISULATE-RENTAL_';
+begin
+  return RAWTOHEX(UTL_RAW.CAST_TO_RAW(dbms_obfuscation_toolkit.MD5(input_string => g_columns_value)));
+end;
+
+-- return internal value. 
+function get_internal_value return varchar2
+is
+begin
+  return g_columns_value;
+end;
+
+-- set internal value
+procedure set_internal_value(val varchar2)
+is
+begin
+  g_columns_value := val;
+end;
+ 
+
+END RNT_SYS_CHECKSUM_REC_PKG;
+Package body created.
+SQL> SHOW ERRORS
+No errors.
+SQL> --
+SQL> -- RNT_TENANCY_AGREEMENT_PKG  (Package Body) 
+SQL> --
+SQL> CREATE OR REPLACE PACKAGE BODY        RNT_TENANCY_AGREEMENT_PKG AS
+/******************************************************************************
+   NAME:       RNT_TENANCY_AGREEMENT_PKG
+   PURPOSE:
+
+   REVISIONS:
+   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        06.04.2007             1. Created this package body.
+******************************************************************************/
+function get_checksum(X_AGREEMENT_ID RNT_TENANCY_AGREEMENT.AGREEMENT_ID%TYPE) return VARCHAR2
+is
+begin
+for x in (select 
+           AGREEMENT_ID, UNIT_ID, AGREEMENT_DATE, 
+           TERM, AMOUNT, AMOUNT_PERIOD, 
+           EFFECTIVE_DATE, DEPOSIT, LAST_MONTH, 
+           DISCOUNT_AMOUNT, DISCOUNT_TYPE, DISCOUNT_PERIOD
+         from RNT_TENANCY_AGREEMENT
+         where AGREEMENT_ID = X_AGREEMENT_ID) loop
+         RNT_SYS_CHECKSUM_REC_PKG.INIT;
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.AGREEMENT_ID);         
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.UNIT_ID);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.AGREEMENT_DATE); 
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.TERM);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.AMOUNT);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.AMOUNT_PERIOD);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.EFFECTIVE_DATE);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.DEPOSIT);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.LAST_MONTH);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.DISCOUNT_AMOUNT);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.DISCOUNT_TYPE);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.DISCOUNT_PERIOD);
+         return RNT_SYS_CHECKSUM_REC_PKG.GET_CHECKSUM;
+   end loop;
+   raise NO_DATA_FOUND;  
+end;
+
+
+
+function check_unique(X_AGREEMENT_ID RNT_TENANCY_AGREEMENT.AGREEMENT_ID%TYPE, 
+                      X_UNIT_ID RNT_TENANCY_AGREEMENT.UNIT_ID%TYPE,
+                      X_AGREEMENT_DATE RNT_TENANCY_AGREEMENT.AGREEMENT_DATE%TYPE
+                      ) return boolean
+is
+  x NUMBER;
+begin
+   select 1 
+   into x
+   from DUAL
+   where exists (
+                   select 1
+                   from RNT_TENANCY_AGREEMENT
+                   where UNIT_ID = X_UNIT_ID
+                     and AGREEMENT_DATE = X_AGREEMENT_DATE
+                     and (AGREEMENT_ID != X_AGREEMENT_ID or X_AGREEMENT_ID is null)
+                 );
+  return false;
+exception
+  when NO_DATA_FOUND then
+     return true;                        
+end;                       
+                      
+
+procedure lock_row(X_AGREEMENT_ID RNT_TENANCY_AGREEMENT.AGREEMENT_ID%TYPE)
+is
+    cursor c is
+              select 
+               AGREEMENT_ID, UNIT_ID, AGREEMENT_DATE, 
+               TERM, AMOUNT, AMOUNT_PERIOD, 
+               EFFECTIVE_DATE, DEPOSIT, LAST_MONTH, 
+               DISCOUNT_AMOUNT, DISCOUNT_TYPE, DISCOUNT_PERIOD
+             from RNT_TENANCY_AGREEMENT
+             where AGREEMENT_ID = X_AGREEMENT_ID
+             for update of AGREEMENT_ID nowait; 
+begin
+  open c;
+  close c;
+exception
+  when OTHERS then
+    if SQLCODE = -54 then
+      RAISE_APPLICATION_ERROR(-20001, 'Cannot changed record. Record is locked.');
+    end if; 
+end;
+
+procedure update_row(X_AGREEMENT_ID RNT_TENANCY_AGREEMENT.AGREEMENT_ID%TYPE,
+                     X_UNIT_ID RNT_TENANCY_AGREEMENT.UNIT_ID%TYPE,
+                     X_AGREEMENT_DATE RNT_TENANCY_AGREEMENT.AGREEMENT_DATE%TYPE,
+                     X_TERM RNT_TENANCY_AGREEMENT.TERM%TYPE,
+                     X_AMOUNT RNT_TENANCY_AGREEMENT.AMOUNT%TYPE,
+                     X_AMOUNT_PERIOD RNT_TENANCY_AGREEMENT.AMOUNT_PERIOD%TYPE,
+                     X_EFFECTIVE_DATE RNT_TENANCY_AGREEMENT.EFFECTIVE_DATE%TYPE,
+                     X_DEPOSIT RNT_TENANCY_AGREEMENT.DEPOSIT%TYPE,
+                     X_LAST_MONTH RNT_TENANCY_AGREEMENT.LAST_MONTH%TYPE,
+                     X_DISCOUNT_AMOUNT RNT_TENANCY_AGREEMENT.DISCOUNT_AMOUNT%TYPE,
+                     X_DISCOUNT_TYPE RNT_TENANCY_AGREEMENT.DISCOUNT_TYPE%TYPE,
+                     X_DISCOUNT_PERIOD RNT_TENANCY_AGREEMENT.DISCOUNT_PERIOD%TYPE,
+                     X_CHECKSUM VARCHAR2
+                     )
+is
+l_checksum varchar2(32); 
+begin
+   
+   lock_row(X_AGREEMENT_ID);
+   
+   -- validate checksum   
+   l_checksum := get_checksum(X_AGREEMENT_ID);
+   if X_CHECKSUM != l_checksum then
+      RAISE_APPLICATION_ERROR(-20002, 'Record was changed another user.');
+      --E_ROW_CHANGED_ANOTHER_USER  
+   end if;
+
+   if not check_unique(X_AGREEMENT_ID, X_UNIT_ID, X_AGREEMENT_DATE) then
+        RAISE_APPLICATION_ERROR(-20006, 'Address of property must be unique');                      
+   end if;   
+   
+   update RNT_TENANCY_AGREEMENT
+   set  AGREEMENT_ID      = X_AGREEMENT_ID,
+        UNIT_ID           = X_UNIT_ID,
+        AGREEMENT_DATE    = X_AGREEMENT_DATE,
+        TERM              = X_TERM,
+        AMOUNT            = X_AMOUNT,
+        AMOUNT_PERIOD     = X_AMOUNT_PERIOD,
+        EFFECTIVE_DATE    = X_EFFECTIVE_DATE,
+        DEPOSIT           = X_DEPOSIT,
+        LAST_MONTH        = X_LAST_MONTH,
+        DISCOUNT_AMOUNT   = X_DISCOUNT_AMOUNT,
+        DISCOUNT_TYPE     = X_DISCOUNT_TYPE,
+        DISCOUNT_PERIOD   = X_DISCOUNT_PERIOD
+   where AGREEMENT_ID     = X_AGREEMENT_ID;
+end;                 
+
+function insert_row(X_UNIT_ID RNT_TENANCY_AGREEMENT.UNIT_ID%TYPE,
+                     X_AGREEMENT_DATE RNT_TENANCY_AGREEMENT.AGREEMENT_DATE%TYPE,
+                     X_TERM RNT_TENANCY_AGREEMENT.TERM%TYPE,
+                     X_AMOUNT RNT_TENANCY_AGREEMENT.AMOUNT%TYPE,
+                     X_AMOUNT_PERIOD RNT_TENANCY_AGREEMENT.AMOUNT_PERIOD%TYPE,
+                     X_EFFECTIVE_DATE RNT_TENANCY_AGREEMENT.EFFECTIVE_DATE%TYPE,
+                     X_DEPOSIT RNT_TENANCY_AGREEMENT.DEPOSIT%TYPE,
+                     X_LAST_MONTH RNT_TENANCY_AGREEMENT.LAST_MONTH%TYPE,
+                     X_DISCOUNT_AMOUNT RNT_TENANCY_AGREEMENT.DISCOUNT_AMOUNT%TYPE,
+                     X_DISCOUNT_TYPE RNT_TENANCY_AGREEMENT.DISCOUNT_TYPE%TYPE,
+                     X_DISCOUNT_PERIOD RNT_TENANCY_AGREEMENT.DISCOUNT_PERIOD%TYPE
+                     ) return RNT_TENANCY_AGREEMENT.AGREEMENT_ID%TYPE
+is
+  x RNT_TENANCY_AGREEMENT.AGREEMENT_ID%TYPE;
+begin
+    insert into RNT_TENANCY_AGREEMENT (
+       AGREEMENT_ID, 
+       UNIT_ID, 
+       AGREEMENT_DATE, 
+       TERM, 
+       AMOUNT, 
+       AMOUNT_PERIOD, 
+       EFFECTIVE_DATE, 
+       DEPOSIT, 
+       LAST_MONTH, 
+       DISCOUNT_AMOUNT, 
+       DISCOUNT_TYPE, 
+       DISCOUNT_PERIOD) 
+    values (
+       RNT_TENANCY_AGREEMENT_SEQ.NEXTVAL, 
+       X_UNIT_ID, 
+       X_AGREEMENT_DATE, 
+       X_TERM, 
+       X_AMOUNT, 
+       X_AMOUNT_PERIOD, 
+       X_EFFECTIVE_DATE, 
+       X_DEPOSIT, 
+       X_LAST_MONTH, 
+       X_DISCOUNT_AMOUNT, 
+       X_DISCOUNT_TYPE, 
+       X_DISCOUNT_PERIOD)
+    returning AGREEMENT_ID into x;
+    return x;    
+end;                     
+    
+                     
+END RNT_TENANCY_AGREEMENT_PKG;
+Package body created.
+SQL> SHOW ERRORS
+No errors.
+SQL> --
+SQL> -- RNT_LOANS_PKG  (Package) 
+SQL> --
+SQL> CREATE OR REPLACE PACKAGE RNT_LOANS_PKG AS
+/******************************************************************************
+   NAME:       RNT_LOANS_PKG
+   PURPOSE:
+
+   REVISIONS:
+   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        08.04.2007             1. Created this package.
+******************************************************************************/
+
+function get_checksum(X_LOAN_ID RNT_LOANS.LOAN_ID%TYPE) return VARCHAR2;
+
+procedure update_row(X_LOAN_ID            RNT_LOANS.LOAN_ID%TYPE,
+                     X_PROPERTY_ID        RNT_LOANS.PROPERTY_ID%TYPE,
+                     X_POSITION           RNT_LOANS.POSITION%TYPE,
+                     X_LOAN_DATE          RNT_LOANS.LOAN_DATE%TYPE,
+                     X_LOAN_AMOUNT        RNT_LOANS.LOAN_AMOUNT%TYPE,
+                     X_TERM               RNT_LOANS.TERM%TYPE,
+                     X_INTEREST_RATE      RNT_LOANS.INTEREST_RATE%TYPE,
+                     X_CREDIT_LINE_YN     RNT_LOANS.CREDIT_LINE_YN%TYPE,
+                     X_ARM_YN             RNT_LOANS.ARM_YN%TYPE,
+                     X_BALLOON_DATE       RNT_LOANS.BALLOON_DATE%TYPE,
+                     X_AMORTIZATION_START RNT_LOANS.AMORTIZATION_START%TYPE,
+                     X_SETTLEMENT_DATE    RNT_LOANS.SETTLEMENT_DATE%TYPE,
+                     X_CHECKSUM           VARCHAR2
+                    ); 
+
+function insert_row( X_PROPERTY_ID        RNT_LOANS.PROPERTY_ID%TYPE,
+                     X_POSITION           RNT_LOANS.POSITION%TYPE,
+                     X_LOAN_DATE          RNT_LOANS.LOAN_DATE%TYPE,
+                     X_LOAN_AMOUNT        RNT_LOANS.LOAN_AMOUNT%TYPE,
+                     X_TERM               RNT_LOANS.TERM%TYPE,
+                     X_INTEREST_RATE      RNT_LOANS.INTEREST_RATE%TYPE,
+                     X_CREDIT_LINE_YN     RNT_LOANS.CREDIT_LINE_YN%TYPE,
+                     X_ARM_YN             RNT_LOANS.ARM_YN%TYPE,
+                     X_BALLOON_DATE       RNT_LOANS.BALLOON_DATE%TYPE,
+                     X_AMORTIZATION_START RNT_LOANS.AMORTIZATION_START%TYPE,
+                     X_SETTLEMENT_DATE    RNT_LOANS.SETTLEMENT_DATE%TYPE
+                    ) return RNT_LOANS.LOAN_ID%TYPE; 
+END RNT_LOANS_PKG;
+Package created.
+SQL> SHOW ERRORS
+No errors.
+SQL> --
+SQL> -- RNT_PROPERTIES_PKG  (Package) 
+SQL> --
+SQL> CREATE OR REPLACE PACKAGE        RNT_PROPERTIES_PKG AS
+/******************************************************************************
+   NAME:       RNT_PROPERTIES_PKG
+   PURPOSE:
+
+   REVISIONS:
+   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        30.03.2007             1. Created this package.
+******************************************************************************/
+E_ROW_LOCKED EXCEPTION;
+E_ROW_CHANGED_ANOTHER_USER EXCEPTION;
+
+PRAGMA EXCEPTION_INIT (E_ROW_LOCKED, -20001);
+PRAGMA EXCEPTION_INIT (E_ROW_CHANGED_ANOTHER_USER, -20002);
+
+function get_ckecksum(p_property_id RNT_PROPERTIES.PROPERTY_ID%TYPE) return VARCHAR2;
+
+procedure lock_row(X_PROPERTY_ID RNT_PROPERTIES.PROPERTY_ID%TYPE); 
+   
+
+procedure update_row(X_PROPERTY_ID       RNT_PROPERTIES.PROPERTY_ID%TYPE, 
+                     X_BUSINESS_ID       RNT_PROPERTIES.BUSINESS_ID%TYPE,
+                     X_UNITS             RNT_PROPERTIES.UNITS%TYPE,                      
+                     X_ADDRESS1          RNT_PROPERTIES.ADDRESS1%TYPE, 
+                     X_ADDRESS2          RNT_PROPERTIES.ADDRESS2%TYPE, 
+                     X_CITY              RNT_PROPERTIES.CITY%TYPE, 
+                     X_STATE             RNT_PROPERTIES.STATE%TYPE, 
+                     X_ZIPCODE           RNT_PROPERTIES.ZIPCODE%TYPE, 
+                     X_DATE_PURCHASED    RNT_PROPERTIES.DATE_PURCHASED%TYPE, 
+                     X_PURCHASE_PRICE    RNT_PROPERTIES.PURCHASE_PRICE%TYPE, 
+                     X_LAND_VALUE        RNT_PROPERTIES.LAND_VALUE%TYPE, 
+                     X_DEPRECIATION_TERM RNT_PROPERTIES.DEPRECIATION_TERM%TYPE, 
+                     X_YEAR_BUILT        RNT_PROPERTIES.YEAR_BUILT%TYPE, 
+                     X_BUILDING_SIZE     RNT_PROPERTIES.BUILDING_SIZE%TYPE, 
+                     X_LOT_SIZE          RNT_PROPERTIES.LOT_SIZE%TYPE, 
+                     X_DATE_SOLD         RNT_PROPERTIES.DATE_SOLD%TYPE, 
+                     X_SALE_AMOUNT       RNT_PROPERTIES.SALE_AMOUNT%TYPE, 
+                     X_NOTE_YN           RNT_PROPERTIES.NOTE_YN%TYPE,
+                     X_CHECKSUM VARCHAR2); 
+
+function insert_row( 
+                     X_BUSINESS_ID       RNT_PROPERTIES.BUSINESS_ID%TYPE,
+                     X_UNITS             RNT_PROPERTIES.UNITS%TYPE, 
+                     X_ADDRESS1          RNT_PROPERTIES.ADDRESS1%TYPE, 
+                     X_ADDRESS2          RNT_PROPERTIES.ADDRESS2%TYPE, 
+                     X_CITY              RNT_PROPERTIES.CITY%TYPE, 
+                     X_STATE             RNT_PROPERTIES.STATE%TYPE, 
+                     X_ZIPCODE           RNT_PROPERTIES.ZIPCODE%TYPE, 
+                     X_DATE_PURCHASED    RNT_PROPERTIES.DATE_PURCHASED%TYPE, 
+                     X_PURCHASE_PRICE    RNT_PROPERTIES.PURCHASE_PRICE%TYPE, 
+                     X_LAND_VALUE        RNT_PROPERTIES.LAND_VALUE%TYPE, 
+                     X_DEPRECIATION_TERM RNT_PROPERTIES.DEPRECIATION_TERM%TYPE, 
+                     X_YEAR_BUILT        RNT_PROPERTIES.YEAR_BUILT%TYPE, 
+                     X_BUILDING_SIZE     RNT_PROPERTIES.BUILDING_SIZE%TYPE, 
+                     X_LOT_SIZE          RNT_PROPERTIES.LOT_SIZE%TYPE, 
+                     X_DATE_SOLD         RNT_PROPERTIES.DATE_SOLD%TYPE, 
+                     X_SALE_AMOUNT       RNT_PROPERTIES.SALE_AMOUNT%TYPE, 
+                     X_NOTE_YN           RNT_PROPERTIES.NOTE_YN%TYPE)
+    return RNT_PROPERTIES.PROPERTY_ID%TYPE;                      
+END RNT_PROPERTIES_PKG;
+Package created.
+SQL> SHOW ERRORS
+No errors.
+SQL> --
+SQL> -- RNT_PROPERTY_UNITS_PKG  (Package) 
+SQL> --
+SQL> CREATE OR REPLACE PACKAGE        RNT_PROPERTY_UNITS_PKG AS
+/******************************************************************************
+   NAME:       RNT_PROPERTY_UNITS_PKG
+   PURPOSE:
+
+   REVISIONS:
+   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        04.04.2007             1. Created this package.
+******************************************************************************/
+
+function get_checksum(p_unit_id RNT_PROPERTY_UNITS.UNIT_ID%TYPE) return VARCHAR2;
+
+procedure lock_row(X_UNIT_ID RNT_PROPERTY_UNITS.UNIT_ID%TYPE);
+
+procedure update_row(X_UNIT_ID RNT_PROPERTY_UNITS.UNIT_ID%TYPE, 
+                     X_PROPERTY_ID RNT_PROPERTY_UNITS.PROPERTY_ID%TYPE, 
+                     X_UNIT_NAME RNT_PROPERTY_UNITS.UNIT_NAME%TYPE, 
+                     X_UNIT_SIZE RNT_PROPERTY_UNITS.UNIT_SIZE%TYPE, 
+                     X_BEDROOMS RNT_PROPERTY_UNITS.BEDROOMS%TYPE, 
+                     X_BATHROOMS RNT_PROPERTY_UNITS.BATHROOMS%TYPE,
+                     X_CHECKSUM VARCHAR2);
+
+function insert_row( X_PROPERTY_ID RNT_PROPERTY_UNITS.PROPERTY_ID%TYPE, 
+                     X_UNIT_NAME RNT_PROPERTY_UNITS.UNIT_NAME%TYPE, 
+                     X_UNIT_SIZE RNT_PROPERTY_UNITS.UNIT_SIZE%TYPE, 
+                     X_BEDROOMS RNT_PROPERTY_UNITS.BEDROOMS%TYPE, 
+                     X_BATHROOMS RNT_PROPERTY_UNITS.BATHROOMS%TYPE
+                    ) return RNT_PROPERTY_UNITS.UNIT_ID%TYPE;
+END RNT_PROPERTY_UNITS_PKG;
+Package created.
+SQL> SHOW ERRORS
+No errors.
+SQL> --
+SQL> -- RNT_LOANS_PKG  (Package Body) 
+SQL> --
+SQL> CREATE OR REPLACE PACKAGE BODY RNT_LOANS_PKG AS
+/******************************************************************************
+   NAME:       RNT_LOANS_PKG
+   PURPOSE:
+
+   REVISIONS:
+   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        08.04.2007             1. Created this package body.
+******************************************************************************/
+
+function get_checksum(X_LOAN_ID RNT_LOANS.LOAN_ID%TYPE) return VARCHAR2
+is
+begin
+   for x in (select 
+                LOAN_ID, PROPERTY_ID, POSITION, 
+                LOAN_DATE, LOAN_AMOUNT, TERM, 
+                INTEREST_RATE, CREDIT_LINE_YN, ARM_YN, 
+                BALLOON_DATE, AMORTIZATION_START, SETTLEMENT_DATE
+            from RNT_LOANS
+            where LOAN_ID = X_LOAN_ID) loop
+         RNT_SYS_CHECKSUM_REC_PKG.INIT;
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.LOAN_ID);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.PROPERTY_ID);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.POSITION);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.LOAN_DATE);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.LOAN_AMOUNT);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.TERM); 
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.INTEREST_RATE); 
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.CREDIT_LINE_YN); 
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.ARM_YN); 
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.BALLOON_DATE); 
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.AMORTIZATION_START);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.SETTLEMENT_DATE); 
+         return RNT_SYS_CHECKSUM_REC_PKG.GET_CHECKSUM;
+   end loop;
+   raise NO_DATA_FOUND;               
+end;
+
+procedure lock_row(X_LOAN_ID RNT_LOANS.LOAN_ID%TYPE)
+is
+  cursor c is
+     select * 
+     from RNT_LOANS   
+     where LOAN_ID = X_LOAN_ID
+     for update of LOAN_ID nowait; 
+begin
+  open c;
+  close c;
+exception
+  when OTHERS then
+    if SQLCODE = -54 then
+      RAISE_APPLICATION_ERROR(-20001, 'Cannot changed record. Record is locked.');
+    end if;       
+end;
+
+function check_unique(X_LOAN_ID       RNT_LOANS.LOAN_ID%TYPE,
+                      X_PROPERTY_ID   RNT_LOANS.PROPERTY_ID%TYPE,
+                      X_POSITION      RNT_LOANS.POSITION%TYPE
+                      ) return boolean
+is
+  x NUMBER;
+begin
+   select 1 
+   into x
+   from DUAL
+   where exists (
+                   select 1
+                   from RNT_LOANS
+                   where (LOAN_ID != X_LOAN_ID or X_LOAN_ID is null) 
+                     and PROPERTY_ID = X_PROPERTY_ID
+                     and POSITION = X_POSITION             
+                 );
+  return false;
+exception
+  when NO_DATA_FOUND then
+     return true;                        
+end;                 
+
+procedure update_row(X_LOAN_ID            RNT_LOANS.LOAN_ID%TYPE,
+                     X_PROPERTY_ID        RNT_LOANS.PROPERTY_ID%TYPE,
+                     X_POSITION           RNT_LOANS.POSITION%TYPE,
+                     X_LOAN_DATE          RNT_LOANS.LOAN_DATE%TYPE,
+                     X_LOAN_AMOUNT        RNT_LOANS.LOAN_AMOUNT%TYPE,
+                     X_TERM               RNT_LOANS.TERM%TYPE,
+                     X_INTEREST_RATE      RNT_LOANS.INTEREST_RATE%TYPE,
+                     X_CREDIT_LINE_YN     RNT_LOANS.CREDIT_LINE_YN%TYPE,
+                     X_ARM_YN             RNT_LOANS.ARM_YN%TYPE,
+                     X_BALLOON_DATE       RNT_LOANS.BALLOON_DATE%TYPE,
+                     X_AMORTIZATION_START RNT_LOANS.AMORTIZATION_START%TYPE,
+                     X_SETTLEMENT_DATE    RNT_LOANS.SETTLEMENT_DATE%TYPE,
+                     X_CHECKSUM           VARCHAR2
+                    )
+is
+ l_checksum varchar2(32); 
+begin
+   lock_row(X_LOAN_ID);
+   
+   -- validate checksum   
+   l_checksum := get_checksum(X_LOAN_ID);
+   if X_CHECKSUM != l_checksum then
+      RAISE_APPLICATION_ERROR(-20002, 'Record was changed another user.');
+   end if;
+
+   if not check_unique(X_LOAN_ID, X_PROPERTY_ID, X_POSITION) then
+        RAISE_APPLICATION_ERROR(-20006, 'Position in property must be unique.');                      
+   end if;   
+   
+   update RNT_LOANS
+   set LOAN_ID            = X_LOAN_ID,
+       PROPERTY_ID        = X_PROPERTY_ID,
+       POSITION           = X_POSITION,
+       LOAN_DATE          = X_LOAN_DATE,
+       LOAN_AMOUNT        = X_LOAN_AMOUNT,
+       TERM               = X_TERM,
+       INTEREST_RATE      = X_INTEREST_RATE,
+       CREDIT_LINE_YN     = X_CREDIT_LINE_YN,
+       ARM_YN             = X_ARM_YN,
+       BALLOON_DATE       = X_BALLOON_DATE,
+       AMORTIZATION_START = X_AMORTIZATION_START,
+       SETTLEMENT_DATE    = X_SETTLEMENT_DATE
+   where LOAN_ID = X_LOAN_ID;
+end;                                  
+
+function insert_row( X_PROPERTY_ID        RNT_LOANS.PROPERTY_ID%TYPE,
+                     X_POSITION           RNT_LOANS.POSITION%TYPE,
+                     X_LOAN_DATE          RNT_LOANS.LOAN_DATE%TYPE,
+                     X_LOAN_AMOUNT        RNT_LOANS.LOAN_AMOUNT%TYPE,
+                     X_TERM               RNT_LOANS.TERM%TYPE,
+                     X_INTEREST_RATE      RNT_LOANS.INTEREST_RATE%TYPE,
+                     X_CREDIT_LINE_YN     RNT_LOANS.CREDIT_LINE_YN%TYPE,
+                     X_ARM_YN             RNT_LOANS.ARM_YN%TYPE,
+                     X_BALLOON_DATE       RNT_LOANS.BALLOON_DATE%TYPE,
+                     X_AMORTIZATION_START RNT_LOANS.AMORTIZATION_START%TYPE,
+                     X_SETTLEMENT_DATE    RNT_LOANS.SETTLEMENT_DATE%TYPE
+                    ) return RNT_LOANS.LOAN_ID%TYPE
+is
+  x NUMBER;
+begin
+   if not check_unique(NULL, X_PROPERTY_ID, X_POSITION) then
+        RAISE_APPLICATION_ERROR(-20006, 'Position in property must be unique.');                      
+   end if;
+   
+   insert into RNT_LOANS (
+       LOAN_ID, PROPERTY_ID, POSITION, 
+       LOAN_DATE, LOAN_AMOUNT, TERM, 
+       INTEREST_RATE, CREDIT_LINE_YN, ARM_YN, 
+       BALLOON_DATE, AMORTIZATION_START, SETTLEMENT_DATE) 
+    values (RNT_LOANS_SEQ.NEXTVAL, X_PROPERTY_ID, X_POSITION, 
+         X_LOAN_DATE, X_LOAN_AMOUNT, X_TERM, 
+         X_INTEREST_RATE, X_CREDIT_LINE_YN, X_ARM_YN, 
+         X_BALLOON_DATE, X_AMORTIZATION_START, X_SETTLEMENT_DATE)
+    returning LOAN_ID into x;
+             
+    return x;
+end;                    
+
+END RNT_LOANS_PKG;
+Package body created.
+SQL> SHOW ERRORS
+No errors.
+SQL> --
+SQL> -- RNT_PROPERTIES_PKG  (Package Body) 
+SQL> --
+SQL> CREATE OR REPLACE PACKAGE BODY        RNT_PROPERTIES_PKG AS
+/******************************************************************************
+   NAME:       RNT_PROPERTIES_PKG
+   PURPOSE:
+
+   REVISIONS:
+   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        30.03.2007             1. Created this package body.
+******************************************************************************/
+
+function get_ckecksum(p_property_id RNT_PROPERTIES.PROPERTY_ID%TYPE) return VARCHAR2
+is
+begin
+   for x in (select 
+                 PROPERTY_ID, BUSINESS_ID, 
+                 ADDRESS1, ADDRESS2, CITY, UNITS,
+                 STATE, ZIPCODE, 
+                 DATE_PURCHASED, PURCHASE_PRICE, LAND_VALUE, 
+                 DEPRECIATION_TERM, YEAR_BUILT, BUILDING_SIZE, 
+                 LOT_SIZE, DATE_SOLD, SALE_AMOUNT, 
+                 NOTE_YN
+              from RNT_PROPERTIES
+              where PROPERTY_ID = p_property_id) loop
+         RNT_SYS_CHECKSUM_REC_PKG.INIT;
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.PROPERTY_ID);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.BUSINESS_ID);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.UNITS);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.ADDRESS1);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.ADDRESS2);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.CITY); 
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.STATE); 
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.ZIPCODE); 
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.DATE_PURCHASED); 
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.PURCHASE_PRICE); 
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.LAND_VALUE);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.DEPRECIATION_TERM); 
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.YEAR_BUILT);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.BUILDING_SIZE); 
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.LOT_SIZE);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.DATE_SOLD);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.SALE_AMOUNT); 
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.NOTE_YN);
+         return RNT_SYS_CHECKSUM_REC_PKG.GET_CHECKSUM;
+   end loop;
+   raise NO_DATA_FOUND;               
+end;
+
+procedure lock_row(X_PROPERTY_ID RNT_PROPERTIES.PROPERTY_ID%TYPE)
+is
+  cursor c is
+    select 
+      PROPERTY_ID, BUSINESS_ID, UNITS, 
+      ADDRESS1, ADDRESS2, 
+      CITY, STATE, ZIPCODE, 
+      DATE_PURCHASED, PURCHASE_PRICE, LAND_VALUE, 
+      DEPRECIATION_TERM, YEAR_BUILT, BUILDING_SIZE, 
+      LOT_SIZE, DATE_SOLD, SALE_AMOUNT, 
+      NOTE_YN
+   from RNT_PROPERTIES
+   where PROPERTY_ID = X_PROPERTY_ID
+   for update of PROPERTY_ID nowait; 
+begin
+  open c;
+  close c;
+exception
+  when OTHERS then
+    if SQLCODE = -54 then
+      RAISE_APPLICATION_ERROR(-20001, 'Cannot changed record. Record is locked.');
+    end if;       
+end;
+
+function check_unique(X_PROPERTY_ID       RNT_PROPERTIES.PROPERTY_ID%TYPE, 
+                      X_ADDRESS1          RNT_PROPERTIES.ADDRESS1%TYPE, 
+                      X_ADDRESS2          RNT_PROPERTIES.ADDRESS2%TYPE, 
+                      X_CITY              RNT_PROPERTIES.CITY%TYPE, 
+                      X_STATE             RNT_PROPERTIES.STATE%TYPE, 
+                      X_ZIPCODE           RNT_PROPERTIES.ZIPCODE%TYPE) return boolean
+is
+  x NUMBER;
+begin
+   select 1 
+   into x
+   from DUAL
+   where exists (
+                   select 1
+                   from RNT_PROPERTIES
+                   where (PROPERTY_ID != X_PROPERTY_ID or X_PROPERTY_ID is null) 
+                     and ADDRESS1 = X_ADDRESS1 
+                     and ADDRESS2 = X_ADDRESS2 
+                     and CITY = X_CITY 
+                     and STATE = X_STATE 
+                     and ZIPCODE = X_ZIPCODE            
+                 );
+  return false;
+exception
+  when NO_DATA_FOUND then
+     return true;                        
+end;                               
+
+procedure update_row(X_PROPERTY_ID       RNT_PROPERTIES.PROPERTY_ID%TYPE, 
+                     X_BUSINESS_ID       RNT_PROPERTIES.BUSINESS_ID%TYPE, 
+                     X_UNITS             RNT_PROPERTIES.UNITS%TYPE,
+                     X_ADDRESS1          RNT_PROPERTIES.ADDRESS1%TYPE, 
+                     X_ADDRESS2          RNT_PROPERTIES.ADDRESS2%TYPE, 
+                     X_CITY              RNT_PROPERTIES.CITY%TYPE, 
+                     X_STATE             RNT_PROPERTIES.STATE%TYPE, 
+                     X_ZIPCODE           RNT_PROPERTIES.ZIPCODE%TYPE, 
+                     X_DATE_PURCHASED    RNT_PROPERTIES.DATE_PURCHASED%TYPE, 
+                     X_PURCHASE_PRICE    RNT_PROPERTIES.PURCHASE_PRICE%TYPE, 
+                     X_LAND_VALUE        RNT_PROPERTIES.LAND_VALUE%TYPE, 
+                     X_DEPRECIATION_TERM RNT_PROPERTIES.DEPRECIATION_TERM%TYPE, 
+                     X_YEAR_BUILT        RNT_PROPERTIES.YEAR_BUILT%TYPE, 
+                     X_BUILDING_SIZE     RNT_PROPERTIES.BUILDING_SIZE%TYPE, 
+                     X_LOT_SIZE          RNT_PROPERTIES.LOT_SIZE%TYPE, 
+                     X_DATE_SOLD         RNT_PROPERTIES.DATE_SOLD%TYPE, 
+                     X_SALE_AMOUNT       RNT_PROPERTIES.SALE_AMOUNT%TYPE, 
+                     X_NOTE_YN           RNT_PROPERTIES.NOTE_YN%TYPE,
+                     X_CHECKSUM          VARCHAR2) 
+is
+  l_checksum varchar2(32); 
+begin
+   lock_row(X_PROPERTY_ID);
+   
+   -- validate checksum   
+   l_checksum := get_ckecksum(X_PROPERTY_ID);
+   if X_CHECKSUM != l_checksum then
+      RAISE_APPLICATION_ERROR(-20002, 'Record was changed another user.');
+      --E_ROW_CHANGED_ANOTHER_USER  
+   end if;
+
+   if not check_unique(X_PROPERTY_ID,X_ADDRESS1, X_ADDRESS2, 
+                      X_CITY, X_STATE, X_ZIPCODE) then
+        RAISE_APPLICATION_ERROR(-20006, 'Address of property must be unique');                      
+   end if;                       
+   
+   update RNT_PROPERTIES
+   set PROPERTY_ID       = X_PROPERTY_ID,
+       BUSINESS_ID       = X_BUSINESS_ID,
+       UNITS             = X_UNITS,
+       ADDRESS1          = X_ADDRESS1,
+       ADDRESS2          = X_ADDRESS2,
+       CITY              = X_CITY,
+       STATE             = X_STATE,
+       ZIPCODE           = X_ZIPCODE,
+       DATE_PURCHASED    = X_DATE_PURCHASED,
+       PURCHASE_PRICE    = X_PURCHASE_PRICE,
+       LAND_VALUE        = X_LAND_VALUE,
+       DEPRECIATION_TERM = X_DEPRECIATION_TERM,
+       YEAR_BUILT        = X_YEAR_BUILT,
+       BUILDING_SIZE     = X_BUILDING_SIZE,
+       LOT_SIZE          = X_LOT_SIZE,
+       DATE_SOLD         = X_DATE_SOLD,
+       SALE_AMOUNT       = X_SALE_AMOUNT,
+       NOTE_YN           = X_NOTE_YN
+   where  PROPERTY_ID    = X_PROPERTY_ID;
+end;
+
+function insert_row( X_BUSINESS_ID       RNT_PROPERTIES.BUSINESS_ID%TYPE,
+                     X_UNITS             RNT_PROPERTIES.UNITS%TYPE, 
+                     X_ADDRESS1          RNT_PROPERTIES.ADDRESS1%TYPE, 
+                     X_ADDRESS2          RNT_PROPERTIES.ADDRESS2%TYPE, 
+                     X_CITY              RNT_PROPERTIES.CITY%TYPE, 
+                     X_STATE             RNT_PROPERTIES.STATE%TYPE, 
+                     X_ZIPCODE           RNT_PROPERTIES.ZIPCODE%TYPE, 
+                     X_DATE_PURCHASED    RNT_PROPERTIES.DATE_PURCHASED%TYPE, 
+                     X_PURCHASE_PRICE    RNT_PROPERTIES.PURCHASE_PRICE%TYPE, 
+                     X_LAND_VALUE        RNT_PROPERTIES.LAND_VALUE%TYPE, 
+                     X_DEPRECIATION_TERM RNT_PROPERTIES.DEPRECIATION_TERM%TYPE, 
+                     X_YEAR_BUILT        RNT_PROPERTIES.YEAR_BUILT%TYPE, 
+                     X_BUILDING_SIZE     RNT_PROPERTIES.BUILDING_SIZE%TYPE, 
+                     X_LOT_SIZE          RNT_PROPERTIES.LOT_SIZE%TYPE, 
+                     X_DATE_SOLD         RNT_PROPERTIES.DATE_SOLD%TYPE, 
+                     X_SALE_AMOUNT       RNT_PROPERTIES.SALE_AMOUNT%TYPE, 
+                     X_NOTE_YN           RNT_PROPERTIES.NOTE_YN%TYPE)
+       return RNT_PROPERTIES.PROPERTY_ID%TYPE                     
+is
+ x RNT_PROPERTIES.PROPERTY_ID%TYPE;
+begin
+
+   if not check_unique(NULL,X_ADDRESS1, X_ADDRESS2, 
+                      X_CITY, X_STATE, X_ZIPCODE) then
+        RAISE_APPLICATION_ERROR(-20006, 'Address of property must be unique');                      
+   end if;                       
+
+  insert into RNT_PROPERTIES (
+           PROPERTY_ID, BUSINESS_ID, UNITS, 
+           ADDRESS1, ADDRESS2, 
+           CITY, STATE, ZIPCODE, 
+           DATE_PURCHASED, PURCHASE_PRICE, LAND_VALUE, 
+           DEPRECIATION_TERM, YEAR_BUILT, BUILDING_SIZE, 
+           LOT_SIZE, DATE_SOLD, SALE_AMOUNT, 
+           NOTE_YN) 
+  values (RNT_PROPERTIES_SEQ.NEXTVAL, X_BUSINESS_ID, X_UNITS, 
+   X_ADDRESS1, X_ADDRESS2, 
+   X_CITY, X_STATE, X_ZIPCODE, 
+   X_DATE_PURCHASED, X_PURCHASE_PRICE, X_LAND_VALUE, 
+   X_DEPRECIATION_TERM, X_YEAR_BUILT, X_BUILDING_SIZE, 
+   X_LOT_SIZE, X_DATE_SOLD, X_SALE_AMOUNT, 
+   X_NOTE_YN)
+  returning PROPERTY_ID into x;
+   
+  return x;
+end;
+
+END RNT_PROPERTIES_PKG;
+Package body created.
+SQL> SHOW ERRORS
+No errors.
+SQL> --
+SQL> -- RNT_PROPERTY_UNITS_PKG  (Package Body) 
+SQL> --
+SQL> CREATE OR REPLACE PACKAGE BODY        RNT_PROPERTY_UNITS_PKG AS
+/******************************************************************************
+   NAME:       RNT_PROPERTY_UNITS_PKG
+   PURPOSE:
+
+   REVISIONS:
+   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        04.04.2007             1. Created this package body.
+******************************************************************************/
+
+function get_checksum(p_unit_id RNT_PROPERTY_UNITS.UNIT_ID%TYPE) return VARCHAR2
+is
+begin
+   for x in (select
+               UNIT_ID, PROPERTY_ID, 
+               UNIT_NAME, UNIT_SIZE, BEDROOMS, 
+               BATHROOMS
+             from RNT_PROPERTY_UNITS      
+             where UNIT_ID = p_unit_id) loop
+         RNT_SYS_CHECKSUM_REC_PKG.INIT;
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.UNIT_ID);         
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.PROPERTY_ID);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.UNIT_NAME); 
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.UNIT_SIZE);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.BEDROOMS);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.BATHROOMS); 
+         return RNT_SYS_CHECKSUM_REC_PKG.GET_CHECKSUM;
+   end loop;
+   raise NO_DATA_FOUND;  
+end;
+
+function check_unique(X_UNIT_ID RNT_PROPERTY_UNITS.UNIT_ID%TYPE,
+                      X_PROPERTY_ID RNT_PROPERTY_UNITS.PROPERTY_ID%TYPE, 
+                      X_UNIT_NAME RNT_PROPERTY_UNITS.UNIT_NAME%TYPE) return boolean
+is
+  x NUMBER;
+begin
+   select 1 
+   into x
+   from DUAL
+   where exists (
+                   select 1
+                   from RNT_PROPERTY_UNITS
+                   where PROPERTY_ID = X_PROPERTY_ID
+                     and UNIT_NAME = X_UNIT_NAME
+                     and (UNIT_ID != X_UNIT_ID or X_UNIT_ID is null)
+                 );
+  return false;
+exception
+  when NO_DATA_FOUND then
+     return true;                        
+end;                       
+                      
+
+procedure lock_row(X_UNIT_ID RNT_PROPERTY_UNITS.UNIT_ID%TYPE)
+is
+    cursor c is
+          select
+               UNIT_ID, PROPERTY_ID, 
+               UNIT_NAME, UNIT_SIZE, BEDROOMS, 
+               BATHROOMS
+          from RNT_PROPERTY_UNITS      
+          where UNIT_ID = X_UNIT_ID
+          for update of UNIT_ID nowait; 
+begin
+  open c;
+  close c;
+exception
+  when OTHERS then
+    if SQLCODE = -54 then
+      RAISE_APPLICATION_ERROR(-20001, 'Cannot changed record. Record is locked.');
+    end if; 
+end;
+
+procedure update_row(X_UNIT_ID RNT_PROPERTY_UNITS.UNIT_ID%TYPE, 
+                     X_PROPERTY_ID RNT_PROPERTY_UNITS.PROPERTY_ID%TYPE, 
+                     X_UNIT_NAME RNT_PROPERTY_UNITS.UNIT_NAME%TYPE, 
+                     X_UNIT_SIZE RNT_PROPERTY_UNITS.UNIT_SIZE%TYPE, 
+                     X_BEDROOMS RNT_PROPERTY_UNITS.BEDROOMS%TYPE, 
+                     X_BATHROOMS RNT_PROPERTY_UNITS.BATHROOMS%TYPE,
+                     X_CHECKSUM VARCHAR2)
+is
+ l_checksum varchar2(32); 
+begin
+   lock_row(X_UNIT_ID);
+   
+   -- validate checksum   
+   l_checksum := get_checksum(X_UNIT_ID);
+   if X_CHECKSUM != l_checksum then
+      RAISE_APPLICATION_ERROR(-20002, 'Record was changed another user.');
+   end if;
+   
+   if not check_unique(X_UNIT_ID, X_PROPERTY_ID, X_UNIT_NAME) then
+      RAISE_APPLICATION_ERROR(-20005, 'Unit name must be unique for property.');                 
+   end if;                       
+      
+   update RNT_PROPERTY_UNITS
+   set PROPERTY_ID = X_PROPERTY_ID,
+       UNIT_NAME   = X_UNIT_NAME,
+       UNIT_SIZE   = X_UNIT_SIZE,
+       BEDROOMS    = X_BEDROOMS,
+       BATHROOMS   = X_BATHROOMS
+   where  UNIT_ID  = X_UNIT_ID;
+end;                        
+
+function insert_row( X_PROPERTY_ID RNT_PROPERTY_UNITS.PROPERTY_ID%TYPE, 
+                     X_UNIT_NAME RNT_PROPERTY_UNITS.UNIT_NAME%TYPE, 
+                     X_UNIT_SIZE RNT_PROPERTY_UNITS.UNIT_SIZE%TYPE, 
+                     X_BEDROOMS RNT_PROPERTY_UNITS.BEDROOMS%TYPE, 
+                     X_BATHROOMS RNT_PROPERTY_UNITS.BATHROOMS%TYPE
+                    ) return RNT_PROPERTY_UNITS.UNIT_ID%TYPE
+is
+  x RNT_PROPERTY_UNITS.UNIT_ID%TYPE := 0;
+begin
+   if not check_unique(NULL, X_PROPERTY_ID, X_UNIT_NAME) then
+      RAISE_APPLICATION_ERROR(-20005, 'Unit name must be unique for property.');                 
+   end if;
+   
+   insert into RNT_PROPERTY_UNITS (
+            UNIT_ID, PROPERTY_ID, UNIT_NAME, 
+            UNIT_SIZE, BEDROOMS, BATHROOMS) 
+   values (RNT_PROPERTY_UNITS_SEQ.NEXTVAL, X_PROPERTY_ID, X_UNIT_NAME, 
+          X_UNIT_SIZE, X_BEDROOMS, X_BATHROOMS)
+   returning UNIT_ID into x;
+   return x;
+end;                    
+
+END RNT_PROPERTY_UNITS_PKG;
+Package body created.
+SQL> SHOW ERRORS
+No errors.
+SQL> @@business_units_data.sql
+SQL> SET DEFINE OFF
+SQL> Insert into RNTMGR.RNT_BUSINESS_UNITS
+   (BUSINESS_ID, NOTM, BUSINESS_NAME)
+ Values
+   (1, 0, 'Rental')
+1 row created.
+SQL> Insert into RNTMGR.RNT_BUSINESS_UNITS
+   (BUSINESS_ID, NOTM, BUSINESS_NAME)
+ Values
+   (2, 0, 'Vacation')
+1 row created.
+SQL> Insert into RNTMGR.RNT_BUSINESS_UNITS
+   (BUSINESS_ID, NOTM, BUSINESS_NAME)
+ Values
+   (3, 0, 'Resedential')
+1 row created.
+SQL> COMMIT
+Commit complete.
+SQL> @@lookup_data.sql
+SQL> SET DEFINE OFF
+SQL> Insert into RNTMGR.RNT_LOOKUP_TYPES
+   (LOOKUP_TYPE_ID, LOOKUP_TYPE_CODE, LOOKUP_TYPE_DESCRIPTION)
+ Values
+   (4, 'TENANT_STATUS', 'Tenant status')
+1 row created.
+SQL> Insert into RNTMGR.RNT_LOOKUP_TYPES
+   (LOOKUP_TYPE_ID, LOOKUP_TYPE_CODE, LOOKUP_TYPE_DESCRIPTION)
+ Values
+   (1, 'STATES', 'States of USA')
+1 row created.
+SQL> Insert into RNTMGR.RNT_LOOKUP_TYPES
+   (LOOKUP_TYPE_ID, LOOKUP_TYPE_CODE, LOOKUP_TYPE_DESCRIPTION)
+ Values
+   (2, 'RENT_PERIOD', 'Rent period for agreements.')
+1 row created.
+SQL> Insert into RNTMGR.RNT_LOOKUP_TYPES
+   (LOOKUP_TYPE_ID, LOOKUP_TYPE_CODE, LOOKUP_TYPE_DESCRIPTION)
+ Values
+   (3, 'FEE_TYPE', 'Fee type for agreements')
+1 row created.
+SQL> COMMIT
+Commit complete.
+SQL> SET DEFINE OFF
+SQL> Insert into RNTMGR.RNT_LOOKUP_VALUES
+   (LOOKUP_VALUE_ID, LOOKUP_CODE, LOOKUP_VALUE, LOOKUP_TYPE_ID)
+ Values
+   (9, 'ACTIVE', 'Active', 4)
+1 row created.
+SQL> Insert into RNTMGR.RNT_LOOKUP_VALUES
+   (LOOKUP_VALUE_ID, LOOKUP_CODE, LOOKUP_VALUE, LOOKUP_TYPE_ID)
+ Values
+   (10, 'FORMER', 'Former', 4)
+1 row created.
+SQL> Insert into RNTMGR.RNT_LOOKUP_VALUES
+   (LOOKUP_VALUE_ID, LOOKUP_CODE, LOOKUP_VALUE, LOOKUP_TYPE_ID)
+ Values
+   (1, 'NC', 'North Carolina', 1)
+1 row created.
+SQL> Insert into RNTMGR.RNT_LOOKUP_VALUES
+   (LOOKUP_VALUE_ID, LOOKUP_CODE, LOOKUP_VALUE, LOOKUP_TYPE_ID)
+ Values
+   (2, 'FL', 'Florida', 1)
+1 row created.
+SQL> Insert into RNTMGR.RNT_LOOKUP_VALUES
+   (LOOKUP_VALUE_ID, LOOKUP_CODE, LOOKUP_VALUE, LOOKUP_TYPE_ID)
+ Values
+   (3, 'MONTH', 'Month', 2)
+1 row created.
+SQL> Insert into RNTMGR.RNT_LOOKUP_VALUES
+   (LOOKUP_VALUE_ID, LOOKUP_CODE, LOOKUP_VALUE, LOOKUP_TYPE_ID)
+ Values
+   (4, 'BI-MONTH', 'Bi-Month', 2)
+1 row created.
+SQL> Insert into RNTMGR.RNT_LOOKUP_VALUES
+   (LOOKUP_VALUE_ID, LOOKUP_CODE, LOOKUP_VALUE, LOOKUP_TYPE_ID)
+ Values
+   (5, '2WEEKS', '2-Weeks', 2)
+1 row created.
+SQL> Insert into RNTMGR.RNT_LOOKUP_VALUES
+   (LOOKUP_VALUE_ID, LOOKUP_CODE, LOOKUP_VALUE, LOOKUP_TYPE_ID)
+ Values
+   (6, 'WEEK', 'Week', 2)
+1 row created.
+SQL> Insert into RNTMGR.RNT_LOOKUP_VALUES
+   (LOOKUP_VALUE_ID, LOOKUP_CODE, LOOKUP_VALUE, LOOKUP_TYPE_ID)
+ Values
+   (7, 'DISCOUNT', 'Discount', 3)
+1 row created.
+SQL> Insert into RNTMGR.RNT_LOOKUP_VALUES
+   (LOOKUP_VALUE_ID, LOOKUP_CODE, LOOKUP_VALUE, LOOKUP_TYPE_ID)
+ Values
+   (8, 'LATE_FEE', 'Late Fee', 3)
+1 row created.
+SQL> COMMIT
+Commit complete.
+SQL> @@1_1_RNT_PROPERTIES_PKG.pks
+SQL> CREATE OR REPLACE PACKAGE RNTMGR.RNT_PROPERTIES_PKG AS
+/******************************************************************************
+   NAME:       RNT_PROPERTIES_PKG
+   PURPOSE:
+
+   REVISIONS:
+   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        30.03.2007             1. Created this package.
+******************************************************************************/
+E_ROW_LOCKED EXCEPTION;
+E_ROW_CHANGED_ANOTHER_USER EXCEPTION;
+
+PRAGMA EXCEPTION_INIT (E_ROW_LOCKED, -20001);
+PRAGMA EXCEPTION_INIT (E_ROW_CHANGED_ANOTHER_USER, -20002);
+
+function get_ckecksum(p_property_id RNT_PROPERTIES.PROPERTY_ID%TYPE) return VARCHAR2;
+
+procedure lock_row(X_PROPERTY_ID RNT_PROPERTIES.PROPERTY_ID%TYPE); 
+   
+
+procedure update_row(X_PROPERTY_ID       RNT_PROPERTIES.PROPERTY_ID%TYPE, 
+                     X_BUSINESS_ID       RNT_PROPERTIES.BUSINESS_ID%TYPE,
+                     X_UNITS             RNT_PROPERTIES.UNITS%TYPE,                      
+                     X_ADDRESS1          RNT_PROPERTIES.ADDRESS1%TYPE, 
+                     X_ADDRESS2          RNT_PROPERTIES.ADDRESS2%TYPE, 
+                     X_CITY              RNT_PROPERTIES.CITY%TYPE, 
+                     X_STATE             RNT_PROPERTIES.STATE%TYPE, 
+                     X_ZIPCODE           RNT_PROPERTIES.ZIPCODE%TYPE, 
+                     X_DATE_PURCHASED    RNT_PROPERTIES.DATE_PURCHASED%TYPE, 
+                     X_PURCHASE_PRICE    RNT_PROPERTIES.PURCHASE_PRICE%TYPE, 
+                     X_LAND_VALUE        RNT_PROPERTIES.LAND_VALUE%TYPE, 
+                     X_DEPRECIATION_TERM RNT_PROPERTIES.DEPRECIATION_TERM%TYPE, 
+                     X_YEAR_BUILT        RNT_PROPERTIES.YEAR_BUILT%TYPE, 
+                     X_BUILDING_SIZE     RNT_PROPERTIES.BUILDING_SIZE%TYPE, 
+                     X_LOT_SIZE          RNT_PROPERTIES.LOT_SIZE%TYPE, 
+                     X_DATE_SOLD         RNT_PROPERTIES.DATE_SOLD%TYPE, 
+                     X_SALE_AMOUNT       RNT_PROPERTIES.SALE_AMOUNT%TYPE, 
+                     X_NOTE_YN           RNT_PROPERTIES.NOTE_YN%TYPE,
+                     X_CHECKSUM VARCHAR2); 
+
+function insert_row( 
+                     X_BUSINESS_ID       RNT_PROPERTIES.BUSINESS_ID%TYPE,
+                     X_UNITS             RNT_PROPERTIES.UNITS%TYPE, 
+                     X_ADDRESS1          RNT_PROPERTIES.ADDRESS1%TYPE, 
+                     X_ADDRESS2          RNT_PROPERTIES.ADDRESS2%TYPE, 
+                     X_CITY              RNT_PROPERTIES.CITY%TYPE, 
+                     X_STATE             RNT_PROPERTIES.STATE%TYPE, 
+                     X_ZIPCODE           RNT_PROPERTIES.ZIPCODE%TYPE, 
+                     X_DATE_PURCHASED    RNT_PROPERTIES.DATE_PURCHASED%TYPE, 
+                     X_PURCHASE_PRICE    RNT_PROPERTIES.PURCHASE_PRICE%TYPE, 
+                     X_LAND_VALUE        RNT_PROPERTIES.LAND_VALUE%TYPE, 
+                     X_DEPRECIATION_TERM RNT_PROPERTIES.DEPRECIATION_TERM%TYPE, 
+                     X_YEAR_BUILT        RNT_PROPERTIES.YEAR_BUILT%TYPE, 
+                     X_BUILDING_SIZE     RNT_PROPERTIES.BUILDING_SIZE%TYPE, 
+                     X_LOT_SIZE          RNT_PROPERTIES.LOT_SIZE%TYPE, 
+                     X_DATE_SOLD         RNT_PROPERTIES.DATE_SOLD%TYPE, 
+                     X_SALE_AMOUNT       RNT_PROPERTIES.SALE_AMOUNT%TYPE, 
+                     X_NOTE_YN           RNT_PROPERTIES.NOTE_YN%TYPE)
+    return RNT_PROPERTIES.PROPERTY_ID%TYPE;                      
+END RNT_PROPERTIES_PKG;
+Package created.
+SQL> @@1_1_RNT_PROPERTIES_PKG.pkb
+SQL> CREATE OR REPLACE PACKAGE BODY RNTMGR.RNT_PROPERTIES_PKG AS
+/******************************************************************************
+   NAME:       RNT_PROPERTIES_PKG
+   PURPOSE:
+
+   REVISIONS:
+   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        30.03.2007             1. Created this package body.
+******************************************************************************/
+
+function get_ckecksum(p_property_id RNT_PROPERTIES.PROPERTY_ID%TYPE) return VARCHAR2
+is
+begin
+   for x in (select 
+                 PROPERTY_ID, BUSINESS_ID, 
+                 ADDRESS1, ADDRESS2, CITY, UNITS,
+                 STATE, ZIPCODE, 
+                 DATE_PURCHASED, PURCHASE_PRICE, LAND_VALUE, 
+                 DEPRECIATION_TERM, YEAR_BUILT, BUILDING_SIZE, 
+                 LOT_SIZE, DATE_SOLD, SALE_AMOUNT, 
+                 NOTE_YN
+              from RNT_PROPERTIES
+              where PROPERTY_ID = p_property_id) loop
+         RNT_SYS_CHECKSUM_REC_PKG.INIT;
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.PROPERTY_ID);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.BUSINESS_ID);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.UNITS);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.ADDRESS1);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.ADDRESS2);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.CITY); 
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.STATE); 
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.ZIPCODE); 
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.DATE_PURCHASED); 
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.PURCHASE_PRICE); 
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.LAND_VALUE);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.DEPRECIATION_TERM); 
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.YEAR_BUILT);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.BUILDING_SIZE); 
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.LOT_SIZE);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.DATE_SOLD);
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.SALE_AMOUNT); 
+         RNT_SYS_CHECKSUM_REC_PKG.APPEND(x.NOTE_YN);
+         return RNT_SYS_CHECKSUM_REC_PKG.GET_CHECKSUM;
+   end loop;
+   raise NO_DATA_FOUND;               
+end;
+
+procedure lock_row(X_PROPERTY_ID RNT_PROPERTIES.PROPERTY_ID%TYPE)
+is
+  cursor c is
+    select 
+      PROPERTY_ID, BUSINESS_ID, UNITS, 
+      ADDRESS1, ADDRESS2, 
+      CITY, STATE, ZIPCODE, 
+      DATE_PURCHASED, PURCHASE_PRICE, LAND_VALUE, 
+      DEPRECIATION_TERM, YEAR_BUILT, BUILDING_SIZE, 
+      LOT_SIZE, DATE_SOLD, SALE_AMOUNT, 
+      NOTE_YN
+   from RNT_PROPERTIES
+   where PROPERTY_ID = X_PROPERTY_ID
+   for update of PROPERTY_ID nowait; 
+begin
+  open c;
+  close c;
+exception
+  when OTHERS then
+    if SQLCODE = -54 then
+      RAISE_APPLICATION_ERROR(-20001, 'Cannot changed record. Record is locked.');
+    end if;       
+end;
+
+function check_unique(X_PROPERTY_ID       RNT_PROPERTIES.PROPERTY_ID%TYPE, 
+                      X_ADDRESS1          RNT_PROPERTIES.ADDRESS1%TYPE, 
+                      X_ADDRESS2          RNT_PROPERTIES.ADDRESS2%TYPE, 
+                      X_CITY              RNT_PROPERTIES.CITY%TYPE, 
+                      X_STATE             RNT_PROPERTIES.STATE%TYPE, 
+                      X_ZIPCODE           RNT_PROPERTIES.ZIPCODE%TYPE) return boolean
+is
+  x NUMBER;
+begin
+   select 1 
+   into x
+   from DUAL
+   where exists (
+                   select 1
+                   from RNT_PROPERTIES
+                   where (PROPERTY_ID != X_PROPERTY_ID or X_PROPERTY_ID is null) 
+                     and ADDRESS1 = X_ADDRESS1 
+                     and ADDRESS2 = X_ADDRESS2 
+                     and CITY = X_CITY 
+                     and STATE = X_STATE 
+                     and ZIPCODE = X_ZIPCODE            
+                 );
+  return false;
+exception
+  when NO_DATA_FOUND then
+     return true;                        
+end;                               
+
+procedure update_row(X_PROPERTY_ID       RNT_PROPERTIES.PROPERTY_ID%TYPE, 
+                     X_BUSINESS_ID       RNT_PROPERTIES.BUSINESS_ID%TYPE, 
+                     X_UNITS             RNT_PROPERTIES.UNITS%TYPE,
+                     X_ADDRESS1          RNT_PROPERTIES.ADDRESS1%TYPE, 
+                     X_ADDRESS2          RNT_PROPERTIES.ADDRESS2%TYPE, 
+                     X_CITY              RNT_PROPERTIES.CITY%TYPE, 
+                     X_STATE             RNT_PROPERTIES.STATE%TYPE, 
+                     X_ZIPCODE           RNT_PROPERTIES.ZIPCODE%TYPE, 
+                     X_DATE_PURCHASED    RNT_PROPERTIES.DATE_PURCHASED%TYPE, 
+                     X_PURCHASE_PRICE    RNT_PROPERTIES.PURCHASE_PRICE%TYPE, 
+                     X_LAND_VALUE        RNT_PROPERTIES.LAND_VALUE%TYPE, 
+                     X_DEPRECIATION_TERM RNT_PROPERTIES.DEPRECIATION_TERM%TYPE, 
+                     X_YEAR_BUILT        RNT_PROPERTIES.YEAR_BUILT%TYPE, 
+                     X_BUILDING_SIZE     RNT_PROPERTIES.BUILDING_SIZE%TYPE, 
+                     X_LOT_SIZE          RNT_PROPERTIES.LOT_SIZE%TYPE, 
+                     X_DATE_SOLD         RNT_PROPERTIES.DATE_SOLD%TYPE, 
+                     X_SALE_AMOUNT       RNT_PROPERTIES.SALE_AMOUNT%TYPE, 
+                     X_NOTE_YN           RNT_PROPERTIES.NOTE_YN%TYPE,
+                     X_CHECKSUM          VARCHAR2) 
+is
+  l_checksum varchar2(32);
+  xl_num_units NUMBER := X_UNITS;
+  x_cnt NUMBER;
+  x1 NUMBER; 
+begin
+   lock_row(X_PROPERTY_ID);
+   
+   -- validate checksum   
+   l_checksum := get_ckecksum(X_PROPERTY_ID);
+   if X_CHECKSUM != l_checksum then
+      RAISE_APPLICATION_ERROR(-20002, 'Record was changed another user.');
+      --E_ROW_CHANGED_ANOTHER_USER  
+   end if;
+
+   if not check_unique(X_PROPERTY_ID,X_ADDRESS1, X_ADDRESS2, 
+                      X_CITY, X_STATE, X_ZIPCODE) then
+        RAISE_APPLICATION_ERROR(-20006, 'Address of property must be unique');                      
+   end if;                       
+   
+   -- validate num rows
+   select count(*)
+   into x_cnt
+   from RNT_PROPERTY_UNITS
+   where PROPERTY_ID = X_PROPERTY_ID;
+   
+   if X_UNITS - x_cnt < 0 then
+        RAISE_APPLICATION_ERROR(-20006, 'Value Units must be great then quantity of units in property.');   
+   end if; 
+   
+   if x_cnt = 0 and X_UNITS = 1 then
+     -- append single unit  
+     x1 := RNT_PROPERTY_UNITS_PKG.INSERT_ROW(X_PROPERTY_ID => X_PROPERTY_ID, 
+                                             X_UNIT_NAME => 'Single Unit', 
+                                             X_UNIT_SIZE => X_BUILDING_SIZE, 
+                                             X_BEDROOMS => NULL, 
+                                             X_BATHROOMS => NULL);      
+   end if;
+      
+   update RNT_PROPERTIES
+   set PROPERTY_ID       = X_PROPERTY_ID,
+       BUSINESS_ID       = X_BUSINESS_ID,
+       UNITS             = X_UNITS,
+       ADDRESS1          = X_ADDRESS1,
+       ADDRESS2          = X_ADDRESS2,
+       CITY              = X_CITY,
+       STATE             = X_STATE,
+       ZIPCODE           = X_ZIPCODE,
+       DATE_PURCHASED    = X_DATE_PURCHASED,
+       PURCHASE_PRICE    = X_PURCHASE_PRICE,
+       LAND_VALUE        = X_LAND_VALUE,
+       DEPRECIATION_TERM = X_DEPRECIATION_TERM,
+       YEAR_BUILT        = X_YEAR_BUILT,
+       BUILDING_SIZE     = X_BUILDING_SIZE,
+       LOT_SIZE          = X_LOT_SIZE,
+       DATE_SOLD         = X_DATE_SOLD,
+       SALE_AMOUNT       = X_SALE_AMOUNT,
+       NOTE_YN           = X_NOTE_YN
+   where  PROPERTY_ID    = X_PROPERTY_ID;
+end;
+
+function insert_row( X_BUSINESS_ID       RNT_PROPERTIES.BUSINESS_ID%TYPE,
+                     X_UNITS             RNT_PROPERTIES.UNITS%TYPE, 
+                     X_ADDRESS1          RNT_PROPERTIES.ADDRESS1%TYPE, 
+                     X_ADDRESS2          RNT_PROPERTIES.ADDRESS2%TYPE, 
+                     X_CITY              RNT_PROPERTIES.CITY%TYPE, 
+                     X_STATE             RNT_PROPERTIES.STATE%TYPE, 
+                     X_ZIPCODE           RNT_PROPERTIES.ZIPCODE%TYPE, 
+                     X_DATE_PURCHASED    RNT_PROPERTIES.DATE_PURCHASED%TYPE, 
+                     X_PURCHASE_PRICE    RNT_PROPERTIES.PURCHASE_PRICE%TYPE, 
+                     X_LAND_VALUE        RNT_PROPERTIES.LAND_VALUE%TYPE, 
+                     X_DEPRECIATION_TERM RNT_PROPERTIES.DEPRECIATION_TERM%TYPE, 
+                     X_YEAR_BUILT        RNT_PROPERTIES.YEAR_BUILT%TYPE, 
+                     X_BUILDING_SIZE     RNT_PROPERTIES.BUILDING_SIZE%TYPE, 
+                     X_LOT_SIZE          RNT_PROPERTIES.LOT_SIZE%TYPE, 
+                     X_DATE_SOLD         RNT_PROPERTIES.DATE_SOLD%TYPE, 
+                     X_SALE_AMOUNT       RNT_PROPERTIES.SALE_AMOUNT%TYPE, 
+                     X_NOTE_YN           RNT_PROPERTIES.NOTE_YN%TYPE)
+       return RNT_PROPERTIES.PROPERTY_ID%TYPE                     
+is
+ x RNT_PROPERTIES.PROPERTY_ID%TYPE;
+ xl_num_units RNT_PROPERTIES.UNITS%TYPE;
+ x1 RNT_PROPERTY_UNITS.UNIT_ID%TYPE;
+begin
+
+   if not check_unique(NULL,X_ADDRESS1, X_ADDRESS2, 
+                      X_CITY, X_STATE, X_ZIPCODE) then
+        RAISE_APPLICATION_ERROR(-20006, 'Address of property must be unique');                      
+   end if;                       
+  xl_num_units := X_UNITS;
+    
+  -- num of units must be 1 ro more 
+  if xl_num_units = 0 then
+      xl_num_units := 1;
+  end if;
+    
+  insert into RNT_PROPERTIES (
+           PROPERTY_ID, BUSINESS_ID, UNITS, 
+           ADDRESS1, ADDRESS2, 
+           CITY, STATE, ZIPCODE, 
+           DATE_PURCHASED, PURCHASE_PRICE, LAND_VALUE, 
+           DEPRECIATION_TERM, YEAR_BUILT, BUILDING_SIZE, 
+           LOT_SIZE, DATE_SOLD, SALE_AMOUNT, 
+           NOTE_YN) 
+  values (RNT_PROPERTIES_SEQ.NEXTVAL, X_BUSINESS_ID,  xl_num_units, 
+   X_ADDRESS1, X_ADDRESS2, 
+   X_CITY, X_STATE, X_ZIPCODE, 
+   X_DATE_PURCHASED, X_PURCHASE_PRICE, X_LAND_VALUE, 
+   X_DEPRECIATION_TERM, X_YEAR_BUILT, X_BUILDING_SIZE, 
+   X_LOT_SIZE, X_DATE_SOLD, X_SALE_AMOUNT, 
+   X_NOTE_YN)
+  returning PROPERTY_ID into x;
+  
+  if xl_num_units = 1 then
+       -- append single unit  
+       x1 := RNT_PROPERTY_UNITS_PKG.INSERT_ROW(X_PROPERTY_ID => x, 
+                                               X_UNIT_NAME => 'Single Unit', 
+                                               X_UNIT_SIZE => X_BUILDING_SIZE, 
+                                               X_BEDROOMS => NULL, 
+                                               X_BATHROOMS => NULL);
+  end if;
+  
+  return x;
+end;
+
+END RNT_PROPERTIES_PKG;
+Package body created.
+SQL> spool off

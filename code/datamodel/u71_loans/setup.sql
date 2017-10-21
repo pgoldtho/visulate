@@ -1,0 +1,10 @@
+--@alter_table
+--@alter_table2
+@alter_table3
+@seed_data2
+@alter_table4
+@\visulate2\visulate\code\database\plsql\rnt_loans_pkg
+@\visulate2\visulate\code\database\plsql\rnt_ledger_pkg
+@seed_data3
+@seed_data4
+@seed_data5

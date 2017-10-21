@@ -1,0 +1,45 @@
+select pr.sq_ft,
+                         p.building_size         as sqft,
+                         nvl(pv.asking_price, 0) as asking_price,
+                         nvl(pv.offer_price, 0)  as offer_price,
+                         nvl(e.estimates, 0)     as cost_estimates,
+                         nvl(pv.offer_price, 0) + nvl(e.estimates, 0) as cost_basis,
+                         round((nvl(pv.offer_price, 0) + nvl(e.estimates, 0))
+			       /greatest(pr.sq_ft, 1),2) as price_sqft,
+                         nvl(pv.arv, 0)  as arv,
+                         nvl(pv.arv, 0) - nvl(pv.offer_price, 0) - nvl(e.estimates, 0) as profit_loss
+                  from   rnt_properties   p,
+                         pr_properties    pr,
+                         pr_property_listings pl,
+                         (select pe.property_id,
+                                 sum(pei.item_cost * pei.estimate) as estimates
+                          from   rnt_property_expenses   pe,
+                                 rnt_expense_items    pei
+                          where  pei.expense_id  = pe.expense_id
+                          and    pei.accepted_yn = 'Y'
+                          group  by pe.property_id
+                         )   e,
+                         (select t.property_id,
+                                 max(decode(t.value_method, 'ASK',  t.value, to_number(null))) as asking_price,
+                                 max(decode(t.value_method, 'OFFER',t.value, to_number(null))) as offer_price,
+                                 max(decode(t.value_method, 'ARV',  t.value, to_number(null))) as arv
+                          from   rnt_property_value t,
+                                 (select property_id,
+                                         value_method,
+                                         max(value_date) as last_value_date
+                                  from   rnt_property_value
+                                  group  by property_id, value_method
+                                 ) x
+                          where  t.property_id  = x.property_id
+                          and    t.value_method = x.value_method
+                          and    t.value_date   = x.last_value_date
+                          group  by t.property_id
+                         )   pv
+                  where  e.property_id  (+)= p.property_id
+                  and    pv.property_id (+)= p.property_id
+                  and    pr.prop_id     = 473623
+                  and    pr.prop_id        = p.prop_id
+                  and    pr.prop_id        = pl.prop_id
+                  and    pl.publish_yn     = 'Y'
+                  and    pl.sold_yn        = 'N'
+/

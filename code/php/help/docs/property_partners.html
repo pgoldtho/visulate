@@ -1,0 +1,245 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
+<html>
+<head>
+  <title>Visulate - Business Partners</title>
+
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" >
+  <link rel="stylesheet" type="text/css" href="/css/vis2008tables.css" >
+  <link rel="stylesheet" type="text/css" href="/css/vis2008layout.css" >
+</head>
+
+<body>
+<h1>Business Partners</h1>
+<p>
+The Business Partners screen allows business owners to share information with other Visulate users.  The screen has 2 sub pages.  The Partner Search sub page is accessed by pressing the find link.  It allows business owners to find users with a visulate account and grant access to a business unit.  Enter the user's email address in the email address field then press the find button.  This will present a list of existing partner assignments for that user and allow you to add new ones.
+</p>
+<img src="images/partner_search.jpg"/>
+<p>
+The Partners sub-page is the opening page.  It shows contact and business unit assignment details for business partners.  Visulate allows role based access to a business units.  Each user can be granted access to a business unit based on their role.  For example, a user may own a number of properties that they manage themself and also manage properites for other people.  </p>
+
+<img src="images/visulate_rel.jpg"/>
+<p>
+In the example above 3 property owners and 3 property managers need to colaborate on the management of a number of properties. Each person needs to access the details for the properties they own or manage and should not be able to access other properties.</p>
+<ul>
+   <ol> Manager 1 needs to access Buildings A, B, E and G</ol>
+   <ol> Manager 2 needs to access Building C</ol>
+   <ol> Manager 3 needs to access Buildings F, H, and I</ol>
+   <ol> Owner 1 needs to access Buildings A, B, C and D</ol>
+   <ol> Owner 2 needs to access Buildings E, G, F and H</ol>
+   <ol> Owner 3 needs to access Buildings I and J</ol>
+</ul>
+<p>
+To resolve this each owner would create a business unit for the properties that they own and then grant manager access to the property managers that need to access information about the buildings. 
+</p>
+
+<p>
+The user's role defines the list of screens that they are able to access and the actions they can perform.  The following table shows a summary:
+</p>
+<h1>Page Access</h1>
+
+<table class="datatable">
+<tr>
+<th>Screen</th>
+<th>Business Owner</th>
+<th>Owner Manager</th>
+<th>Owner</th>
+
+<th>Manager</th>
+<th>Bookkeeping</th>
+<th>Administrator</th>
+</tr>
+
+<tr>
+<td>Business - Snapshot</td><!--Screen-->
+<td>R</td><!--Business Owner-->
+<td>R</td><!--Owner Manager-->
+<td>R</td><!--Owner-->
+
+<td>R</td><!--Manager-->
+<td>R</td><!--Bookkeeping-->
+<td>N/A</td><!--Administrator-->
+</tr>
+<tr>
+<td>Business - Business units</td><!--Screen-->
+<td>W</td><!--Business Owner-->
+<td>W</td><!--Owner Manager-->
+<td>R</td><!--Owner-->
+<td>R</td><!--Manager-->
+
+<td>R</td><!--Bookkeeping-->
+<td>N/A</td><!--Administrator-->
+</tr>
+<tr>
+<td>Business - Partners</td><!--Screen-->
+<td>W</td><!--Business Owner-->
+<td>W</td><!--Owner Manager-->
+<td>W</td><!--Owner-->
+<td>W</td><!--Manager-->
+<td>R</td><!--Bookkeeping-->
+
+<td>N/A</td><!--Administrator-->
+</tr>
+<tr>
+<td>Business - Suppliers</td><!--Screen-->
+<td>W</td><!--Business Owner-->
+<td>W</td><!--Owner Manager-->
+<td>W</td><!--Owner-->
+<td>W</td><!--Manager-->
+<td>R</td><!--Bookkeeping-->
+<td>N/A</td><!--Administrator-->
+
+</tr>
+<tr>
+<td>Business - Section 8</td><!--Screen-->
+<td>R</td><!--Business Owner-->
+<td>W</td><!--Owner Manager-->
+<td>R</td><!--Owner-->
+<td>W</td><!--Manager-->
+<td>R</td><!--Bookkeeping-->
+<td>N/A</td><!--Administrator-->
+</tr>
+
+<tr>
+<td>Property  - Property </td><!--Screen-->
+<td>W</td><!--Business Owner-->
+<td>W</td><!--Owner Manager-->
+<td>W</td><!--Owner-->
+<td>W</td><!--Manager-->
+<td>R</td><!--Bookkeeping-->
+<td>N/A</td><!--Administrator-->
+</tr>
+<tr>
+
+<td>Property  - Finance</td><!--Screen-->
+<td>W</td><!--Business Owner-->
+<td>W</td><!--Owner Manager-->
+<td>W</td><!--Owner-->
+<td>R</td><!--Manager-->
+<td>W</td><!--Bookkeeping-->
+<td>N/A</td><!--Administrator-->
+</tr>
+<tr>
+<td>Property  - Expense</td><!--Screen-->
+
+<td>R</td><!--Business Owner-->
+<td>W</td><!--Owner Manager-->
+<td>W</td><!--Owner-->
+<td>W</td><!--Manager-->
+<td>W</td><!--Bookkeeping-->
+<td>N/A</td><!--Administrator-->
+</tr>
+<tr>
+<td>Property - Summary </td><!--Screen-->
+<td>R</td><!--Business Owner-->
+
+<td>R</td><!--Owner Manager-->
+<td>R</td><!--Owner-->
+<td>R</td><!--Manager-->
+<td>R</td><!--Bookkeeping-->
+<td>N/A</td><!--Administrator-->
+</tr>
+<tr>
+<td>Tenant - People</td><!--Screen-->
+<td>R</td><!--Business Owner-->
+<td>W</td><!--Owner Manager-->
+
+<td>R</td><!--Owner-->
+<td>W</td><!--Manager-->
+<td>R</td><!--Bookkeeping-->
+<td>N/A</td><!--Administrator-->
+</tr>
+<tr>
+<td>Tenant - Agreements</td><!--Screen-->
+<td>R</td><!--Business Owner-->
+<td>W</td><!--Owner Manager-->
+<td>R</td><!--Owner-->
+
+<td>W</td><!--Manager-->
+<td>R</td><!--Bookkeeping-->
+<td>N/A</td><!--Administrator-->
+</tr>
+<tr>
+<td>Tenant - Tenants </td><!--Screen-->
+<td>R</td><!--Business Owner-->
+<td>W</td><!--Owner Manager-->
+<td>R</td><!--Owner-->
+<td>W</td><!--Manager-->
+
+<td>R</td><!--Bookkeeping-->
+<td>N/A</td><!--Administrator-->
+</tr>
+<tr>
+<td>Tenant - Actions</td><!--Screen-->
+<td>R</td><!--Business Owner-->
+<td>W</td><!--Owner Manager-->
+<td>R</td><!--Owner-->
+<td>W</td><!--Manager-->
+<td>R</td><!--Bookkeeping-->
+
+<td>N/A</td><!--Administrator-->
+</tr>
+<tr>
+<td>Payment - Receivable</td><!--Screen-->
+<td>R</td><!--Business Owner-->
+<td>W</td><!--Owner Manager-->
+<td>R</td><!--Owner-->
+<td>W</td><!--Manager-->
+<td>W</td><!--Bookkeeping-->
+<td>N/A</td><!--Administrator-->
+
+</tr>
+<tr>
+<td>Payment - Payable </td><!--Screen-->
+<td>R</td><!--Business Owner-->
+<td>W</td><!--Owner Manager-->
+<td>R</td><!--Owner-->
+<td>W</td><!--Manager-->
+<td>W</td><!--Bookkeeping-->
+<td>N/A</td><!--Administrator-->
+</tr>
+
+<tr>
+<td>Admin - Users</td><!--Screen-->
+<td>N/A</td><!--Business Owner-->
+<td>N/A</td><!--Owner Manager-->
+<td>N/A</td><!--Owner-->
+<td>N/A</td><!--Manager-->
+<td>N/A</td><!--Bookkeeping-->
+<td>W</td><!--Administrator-->
+</tr>
+<tr>
+
+<td>Admin - Assignments</td><!--Screen-->
+<td>N/A</td><!--Business Owner-->
+<td>N/A</td><!--Owner Manager-->
+<td>N/A</td><!--Owner-->
+<td>N/A</td><!--Manager-->
+<td>N/A</td><!--Bookkeeping-->
+<td>W</td><!--Administrator-->
+</tr>
+<tr>
+<td>Admin  - Business Units</td><!--Screen-->
+
+<td>N/A</td><!--Business Owner-->
+<td>N/A</td><!--Owner Manager-->
+<td>N/A</td><!--Owner-->
+<td>N/A</td><!--Manager-->
+<td>N/A</td><!--Bookkeeping-->
+<td>W</td><!--Administrator-->
+</tr>
+<tr>
+<td>Admin - Messages</td><!--Screen-->
+<td>N/A</td><!--Business Owner-->
+
+<td>N/A</td><!--Owner Manager-->
+<td>N/A</td><!--Owner-->
+<td>N/A</td><!--Manager-->
+<td>N/A</td><!--Bookkeeping-->
+<td>W</td><!--Administrator-->
+</tr>
+</table>    
+
+ <hr>
+ <p class="copyright">Copyright Visulate LLC  2008</p>
+ </body>
+ </html>

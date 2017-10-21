@@ -1,0 +1,126 @@
+Refresh the materialized views in the local database that point to the Access mdb file.
+
+begin
+  DBMS_MVIEW.REFRESH('pr_brevard_properties_mv');
+  DBMS_MVIEW.REFRESH('pr_brevard_taxes_mv');
+  DBMS_MVIEW.REFRESH('pr_brevard_building_mv'); 
+  DBMS_MVIEW.REFRESH('pr_brevard_sales_mv');
+  DBMS_MVIEW.REFRESH('pr_brevard_beds_mv');
+end;
+/ 
+
+Drop and recreate the following tables
+
+drop table brd_properties purge;
+drop table brd_buildings purge;
+drop table brd_sales purge;
+drop table brd_sales_properties purge;
+
+
+
+-- New Properties Since Last Run
+create table brd_properties as 
+ select  "TaxAcct"
+ ,       "OwnerName"
+ ,       "ParcelId"
+ ,       "SiteHouseNo"
+ ,       "SiteStreetname"
+ ,       "SiteType"
+ ,       "SiteDir"
+ ,       "SiteAptNo"
+ ,       "SiteHouseNo"||' '||"SiteStreetname"||' '||"SiteType"||' '||"SiteDir" address1
+ ,       'FL' state
+ ,       to_char("SiteZip5") zipcode
+ ,       'USA' country
+ ,       "SiteCity"
+ ,       "SiteZip5"
+ ,       "SiteZip4"
+ ,       "BuildingSqFt"
+ ,       "Acreage"
+ ,       "MailHouseNo"
+ ,       "MailAddressLine1"
+ ,       "MailAddressLine2"
+ ,       "MailCity"
+ ,       "MailState"
+ ,       "MailZip5"
+ ,       to_char("MailZip5") Mzipcode
+ ,       "MailZip4"
+ ,       "UseCode"
+ ,       "MarketValue"
+ ,       "AssessedValue"
+ ,       "MillageCode"
+ from pr_brevard_properties_mv
+ where not exists (select 1 
+                   from pr_properties 
+                   where address1 =  rtrim("SiteHouseNo"||' '||"SiteStreetname"||' '||"SiteType"||' '||"SiteDir"))
+ and "SiteStreetname" is not null;
+
+
+
+-- Geocode the properties and save as brd_properties_geocoded
+
+-- Buildings for new properties
+create table brd_buildings as 
+ select  *
+ from pr_brevard_building_mv
+ where "TaxAcct" in (select "TaxAcct" from brd_properties);
+
+
+***************************************************
+***** EDIT the SaleDate entry before running ******
+***************************************************
+-- Sales history 
+create table brd_sales as 
+select s."TaxAcct"
+,      "BookPg"
+,      "SaleDate"
+,      "SaleAmount"
+,      "DeedType"
+,      "DeedQual"
+,      "SaleConfirm"
+,      "VorI"
+,      "PriorOwner"
+,      "DateAdded"
+,      "PhysChangeCode"
+,      "SalesId"
+,      pr_records_pkg.get_prop_id(to_char(s."TaxAcct")) prop_id
+,      "OwnerName"
+from pr_brevard_sales_mv s
+,    pr_brevard_properties_mv p
+where (to_char("SaleDate", 'yyyy') = 2011)  
+and p."TaxAcct" = s."TaxAcct";
+
+
+-- Sales Properties
+create table brd_sales_properties as
+  select p."TaxAcct"          source_pk
+  ,      "OwnerName"        owner_name
+  ,      rtrim("SiteHouseNo"||' '||"SiteStreetname"||' '||"SiteType"||' '||"SiteDir") address1
+  ,      "SiteAptNo"        address2
+  ,      "SiteCity"         city
+  ,      "SiteZip5"         zipcode
+  ,      "BuildingSqFt"     sq_ft
+  ,      "Acreage"          acreage
+  ,      "MailHouseNo"||' '||"MailAddressLine1" mail_address1
+  ,      "MailAddressLine2" mail_address2
+  ,      "MailCity"         mail_city
+  ,      "MailState"        mail_state
+  ,      "MailZip5"         mail_zipcode
+  from pr_brevard_sales_mv s
+  ,    pr_brevard_properties_mv p
+where (to_char("SaleDate", 'yyyy') = 2011)  
+and p."TaxAcct" = s."TaxAcct";
+
+
+create table brd_beds as
+ select "TaxAcct"          source_pk
+ ,      sum("Beds")        total_bedrooms
+ ,      sum("Baths")       total_bathrooms
+ from pr_brevard_beds_mv
+ group by "TaxAcct";
+
+create table brd_usecodes as
+ select "TaxAcct"          source_pk
+ ,      "UseCode"          usecode
+ from pr_brevard_properties_mv
+

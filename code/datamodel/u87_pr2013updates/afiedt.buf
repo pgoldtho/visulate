@@ -1,0 +1,10 @@
+select '    set_addr('||pp.prop_id||', '''||p.phy_addr1||''');'
+from pr_nal p
+,    pr_properties pp
+where (pp.source_pk = p.parcel_id or pp.source_pk = p.alt_key)
+and pp.source_id = to_number(p.co_no)
+and pp.source_id = 28
+and not regexp_like(address1, '\d')
+and p.phy_addr1  is not null
+order by 1
+/

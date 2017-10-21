@@ -1,0 +1,1 @@
+truncate table pr_property_photos;

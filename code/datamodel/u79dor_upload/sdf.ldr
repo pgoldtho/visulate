@@ -1,0 +1,96 @@
+LOAD DATA 
+  infile './sdf2011/SDF11F201101.csv'
+  infile './sdf2011/SDF12F201106.csv'
+  infile './sdf2011/SDF13F201104VAB.csv'
+  infile './sdf2011/SDF14F201102.csv'
+  infile './sdf2011/SDF15F201102VAB.csv'
+  infile './sdf2011/SDF16F201101.csv'
+  infile './sdf2011/SDF17F201101.csv'
+  infile './sdf2011/SDF18F201101.csv'
+  infile './sdf2011/SDF19F201103VAB.csv'
+  infile './sdf2011/SDF20F201101.csv'
+  infile './sdf2011/SDF21F201104VAB.csv'
+  infile './sdf2011/SDF22F201103VAB.csv'
+  infile './sdf2011/SDF23F201102.csv'
+  infile './sdf2011/SDF24F201101.csv'
+  infile './sdf2011/SDF25F201103.csv'
+  infile './sdf2011/SDF26F201101.csv'
+  infile './sdf2011/SDF27F201101.csv'
+  infile './sdf2011/SDF28F201103VABR1.csv'
+  infile './sdf2011/SDF29F201102.csv'
+  infile './sdf2011/SDF30F201101.csv'
+  infile './sdf2011/SDF31F201102VAB.csv'
+  infile './sdf2011/SDF32F201101.csv'
+  infile './sdf2011/SDF33F201103.csv'
+  infile './sdf2011/SDF34F201104VAB.csv'
+  infile './sdf2011/SDF35F201103VAB.csv'
+  infile './sdf2011/SDF36F201101.csv'
+  infile './sdf2011/SDF37F201102VAB.csv'
+  infile './sdf2011/SDF38F201104VAB.csv'
+  infile './sdf2011/SDF39F201101.csv'
+  infile './sdf2011/SDF40F201101.csv'
+  infile './sdf2011/SDF41F201101.csv'
+  infile './sdf2011/SDF42F201101.csv'
+  infile './sdf2011/SDF43F201102.csv'
+  infile './sdf2011/SDF44F201104VAB.csv'
+  infile './sdf2011/SDF45F201103VAB.csv'
+  infile './sdf2011/SDF46F201102VAB.csv'
+  infile './sdf2011/SDF47F201107VABRD3.csv'
+  infile './sdf2011/SDF48F201101.csv'
+  infile './sdf2011/SDF49F201101.csv'
+  infile './sdf2011/SDF50F201101.csv'
+  infile './sdf2011/SDF51F201102VAB.csv'
+  infile './sdf2011/SDF52F201102VAB.csv'
+  infile './sdf2011/SDF53F201106.csv'
+  infile './sdf2011/SDF54F201103VAB.csv'
+  infile './sdf2011/SDF55F201102.csv'
+  infile './sdf2011/SDF56F201101.csv'
+  infile './sdf2011/SDF57F201102VAB.csv'
+  infile './sdf2011/SDF58F201102VAB.csv'
+  infile './sdf2011/SDF59F201102.csv'
+  infile './sdf2011/SDF60F201102VAB.csv'
+  infile './sdf2011/SDF61F201103VAB.csv'
+  infile './sdf2011/SDF62F201102VAB.csv'
+  infile './sdf2011/SDF63F201102VAB.csv'
+  infile './sdf2011/SDF64F201102VAB.csv'
+  infile './sdf2011/SDF65F201103VAB.csv'
+  infile './sdf2011/SDF66F201102VAB.csv'
+  infile './sdf2011/SDF67F201101.csv'
+  infile './sdf2011/SDF68F201102VAB.csv'
+  infile './sdf2011/SDF69F201103VAB.csv'
+  infile './sdf2011/SDF70F201104.csv'
+  infile './sdf2011/SDF71F201101.csv'
+  infile './sdf2011/SDF72F201101.csv'
+  infile './sdf2011/SDF73F201101.csv'
+  infile './sdf2011/SDF74F201101.csv'
+  infile './sdf2011/SDF75F201101.csv'
+  infile './sdf2011/SDF76F201102VAB.csv'
+  infile './sdf2011/SDF77F201103.csv'
+TRUNCATE
+INTO TABLE pr_sdf
+FIELDS TERMINATED BY ',' optionally enclosed by '"'
+TRAILING NULLCOLS
+( CO_NO
+, PARCEL_ID
+, ASMNT_YR
+, ATV_STRT
+, GRP_NO
+, DOR_UC
+, NBRHD_CD
+, MKT_AR
+, CENSUS_BK
+, SALE_ID_CD
+, SAL_CHG_CD
+, VI_CD
+, OR_BOOK
+, OR_PAGE
+, CLERK_NO
+, QUAL_CD
+, SALE_YR
+, SALE_MO
+, SALE_PRC
+, MULTI_PAR_SAL
+, RS_ID
+, MP_ID
+, STATE_PARCEL_ID
+)

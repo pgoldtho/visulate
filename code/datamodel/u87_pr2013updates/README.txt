@@ -1,0 +1,27 @@
+Update Sales Summary
+
+sqlldr rntmgr2@vis13d control=millage_taxes_levied.ldr
+@set_millage_rent
+
+export TMP_TAX_VALUES from dev db and import into production
+
+
+
+@update_ucode_parents.sql
+
+@pr_nal_patch.sql
+  -- edit and run one procedure at a time to avoid sqlnet timeouts.
+
+@/home/pgoldtho/visulate/visulate/code/database/plsql/pr_records_pkg.sql
+@gen_fl_text
+@gen_county_text
+@gen_city_text
+
+update visulate_city.tpl
+upload map images to replace eflorida url.
+
+
+cp /home/pgoldtho/visulate/visulate/code/php/_smarty/templates/visulate_city.tpl .
+
+cp /home/pgoldtho/visulate/visulate/code/php/visulate_search.php .
+cp /home/pgoldtho/visulate/visulate/code/php/classes/database/rnt_search.class.php .

@@ -1,0 +1,1 @@
+CREATE INDEX pr_properties_x1 ON pr_properties(address1) INDEXTYPE IS CTXSYS.CONTEXT;

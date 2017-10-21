@@ -1,0 +1,36 @@
+create table ldr_license_edu
+( lRank                varchar2(2)
+, Title                varchar2(20)
+, Lic                  varchar2(20)
+, Name                 varchar2(64)
+, Addr1                varchar2(64)
+, Addr2                varchar2(64)
+, City_state_zip       varchar2(64)
+, Lic_Expire_Date      date
+, Course_Number        varchar2(16)
+, Course_Name          varchar2(64)
+, Course_Credit_Hours  number
+, Course_End_Date      date );
+
+create table ldr_license
+( Board                     varchar2(64)
+, Licensee_Name             varchar2(64)
+, DBA_Name                  varchar2(64)
+, nRank                     varchar2(32)
+, Address1                  varchar2(64)
+, Address2                  varchar2(64)
+, Address3                  varchar2(64)
+, City                      varchar2(64)
+, State                     varchar2(64)
+, Zip                       varchar2(16)
+, County                    varchar2(64)
+, License_Number            varchar2(64)
+, Primary_Status            varchar2(64)
+, Secondary_Status          varchar2(64)
+, License_Date              varchar2(64)
+, Effective_Date            varchar2(64)
+, Expiration_Date           varchar2(64)
+, Alternate_License_Number  varchar2(64)
+, Sole_Proprietor           varchar2(64)
+, Employer                  varchar2(64)
+, Employer_License_Number   varchar2(64));

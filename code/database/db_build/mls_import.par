@@ -1,0 +1,3 @@
+DIRECTORY=dpump_dir1 
+DUMPFILE=rnt_data.dmp 
+

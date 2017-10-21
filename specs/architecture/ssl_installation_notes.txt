@@ -1,0 +1,70 @@
+Login to server
+su – root
+cd /usr/local/Zend/apache2/conf/ssl2009
+more ../ssl_pass.sh
+
+passphraseforvisulatenew
+
+openssl genrsa -des3 -out visulate.net.key 2048
+openssl req -new -key visulate.net.key -out visulate.net.csr
+
+Enter pass phrase for visulate.net.key:
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [GB]:US
+State or Province Name (full name) [Berkshire]:Florida
+Locality Name (eg, city) [Newbury]:Merritt Island
+Organization Name (eg, company) [My Company Ltd]:Visulate LLC
+Organizational Unit Name (eg, section) []:
+Common Name (eg, your name or your server's hostname) []:www.visulate.net
+Email Address []:peter@goldthorp.com
+
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:raindown
+An optional company name []:Visulate
+
+Paste csr file contents into certificate request and submit request.
+
+wait for confirmation email. Click on the link in the email to confirm 
+
+wait for approval email and follow download instructions.
+
+download a zip file with 2 certificicates inside it
+ftp to webserver and load to
+/usr/local/Zend/apache2/conf/ssl2009
+
+ mv ~pgoldtho/upload/*.crt .
+
+chown root:root *.crt
+
+
+edit httpd.conf
+verify location of 
+SSLPassPhraseDialog exec:/usr/local/Zend/apache2/conf/ssl_pass.sh
+
+cp ssl_visulate.conf ssl_visulate.conf.2008
+
+
+
+   1.  Copy your issued certificate, intermediate certificate and key file (generated when you created the Certificate Signing Request (CSR)) into the directory that you will be using to hold your certificates.
+   2. Open the Apache ssl.conf file and add the following directives:
+          * SSLCertificateFile /path to certificate file/your issued certificate
+          * SSLCertificateKeyFile /path to key file/your key file
+          * SSLCertificateChainFile /path to intermediate certificate/null
+   3. Save your ssl.conf file and restart Apache.
+
+
+SSLCertificateFile /usr/local/Zend/apache2/conf/ssl2009/www.visulate.net.crt
+SSLCertificateKeyFile /usr/local/Zend/apache2/conf/ssl2009/visulate.net.key
+SSLCertificateChainFile /usr/local/Zend/apache2/conf/ssl2009/gd_bundle.crt
+
+
+cd /usr/local/Zend/apache2/bin
+./apachectl stop
+./apachectl start

@@ -1,0 +1,4 @@
+update RNT_USERS
+set USER_PASSWORD = RNT_OBFURCATION_PASSWORD_PKG.ENCRYPT('changeme');
+
+commit;
