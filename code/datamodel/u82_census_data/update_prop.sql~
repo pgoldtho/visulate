@@ -1,5 +1,0 @@
-declare
-  cursor cur_pums is
-  select prop_id, puma, puma_percentile, rental_percentile
-  from tmp_prop_pums
-  order by prop_id;

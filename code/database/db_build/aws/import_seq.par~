@@ -1,3 +1,0 @@
-DIRECTORY=dpump_dir 
-DUMPFILE=seq_fri.dmp 
-REMAP_SCHEMA=rntmgr1:rntmgr

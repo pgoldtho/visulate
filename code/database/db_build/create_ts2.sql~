@@ -1,8 +1,0 @@
-create tablespace SPATIAL_INDEX2
-  datafile '/ssd1/oradata/vis11/spatial_index2.dbf' 
-  SIZE 1G AUTOEXTEND ON;
-  
-create tablespace SPATIAL_WORK2 
-  datafile '/ssd1/oradata/vis11/spatial_work2.dbf' 
-  SIZE 1G AUTOEXTEND ON; 
-

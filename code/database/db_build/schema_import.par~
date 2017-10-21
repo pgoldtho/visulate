@@ -1,4 +1,0 @@
-DIRECTORY=dpump_dir1 
-DUMPFILE=schema_objects.dmp 
-REMAP_SCHEMA=rntmgr:rntmgr2
-
