@@ -1,0 +1,313 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Visulate Rentals</title>
+
+
+
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="3-1_files/2col.css"></head><body>
+
+
+
+
+<div id="header">
+
+	<img src="3-1_files/visulate.gif" alt="Visulate" class="logo">
+
+
+<div id="navigation">
+  <ul>
+    <li><a href="http://visulate.com/uiPrototype/1-1.html">Property</a></li>
+    <li><a href="http://visulate.com/uiPrototype/2-1.html">Tenant</a></li>
+    <li><a href="#" class="active">Payment</a></li>
+  </ul>
+</div>
+</div>
+
+
+<div id="navcontainer">
+
+	<ul id="navlist">
+		<li><a id="tabz" class="active" href="#">Receivable</a></li>
+		<li><a id="taba" href="http://visulate.com/uiPrototype/3-2.html">Payable</a></li>
+		<li><a id="taba" href="http://visulate.com/uiPrototype/3-3.html">Vendors</a></li>
+
+
+	</ul>
+</div>
+
+
+<div id="nav">
+
+	<h2><a href="#" class="active">Rental</a></h2>
+<!--
+	<ul>
+
+		<li><a href="#" class="active">Rent</a></li>
+                <li><a href="#">Recoverable Items</a></li>
+		<li><a href="#">Mortgage Payments</a></li>
+
+
+	</ul>
+-->
+	<h2>Vacation</h2>
+
+	<h2>Residential</h2>
+
+
+<!--
+	<h2>Payable</h2>
+	<ul>
+		
+		<li><a href="#">Expenses</a></li>
+	</ul>
+-->
+</div>
+
+
+
+
+<div id="content">
+
+
+<form>
+
+
+
+<h1>Rental Business Unit Receivables</h1>
+
+<h3>Anallocated Payments <input value="New" type="button"></h3>
+
+<table class="datatable">
+<tbody><tr><th>Date</th><th>Description</th><th>Received</th><th>Allocated</th><th>Balance</th>
+<th>Tenant</th><th>Allocate</th>
+
+</tr><tr>
+<td><input name="" size="10" value="04/01/2007"></td>
+<td><input name="" size="25" value="Bank Deposit"><input value="Edit" type="button">  </td>
+<td><input name="" size="7" value="825"></td>
+<td><input name="" size="7" value="0"></td>
+<td><input name="" size="7" value="825"></td>
+<td><select name="select" size="1">
+<option value="">Deloris Roger
+</option><option value="A">Allissia Gates
+</option><option value="B">Jan Palasz
+</option><option selected="selected" value="B">Deandra Dunlap
+</option></select></td>
+<td><input name="allocateme" type="radio"></td></tr>
+
+<tr>
+<td><input name="" size="10" value="04/03/2007"></td>
+<td><input name="" size="25" value="Bank Deposit"><input value="Edit" type="button">  </td>
+<td><input name="" size="7" value="725"></td>
+<td><input name="" size="7" value="0"></td>
+<td><input name="" size="7" value="725"></td>
+<td><select name="select" size="1">
+<option value="">Deloris Roger
+</option><option value="A">Allissia Gates
+</option><option value="B">Jan Palasz
+</option><option selected="selected" value="B">
+</option></select></td>
+<td><input checked="checked" name="allocateme" type="radio"></td></tr>
+</tbody></table>
+
+<table class="layouttable">
+<tbody><tr>
+<td></td>
+
+
+</tr>
+</tbody></table>
+
+<h3>Rent Due <input value="Update List" type="button"></h3>
+
+<table class="datatable">
+<tbody><tr><th>Allocate</th><th>Date Due</th><th>From</th><th>Amount Due</th><th></th>
+<th>Amount Paid</th><th>Date Paid</th><th></th> </tr>
+
+<tr>
+<td><input name="payme" type="radio"></td>
+<td>April 1, 2007</td>
+<td><a href="http://visulate.com/uiPrototype/2-2.html">Deandra Dunlap</a></td>
+<td><input name="" size="7" value="$825"></td>
+<td><input value="Paid" type="button"></td>
+<td><input name="" size="7" value="825"></td>
+<td><input name="" size="10" value="April 1, 2007"></td>
+<td><input value="Remove" type="button"></td></tr>
+
+<tr>
+<td><input name="payme" type="radio"></td>
+<td>April 1, 2007</td>
+<td><a href="http://visulate.com/uiPrototype/2-2.html">Jan Palasz</a></td>
+<td><input name="" size="7" value="$760"></td>
+<td><input value="Paid" type="button"></td>
+<td><input name="" size="7" value="760"></td>
+<td><input name="" size="10" value="April 1, 2007"></td>
+<td><input value="Remove" type="button"></td></tr>
+
+<tr>
+<td><input name="payme" type="radio"></td>
+<td>April 1, 2007</td>
+<td><a href="http://visulate.com/uiPrototype/2-2.html">Allissia Gates</a></td>
+<td><input name="" size="7" value="$825"></td>
+<td><input value="Paid" onclick="this.form.a3.value='825';" type="button"></td>
+<td><input name="a3" size="7" value=""></td>
+<td><input name="d3" size="10" value=""></td>
+<td><input value="Remove" type="button"></td></tr>
+
+<tr>
+<td><input name="payme" type="radio"></td>
+<td>April 1, 2007</td>
+<td><a href="http://visulate.com/uiPrototype/2-2.html">Deloris Roger</a></td>
+<td><input name="" size="7" value="$825"></td>
+<td><input value="Paid" type="button"></td>
+<td><input name="" size="7" value=""></td>
+<td><input name="" size="10" value=""></td>
+<td><input value="Remove" type="button"></td></tr>
+
+<tr>
+<td><input name="payme" type="radio"></td>
+<td>April 1, 2007</td>
+<td><a href="http://visulate.com/uiPrototype/2-2.html">Meloy Gray</a></td>
+<td><input name="" size="7" value="$825"></td>
+<td><input value="Paid" type="button"></td>
+<td><input name="" size="7" value=""></td>
+<td><input name="" size="10" value=""></td>
+<td><input value="Remove" type="button"></td></tr>
+
+<tr>
+<td><input name="payme" type="radio"></td>
+<td>April 1, 2007</td>
+<td><a href="http://visulate.com/uiPrototype/2-2.html">Adrien Hunter</a></td>
+<td><input name="" size="7" value="$825"></td>
+<td><input value="Paid" type="button"></td>
+<td><input name="" size="7" value=""></td>
+<td><input name="" size="10" value=""></td>
+<td><input value="Remove" type="button"></td></tr>
+
+<tr>
+<td><input checked="checked" name="payme" type="radio"></td>
+<td>April 1, 2007</td>
+<td><a href="http://visulate.com/uiPrototype/2-2.html">Rachaeal Hunter</a></td>
+<td><input name="" size="7" value="$825"></td>
+<td><input value="Paid" type="button"></td>
+<td><input name="" size="7" value=""></td>
+<td><input name="" size="10" value=""></td>
+<td><input value="Remove" type="button"></td></tr>
+
+</tbody></table>
+
+
+<h3>Recoverable Items <input value="Update List" type="button"></h3>
+
+<table class="datatable">
+<tbody><tr><th>Allocate</th><th>Date Due</th><th>From</th><th>Amount Due</th><th></th>
+<th>Amount Paid</th><th>Date Paid</th><th></th> </tr>
+
+<tr>
+<td><input name="payme" type="radio"></td>
+<td>April 1, 2007</td>
+<td><a href="http://visulate.com/uiPrototype/1-3.html">Remodel after move out of long term tennant. </a></td>
+<td><input name="" size="7" value="190"></td>
+<td><input value="Paid" type="button"></td>
+<td><input name="" size="7" value=""></td>
+<td><input name="" size="10" value=""></td>
+<td><input value="Remove" type="button"></td></tr>
+
+</tbody></table>
+
+
+
+<h3>Other Payments<input value="New" type="button"></h3>
+
+<table class="datatable">
+<tbody><tr><th>Allocate</th><th>Date</th><th>Property</th><th>Payment Type</th><th>Amount Due</th>
+<th></th><th>Amount Paid</th><th>Date Paid</th> </tr>
+
+<tr>
+<td><input name="payme" type="radio"></td>
+<td><input name="" size="10" value="4/15/2007"></td>
+
+<td><select name="select" size="1">
+<option value="">1135 Pine Valley Lane
+</option><option value="A">910 South Park Avenue
+</option><option value="B">3325 Daryl Terrace
+</option><option selected="selected" value="B">105 Sky Lane
+</option></select></td>
+
+<td><select name="select" size="1">
+<option value="B">Mortgage Payment
+</option><option selected="selected" value="B">Other Income
+</option></select></td>
+<td><input name="" size="7" value="190"></td>
+<td><input value="Paid" type="button"></td>
+<td><input name="" size="7" value=""></td>
+
+<td><input size="10" value=""></td></tr>
+
+
+
+</tbody></table>
+
+</form>
+<h5>Developer Notes</h5>
+<p>
+The receivable screen creates rows in the RNT_PAYMENTS,
+RNT_ACCOUNTS_RECEIVABLE and RNT_PAYMENT_ALLOCATIONS tables. The
+RNT_PAYMENTS table is used to record details of payments received.
+RNT_ACCOUNTS_RECEIVABLE records details of payments due and
+RNT_PAYMENT_ALLOCATIONS records details of payment allocations. </p><p>
+The Unallocated Payments section of the screen is used to record
+RNT_PAYMENTS records. It can be used as a holding area for payments
+that the manager is unable to assign. Sometimes a tenant will make a
+bank payment without providing identification. For example, they may
+make a $600 cash deposit without writing their name on the deposit slip
+(these aren't the brightest people in the world). The property manager
+can record the payment as an unallocated payment while they try to
+figure out who it came from. They can also use unallocated payments
+when they receive a single payment for more than one item. For example,
+a property manager may receive a payment of $800 from a tenant who owes
+$750 in rent and $100 for repairs. The manager must decide how to
+allocate the payment. She could decide to allocte $750 to rent and $50
+for repairs or $100 for repairs and $700 for rent. The radio buttons on
+the screen would be used to do this. The Allocated and Balance totals
+should keep a running total of the amount allocated and remaining.</p>
+<p>
+Not all payment require an entry in the RNT_PAYMENTS table. They can be
+recorded direclty in the RNT_PAYMENT_ALLOCATIONS table and joined to a
+row in RNT_ACCOUNTS_RECEIVABLE. RNT_ACCOUNTS_RECEIVABLE rows are
+created from this screen by pressing the Update List buttons for Rent
+Due or Recoverable Items or by inserting a new row in the Other
+Payments section of the screen.</p>
+
+<p>
+Most payments are made from the Rent Due section of this screen. The
+user clicks on the "Update List" button to generate a list of payments
+due on the current date. It does this by reading the tenancy agreements
+recorded in the system and generating an entry for each agreement where
+the agreement end date is null and the current date &gt;= last
+RNT_ACCOUNTS_RECEIVABLE record + RNT_TENANCY_AGREEMENT.AMOUNT_PERIOD.
+It should also look at the late fee entries for the agreement and
+generate fees for overdue payments.
+</p>
+<p>The user should be able to populate the Amount Paid and Date Paid
+fields on the screen by pressing the Paid button on the screen. The
+system should copy the Amount Due value to the Amount Paid field and
+the current date to the Date Paid field. The user should be able to
+edit these values before commiting them. The user should also be able
+to remove rows by pressing the remove button. This should set the
+amount due value to $0 to prevent the system from regenerating the
+entry the next time the screen is populated.
+</p>
+<p>
+Recoverable items relate to repairs or agreement actions that the property manger has marked as recoverable.
+</p>
+
+
+</div>
+
+
+
+
+
+
+</body></html>

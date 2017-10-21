@@ -1,0 +1,12 @@
+cp ./classes/database/pr_reports.class.php ./classes/database/pr_reports.class.php.safe
+cp ./_smarty/templates/visulate-property-details-main.tpl ./_smarty/templates/visulate-property-details-main.tpl.safe
+cp ./_smarty/templates/visulate-property-details.tpl ./_smarty/templates/visulate-property-details.tpl.safe
+cp ./_smarty/templates/mobile-property-details-main.tpl ./_smarty/templates/mobile-property-details-main.tpl.safe
+cp ./_smarty/templates/mobile-property-details.tpl ./_smarty/templates/mobile-property-details.tpl.safe
+
+
+cp /home/pgoldtho/visulate/visulate/code/php/classes/database/pr_reports.class.php ./classes/database
+cp /home/pgoldtho/visulate/visulate/code/php/_smarty/templates/visulate-property-details-main.tpl ./_smarty/templates
+cp /home/pgoldtho/visulate/visulate/code/php/_smarty/templates/visulate-property-details.tpl ./_smarty/templates
+cp /home/pgoldtho/visulate/visulate/code/php/_smarty/templates/mobile-property-details-main.tpl ./_smarty/templates
+cp /home/pgoldtho/visulate/visulate/code/php/_smarty/templates/mobile-property-details.tpl ./_smarty/templates

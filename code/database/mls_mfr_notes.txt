@@ -1,0 +1,149 @@
+MLS Listing Notes
+
+MFR
+
+http://rets.mfrmls.com/contact/rets/login
+  global_user      varchar2(16)  := 'RETS534';
+  global_passwd    varchar2(16)  := '7+Er+7aqeD';
+  global_base      varchar2(256) := 'http://rets.mfrmls.com/contact/rets/search?SearchType=Property';
+  global_src       number := 7; -- Florida Regional MLS
+
+Sample Call:  
+http://rets.mfrmls.com/contact/rets/search?SearchType=Property&Class=Listing&PropertyType=RES&Format=COMPACT-DECODED&QueryType=DMQL2&Query=(Status=ACT),(CountyorParish=Orange)&Select=Matrix_Unique_ID,MLSNumber,ParcelNumber
+
+WSDL Doc
+http://www.myfloridahomesmls.com/MyAjaxService.asmx
+
+http://www.myfloridahomesmls.com/MyAjaxService.asmx?op=GetAuxPhotos
+
+SOAP 1.1
+
+The following is a sample SOAP 1.1 request and response. The placeholders shown need to be replaced with actual values.
+
+POST /MyAjaxService.asmx HTTP/1.1
+Host: www.myfloridahomesmls.com
+Content-Type: text/xml; charset=utf-8
+Content-Length: length
+SOAPAction: "http://tempuri.org/GetAuxPhotos"
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <GetAuxPhotos xmlns="http://tempuri.org/">
+      <Source>string</Source>
+      <SysID>string</SysID>
+    </GetAuxPhotos>
+  </soap:Body>
+</soap:Envelope>
+HTTP/1.1 200 OK
+Content-Type: text/xml; charset=utf-8
+Content-Length: length
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <GetAuxPhotosResponse xmlns="http://tempuri.org/">
+      <GetAuxPhotosResult>
+        <string>string</string>
+        <string>string</string>
+      </GetAuxPhotosResult>
+    </GetAuxPhotosResponse>
+  </soap:Body>
+</soap:Envelope>
+SOAP 1.2
+
+The following is a sample SOAP 1.2 request and response. The placeholders shown need to be replaced with actual values.
+
+POST /MyAjaxService.asmx HTTP/1.1
+Host: www.myfloridahomesmls.com
+Content-Type: application/soap+xml; charset=utf-8
+Content-Length: length
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
+  <soap12:Body>
+    <GetAuxPhotos xmlns="http://tempuri.org/">
+      <Source>string</Source>
+      <SysID>string</SysID>
+    </GetAuxPhotos>
+  </soap12:Body>
+</soap12:Envelope>
+HTTP/1.1 200 OK
+Content-Type: application/soap+xml; charset=utf-8
+Content-Length: length
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
+  <soap12:Body>
+    <GetAuxPhotosResponse xmlns="http://tempuri.org/">
+      <GetAuxPhotosResult>
+        <string>string</string>
+        <string>string</string>
+      </GetAuxPhotosResult>
+    </GetAuxPhotosResponse>
+  </soap12:Body>
+</soap12:Envelope>
+
+http://www.myfloridahomesmls.com/MyAjaxService.asmx?op=PropertyMLLookup
+SOAP 1.1
+
+The following is a sample SOAP 1.1 request and response. The placeholders shown need to be replaced with actual values.
+
+POST /MyAjaxService.asmx HTTP/1.1
+Host: www.myfloridahomesmls.com
+Content-Type: text/xml; charset=utf-8
+Content-Length: length
+SOAPAction: "http://tempuri.org/PropertyMLLookup"
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <PropertyMLLookup xmlns="http://tempuri.org/">
+      <MLNum>string</MLNum>
+      <RectCoord>string</RectCoord>
+    </PropertyMLLookup>
+  </soap:Body>
+</soap:Envelope>
+HTTP/1.1 200 OK
+Content-Type: text/xml; charset=utf-8
+Content-Length: length
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <PropertyMLLookupResponse xmlns="http://tempuri.org/">
+      <PropertyMLLookupResult>string</PropertyMLLookupResult>
+    </PropertyMLLookupResponse>
+  </soap:Body>
+</soap:Envelope>
+SOAP 1.2
+
+The following is a sample SOAP 1.2 request and response. The placeholders shown need to be replaced with actual values.
+
+POST /MyAjaxService.asmx HTTP/1.1
+Host: www.myfloridahomesmls.com
+Content-Type: application/soap+xml; charset=utf-8
+Content-Length: length
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
+  <soap12:Body>
+    <PropertyMLLookup xmlns="http://tempuri.org/">
+      <MLNum>string</MLNum>
+      <RectCoord>string</RectCoord>
+    </PropertyMLLookup>
+  </soap12:Body>
+</soap12:Envelope>
+HTTP/1.1 200 OK
+Content-Type: application/soap+xml; charset=utf-8
+Content-Length: length
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
+  <soap12:Body>
+    <PropertyMLLookupResponse xmlns="http://tempuri.org/">
+      <PropertyMLLookupResult>string</PropertyMLLookupResult>
+    </PropertyMLLookupResponse>
+  </soap12:Body>
+</soap12:Envelope>
+

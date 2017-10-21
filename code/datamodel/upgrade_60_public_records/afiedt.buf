@@ -1,0 +1,19 @@
+select to_char(sale_date, 'yyyy') year
+,      count(*)                   sales_count
+,      sum(price)                 total_sales
+,      round(median(price/acreage))          avg_price
+from pr_property_sales ps
+,    pr_properties p
+,    pr_property_usage pu
+,    pr_usage_codes uc
+where deed_code = 'WD'
+and p.prop_id = ps.prop_id
+and price > 0
+and acreage > 0
+and sale_date <= sysdate
+and to_char(sale_date, 'yyyy') > 1989
+and pu.prop_id = p.prop_id
+and uc.ucode = pu.ucode
+and uc.parent_ucode = 3
+group by to_char(sale_date, 'yyyy')
+/

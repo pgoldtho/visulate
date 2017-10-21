@@ -1,0 +1,3 @@
+select * from rnt_ledger_entries
+where entry_date > '11-AUG-2009'
+/

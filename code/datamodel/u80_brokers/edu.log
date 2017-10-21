@@ -1,0 +1,77 @@
+
+SQL*Loader: Release 11.2.0.3.0 - Production on Sat Oct 20 17:58:03 2012
+
+Copyright (c) 1982, 2011, Oracle and/or its affiliates.  All rights reserved.
+
+Control File:   edu.ctl
+Data File:      re_salesperson.csv
+  Bad File:     re_salesperson.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+
+Number to load: ALL
+Number to skip: 0
+Errors allowed: 50
+Bind array:     64 rows, maximum of 256000 bytes
+Continuation:    none specified
+Path used:      Conventional
+
+Table LDR_LICENSE_EDU, loaded from every logical record.
+Insert option in effect for this table: TRUNCATE
+TRAILING NULLCOLS option in effect
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+LRANK                               FIRST     *   ,  O(") CHARACTER            
+TITLE                                NEXT     *   ,  O(") CHARACTER            
+LIC                                  NEXT     *   ,  O(") CHARACTER            
+NAME                                 NEXT     *   ,  O(") CHARACTER            
+ADDR1                                NEXT     *   ,  O(") CHARACTER            
+ADDR2                                NEXT     *   ,  O(") CHARACTER            
+CITY_STATE_ZIP                       NEXT     *   ,  O(") CHARACTER            
+LIC_EXPIRE_DATE                      NEXT     *   ,  O(") DATE mm/dd/yy        
+COURSE_NUMBER                        NEXT     *   ,  O(") CHARACTER            
+COURSE_NAME                          NEXT     *   ,  O(") CHARACTER            
+COURSE_CREDIT_HOURS                  NEXT     *   ,  O(") CHARACTER            
+COURSE_END_DATE                      NEXT     *   ,  O(") DATE mm/dd/yy        
+
+Record 112711: Rejected - Error on table LDR_LICENSE_EDU, column LRANK.
+ORA-12899: value too large for column "RNTMGR2"."LDR_LICENSE_EDU"."LRANK" (actual: 4, maximum: 2)
+
+Record 622260: Rejected - Error on table LDR_LICENSE_EDU, column LRANK.
+ORA-12899: value too large for column "RNTMGR2"."LDR_LICENSE_EDU"."LRANK" (actual: 4, maximum: 2)
+
+Record 673050: Rejected - Error on table LDR_LICENSE_EDU, column COURSE_END_DATE.
+ORA-01830: date format picture ends before converting entire input string
+
+Record 1262470: Rejected - Error on table LDR_LICENSE_EDU, column LRANK.
+ORA-12899: value too large for column "RNTMGR2"."LDR_LICENSE_EDU"."LRANK" (actual: 4, maximum: 2)
+
+Record 1319068: Rejected - Error on table LDR_LICENSE_EDU, column LRANK.
+ORA-12899: value too large for column "RNTMGR2"."LDR_LICENSE_EDU"."LRANK" (actual: 4, maximum: 2)
+
+Record 1508249: Rejected - Error on table LDR_LICENSE_EDU, column LRANK.
+ORA-12899: value too large for column "RNTMGR2"."LDR_LICENSE_EDU"."LRANK" (actual: 4, maximum: 2)
+
+
+Table LDR_LICENSE_EDU:
+  1683096 Rows successfully loaded.
+  6 Rows not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Space allocated for bind array:                 198144 bytes(64 rows)
+Read   buffer bytes: 1048576
+
+Total logical records skipped:          0
+Total logical records read:       1683102
+Total logical records rejected:         6
+Total logical records discarded:        0
+
+Run began on Sat Oct 20 17:58:03 2012
+Run ended on Sat Oct 20 18:07:09 2012
+
+Elapsed time was:     00:09:06.69
+CPU time was:         00:00:27.67

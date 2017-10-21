@@ -1,0 +1,127 @@
+Request:
+http://retsgw.flexmls.com/rets2_0/GetObject?Type=Photo&Resource=Property&ID=20130731203027390928000000:*&Location=1
+
+Reply:
+
+--FLEXAMPW1R7Hew3GC7jKJSBGpKpBjIIL9yeZ0oiVvJPHkAwzsBLdJz
+Content-Type: image/jpeg
+Content-ID: 20130731203027390928000000
+Object-ID: 1
+Location: http://cdn.photos.flexmls.com/spc/20130731204523680482000000.jpg
+Content-Description: 205 Ballyshannon 020
+Preferred: 1
+
+
+--FLEXAMPW1R7Hew3GC7jKJSBGpKpBjIIL9yeZ0oiVvJPHkAwzsBLdJz
+Content-Type: image/jpeg
+Content-ID: 20130731203027390928000000
+Object-ID: 2
+Location: http://cdn.photos.flexmls.com/spc/20130731204526191270000000.jpg
+Content-Description: dining1sm
+
+
+--FLEXAMPW1R7Hew3GC7jKJSBGpKpBjIIL9yeZ0oiVvJPHkAwzsBLdJz
+Content-Type: image/jpeg
+Content-ID: 20130731203027390928000000
+Object-ID: 3
+Location: http://cdn.photos.flexmls.com/spc/20130731204529228961000000.jpg
+Content-Description: living2sm
+
+
+--FLEXAMPW1R7Hew3GC7jKJSBGpKpBjIIL9yeZ0oiVvJPHkAwzsBLdJz
+Content-Type: image/jpeg
+Content-ID: 20130731203027390928000000
+Object-ID: 4
+Location: http://cdn.photos.flexmls.com/spc/20130731204530916626000000.jpg
+Content-Description: kitchen1sm
+
+
+--FLEXAMPW1R7Hew3GC7jKJSBGpKpBjIIL9yeZ0oiVvJPHkAwzsBLdJz
+Content-Type: image/jpeg
+Content-ID: 20130731203027390928000000
+Object-ID: 5
+Location: http://cdn.photos.flexmls.com/spc/20130731204532812929000000.jpg
+Content-Description: master1sm
+
+
+--FLEXAMPW1R7Hew3GC7jKJSBGpKpBjIIL9yeZ0oiVvJPHkAwzsBLdJz
+Content-Type: image/jpeg
+Content-ID: 20130731203027390928000000
+Object-ID: 6
+Location: http://cdn.photos.flexmls.com/spc/20130731204534589873000000.jpg
+Content-Description: masterbath1sm
+
+
+--FLEXAMPW1R7Hew3GC7jKJSBGpKpBjIIL9yeZ0oiVvJPHkAwzsBLdJz
+Content-Type: image/jpeg
+Content-ID: 20130731203027390928000000
+Object-ID: 7
+Location: http://cdn.photos.flexmls.com/spc/20130731204536563771000000.jpg
+Content-Description: bed2sm
+
+
+--FLEXAMPW1R7Hew3GC7jKJSBGpKpBjIIL9yeZ0oiVvJPHkAwzsBLdJz
+Content-Type: image/jpeg
+Content-ID: 20130731203027390928000000
+Object-ID: 8
+Location: http://cdn.photos.flexmls.com/spc/20130731204538979259000000.jpg
+Content-Description: bed3sm
+
+
+--FLEXAMPW1R7Hew3GC7jKJSBGpKpBjIIL9yeZ0oiVvJPHkAwzsBLdJz
+Content-Type: image/jpeg
+Content-ID: 20130731203027390928000000
+Object-ID: 9
+Location: http://cdn.photos.flexmls.com/spc/20130731204541012644000000.jpg
+Content-Description: nook1sm
+
+
+--FLEXAMPW1R7Hew3GC7jKJSBGpKpBjIIL9yeZ0oiVvJPHkAwzsBLdJz
+Content-Type: image/jpeg
+Content-ID: 20130731203027390928000000
+Object-ID: 10
+Location: http://cdn.photos.flexmls.com/spc/20130731204542815099000000.jpg
+Content-Description: pool1sm
+
+
+--FLEXAMPW1R7Hew3GC7jKJSBGpKpBjIIL9yeZ0oiVvJPHkAwzsBLdJz
+Content-Type: image/jpeg
+Content-ID: 20130731203027390928000000
+Object-ID: 11
+Location: http://cdn.photos.flexmls.com/spc/20130731204544492991000000.jpg
+Content-Description: tenniscourts1sm
+
+
+--FLEXAMPW1R7Hew3GC7jKJSBGpKpBjIIL9yeZ0oiVvJPHkAwzsBLdJz
+Content-Type: image/jpeg
+Content-ID: 20130731203027390928000000
+Object-ID: 12
+Location: http://cdn.photos.flexmls.com/spc/20130731204546239437000000.jpg
+Content-Description: recroom1sm
+
+
+--FLEXAMPW1R7Hew3GC7jKJSBGpKpBjIIL9yeZ0oiVvJPHkAwzsBLdJz
+Content-Type: image/jpeg
+Content-ID: 20130731203027390928000000
+Object-ID: 13
+Location: http://cdn.photos.flexmls.com/spc/20130731204548725865000000.jpg
+Content-Description: pooldock1sm
+
+
+--FLEXAMPW1R7Hew3GC7jKJSBGpKpBjIIL9yeZ0oiVvJPHkAwzsBLdJz
+Content-Type: image/jpeg
+Content-ID: 20130731203027390928000000
+Object-ID: 14
+Location: http://cdn.photos.flexmls.com/spc/20130731204550075280000000.jpg
+Content-Description: balconywest1sm
+
+
+--FLEXAMPW1R7Hew3GC7jKJSBGpKpBjIIL9yeZ0oiVvJPHkAwzsBLdJz
+Content-Type: image/jpeg
+Content-ID: 20130731203027390928000000
+Object-ID: 15
+Location: http://cdn.photos.flexmls.com/spc/20130731204552345348000000.jpg
+Content-Description: balconyeast1sm
+
+
+--FLEXAMPW1R7Hew3GC7jKJSBGpKpBjIIL9yeZ0oiVvJPHkAwzsBLdJz--

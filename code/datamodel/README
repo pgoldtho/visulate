@@ -1,0 +1,11 @@
+This directory contains ddl to create database tables and pl/sql api's.
+
+login as system and run schema.sql to create a database user called rntmgr.  Connect to that user and run the following:
+
+  visulate_ddl.sql   -- create database tables
+  sequences.sql      -- database sequences
+  rnt_properties.sql -- property api's
+  rnt_tenants.sql    -- tenant api's
+
+
+I'm still working on the security model for the application. This may involve separate database schemas.  Create all the objects in the same schema for the time being

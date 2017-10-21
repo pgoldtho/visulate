@@ -1,0 +1,60 @@
+.listImg {
+  width: 100%
+}
+
+.showing {
+  margin: 0;
+  display: block;
+}
+
+.current-photo {
+  margin: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.photos {
+  width: 98%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.photos ul {
+  list-style: none;
+  padding: 0;
+}
+
+.indicator {
+  text-align: center;
+}
+
+#next {
+  float: right;
+  height: 100px;
+  width: 5px;
+}
+
+#prev {
+  float: left;
+  height: 100px;
+  width: 5px;
+}
+
+.ind-wrap {
+  text-align: center;
+}
+
+.indicator {
+  display: inline-block;
+  font-size: 25px;
+}
+
+.photo-button {
+  height: 20px;
+  border-radius: 50%;
+  padding: 2px;
+  border: 1px #ddd solid;
+  height: auto;
+}

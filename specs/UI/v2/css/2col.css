@@ -1,0 +1,41 @@
+/* Tables
+-------------------------------------------------------------- */
+
+ td, th {
+  font: 0.9em Tahoma Arial, Helvetica, sans-serif;
+}
+.layouttable td {
+  vertical-align: top;
+}
+table.datatable {
+  border:none;
+  margin:0 0 20px 0;
+  padding:0;
+/*  border-collapse: collapse;*/
+}
+.datatable td {
+  border-style:none none solid none;
+  border-width:1px;
+  border-color:#a3a591;
+  text-align: left;
+  padding: 4px;
+}
+.datatable th {
+  border-style:none none solid none;
+  border-width:1px;
+  border-color:#a3a591;
+  background-color: #DEE1C6;
+  color: #383838;
+  font-weight: bold;
+  text-align: left;
+  padding: 4px;
+}
+.datatable th td {
+  border:none;
+}
+.datatable caption {
+  font: bold 0.9em Tahoma, Arial, Helvetica, sans-serif;
+  background-color: #446688;
+  color: #FFFFFF;
+  padding: 4px;
+  border: 1px solid #;

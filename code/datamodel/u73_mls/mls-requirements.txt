@@ -1,0 +1,166 @@
+
+==Overview==
+ Visulate currently displays property records that are sourced from public records.  This results in a large number of visits to the site but does  not produce significant revenue.  We believe we can change this by adding sales listings to the site.  These should generate leads for our real estate brokerage.
+===Problem Description===
+Sales listings are maintained in MLS (Multiple Listing Service) databases.  Each board of realtors maintains an MLS DB.  Most of them oursouce this function to a company that specializes in MLS data.  Listing data is made available for brokers to integrate via web services.  The NAR (National Association of Realtors) publishes standards for these services.  They are referred to as RETS.
+
+The RETS standard defines a protocol for IDX (Internet Data Exchange) requests.  http clients make RETS requests to an MLS server.  The server responds with an XML document that includes details of active listings that match the request criteria.  These listings could be for residential, commercial, rental, income, land or rental properties.  The data format of the response file varies depending on the request type.
+
+There are a number of different MLS vendors.  The Space Coast Board of Realtors currently uses an Innovia database.  Its web services conform to an old version of the RETS standard.  Other vendors use later versions.  The Innovia implementation supports REST based http requests that have been authenticated using digest authentication.
+
+Most MLS vendors impose data caps on the response size for each request.  Few will support the download of all active listing details from a single request.  A RETS request will only return details for active listings.  A client system that uses RETS to repicate data for later use will need to implemnt mechanisms to idendify listings that are no longer active.
+===Solution===
+Develop a RETS client using utl_http.  Use it to replicate data from one or more MLS systems and integrate the result into the public records reports that are available on the Visulate website.
+===Business Need===
+Display of the MLS data should improve the quality of the leads that we receive from the Visulate website.
+==Requirements==
+  ===Functional Requirements===
+       ====1. Customer Requirement====
+       1.1 Display listing data for public record pages if the current selected property is for sale.
+       1.2 Display links to property pages with listings for that are similar to the the current selected property
+       1.3 Modify the homepage to display daily updates with new listings and listing news.
+       1.4 Develop custom search facilities 
+       
+       ====2. Use Cases====
+       2.1 User lands on a property page as the result of a Google Search.  They notice the property is listed for sale and click on a link to request additional information.
+       2.2 User lands on a property page.  Visulate displays a list of similar properties that are for sale.  The user clicks on them and reviews the listing details for each.  They click on a link to request additional details for one of them.
+       2.3 User visits the home page to review the latest listings and real estate news for their area.  Visulate displays listing details for one or more properties of interest.  They click on a link to request additional details.
+       2.4 User visits the Visulate site and uses a customized search report.  The report provides a drill down/up interface instead of the traditional Query Form -> Query Result display.
+       ====3. Functionality and Feature Description====
+         =====Current behavior=====
+         Visulate displays public record data.  It does not provide information on MLS listings.
+         =====New functionality=====
+         3.1 Replication facilities for MLS data
+         3.2 Report page integration
+         3.3 News Service
+         3.4 Customized reports         
+         =====New concepts=====
+         =====User Interface=====
+       ====4. Preconditions and Assumptions====
+       ====5. Limitations====
+       5.1 Must conform to Broker Reciprocity rules
+       5.2 Should maintain a single table for all active listings
+       5.3 Could store type specific data in a separate table
+       5.4 Must track listing status updates and prevent the display of non-active listings
+       5.5 Must not display listings for brokers who have opted out of IDX.
+       ====6. Dependencies and Impact Analysis====
+       ====7. Known issues====
+  ===User Interface Requirements===
+  ===Performance Requirements===
+==Design==
+  ===Data Model===
+    ====Schema Changes====
+    ====Seed Data====
+    ====Data Upgrade====
+  ===Code===
+    ====APIs====
+create or replace package pr_rets_pkg as
+
+  --
+  -- Package Types
+  -- 
+  type name_value_type  is record ( name  varchar2(256)
+                                  , value varchar2(4048));
+  type name_value_table is table of name_value_type 
+     index by pls_integer;
+
+  type value_table is table of varchar2(4048)
+     index by varchar2(256);
+
+  --
+  -- Print http headers using dbms_output
+  --
+  procedure prn_http_headers(p_resp in out UTL_HTTP.resp);
+  
+  --
+  -- Extract parameter value from response values.  For example,
+  -- get_str( 'Digest realm="rets.offutt-innovia.com",nonce="2bb321aeba9"'
+  --        , 'realm');
+  -- returns 'rets.offutt-innovia.com'
+  --
+  function get_str( p_str   in varchar2
+                  , p_param in varchar2) return varchar2;
+  --
+  -- Generate a lowercase md5 hash for a given input string.
+  --
+  function getMD5(in_string in varchar2)  return varchar2;
+  
+  --
+  -- Login to a RETS server
+  --
+  procedure rets_login( p_url        in varchar2
+                      , p_user       in varchar2
+				      , p_passwd     in varchar2
+				      , p_realm      out varchar2
+				      , p_nonce      out varchar2
+					  , p_seq        out integer
+				      , p_opaque     out varchar2);
+
+  --
+  -- Make an http request to a server that uses Digest Authentication
+  --
+  function get_resp( p_url        in varchar2
+                   , p_user       in varchar2
+				   , p_passwd     in varchar2
+				   , p_realm      in varchar2
+				   , p_nonce      in varchar2
+				   , p_seq        in integer
+				   , p_opaque     in varchar2)
+     return UTL_HTTP.resp;
+  --
+  -- Read the http response and convert to xml. Close the response and 
+  -- optionally display the xml via dbms_output.put_line.  
+  -- Note: Wraps <DATA> content in CDATA section for use with COMPACT responses.
+  -- Should only be used for STANDARD documents that are known to be well formed.
+  --
+  function get_xml( p_resp  in out UTL_HTTP.resp
+                  , p_debug in boolean := FALSE) return xmltype;
+				  
+  --
+  -- Print long lines via dbms_output
+  --
+  procedure put_line(p_data in varchar2);
+  
+  --
+  -- Read the http response for a COMPACT or COMPACT-DECODED
+  -- RETS request.  Return as a table of name:value pairs.
+  --
+  function read_compact_request( p_resp  in out UTL_HTTP.resp
+                               , p_debug in boolean := FALSE)
+    return name_value_table;
+
+  --
+  -- Wrapper for read_compact_request.  Returns x(name) = value.
+  --
+  function read_compact_values( p_resp  in out UTL_HTTP.resp
+                              , p_debug in boolean := FALSE)
+    return value_table;
+end pr_rets_pkg;    
+    ====Non-API Code Changes====
+Create a pl/sql package to replicate data.
+1.  Read active listings.
+2.  Identify inactive listings and remove from database.
+3.  For each active listing insert or update listing data  ...
+  - if inserting get prop_id from TaxID;
+  - populate database columns:
+  -- query_type = ResidentialProperty, CommercialProperty, IncomeProperty, VacantLand or Rental
+  -- listing_type = sale, rent, lease
+  -- price = ListPrice
+  -- listing_broker = OriginalListingFirmName
+  -- idx_yn = derived from OfficeIDX or IDX set to N if either = N or No
+  
+  -- Generate short and full html for display on webpage.  Store as XML type.
+  --- each query_type needs its own template for html generation.
+  
+  - find photos
+read PhotoCount property and use the following logic to find brevard mls photo urls:
+http://www.brevardmls.com/brv/jpg#/xxx/mls_xxx.jpg - e.g.
+http://www.brevardmls.com/brv/jpg7/449/625449.jpg
+Numbers start from 2 main image has no number.
+http://www.brevardmls.com/brv/jpg/449/625449.jpg
+  
+   
+  ===User Interface===
+Modify search screens to display pre-processed html  
+  
+==Test Plans==

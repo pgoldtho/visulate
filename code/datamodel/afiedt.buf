@@ -1,0 +1,12 @@
+select pt.payment_type_name "Payment Type"
+,      to_char(sum(pa.amount), '$999,999.99') "Amount"
+from rnt_payment_types pt
+,    rnt_accounts_payable ap
+,    rnt_payment_allocations pa
+where pt.payment_type_id = ap.payment_type_id
+and   ap.ap_id = pa.ap_id
+and to_char(ap.payment_due_date, 'YYYY') = '2007'
+and ap.business_id = 21
+group by  pt.payment_type_name
+order by pt.payment_type_name
+/

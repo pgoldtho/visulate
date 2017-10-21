@@ -1,0 +1,11 @@
+begin
+ mls_mfr_pkg.set_index_page( X_TAB_NAME  => 'find'
+
+                              , X_MENU_NAME => 'items'
+
+              , X_PAGE_NAME => 'homePage'
+, X_SUB_PAGE  => 'Space Coast'
+, X_DATE      => to_date('20-MAY-13', 'dd-MON-yy')
+, X_COUNTY    => 'OS');
+end;
+/

@@ -1,0 +1,6 @@
+declare
+x xmltype;
+begin
+x := xmltype('<title>Visulate - Brevard County Buy-to-Rent</title> ');
+end;
+/

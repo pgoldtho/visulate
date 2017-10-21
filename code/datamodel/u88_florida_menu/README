@@ -1,0 +1,6 @@
+The new menu requires a symlink from the pages directory to visulate_search.php
+
+cd /home/visulate/source/visulate/visulate/code/php/pages
+ln -s  ../visulate_search.php  visulate_search.php
+
+Then login to the database and run the seed_data script.

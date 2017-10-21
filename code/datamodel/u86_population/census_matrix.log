@@ -1,0 +1,239 @@
+
+SQL*Loader: Release 11.2.0.3.0 - Production on Sat Dec 28 13:02:07 2013
+
+Copyright (c) 1982, 2011, Oracle and/or its affiliates.  All rights reserved.
+
+Control File:   census_matrix.ldr
+Data File:      fl000012010.dp
+  Bad File:     fl000012010.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+
+Number to load: ALL
+Number to skip: 0
+Errors allowed: 50
+Bind array:     64 rows, maximum of 256000 bytes
+Continuation:    none specified
+Path used:      Conventional
+
+Table CENSUS2010MATRIX, loaded from every logical record.
+Insert option in effect for this table: TRUNCATE
+TRAILING NULLCOLS option in effect
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+FILEID                              FIRST     *   ,  O(") CHARACTER            
+STUSAB                               NEXT     *   ,  O(") CHARACTER            
+CHARITER                             NEXT     *   ,  O(") CHARACTER            
+CIFSN                                NEXT     *   ,  O(") CHARACTER            
+LOGRECNO                             NEXT     *   ,  O(") CHARACTER            
+DPSF0010001                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010002                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010003                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010004                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010005                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010006                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010007                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010008                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010009                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010010                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010011                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010012                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010013                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010014                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010015                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010016                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010017                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010018                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010019                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010020                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010021                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010022                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010023                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010024                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010025                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010026                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010027                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010028                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010029                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010030                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010031                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010032                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010033                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010034                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010035                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010036                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010037                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010038                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010039                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010040                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010041                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010042                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010043                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010044                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010045                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010046                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010047                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010048                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010049                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010050                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010051                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010052                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010053                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010054                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010055                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010056                          NEXT     *   ,  O(") CHARACTER            
+DPSF0010057                          NEXT     *   ,  O(") CHARACTER            
+DPSF0020001                          NEXT     *   ,  O(") CHARACTER            
+DPSF0020002                          NEXT     *   ,  O(") CHARACTER            
+DPSF0020003                          NEXT     *   ,  O(") CHARACTER            
+DPSF0030001                          NEXT     *   ,  O(") CHARACTER            
+DPSF0030002                          NEXT     *   ,  O(") CHARACTER            
+DPSF0030003                          NEXT     *   ,  O(") CHARACTER            
+DPSF0040001                          NEXT     *   ,  O(") CHARACTER            
+DPSF0040002                          NEXT     *   ,  O(") CHARACTER            
+DPSF0040003                          NEXT     *   ,  O(") CHARACTER            
+DPSF0050001                          NEXT     *   ,  O(") CHARACTER            
+DPSF0050002                          NEXT     *   ,  O(") CHARACTER            
+DPSF0050003                          NEXT     *   ,  O(") CHARACTER            
+DPSF0060001                          NEXT     *   ,  O(") CHARACTER            
+DPSF0060002                          NEXT     *   ,  O(") CHARACTER            
+DPSF0060003                          NEXT     *   ,  O(") CHARACTER            
+DPSF0070001                          NEXT     *   ,  O(") CHARACTER            
+DPSF0070002                          NEXT     *   ,  O(") CHARACTER            
+DPSF0070003                          NEXT     *   ,  O(") CHARACTER            
+DPSF0080001                          NEXT     *   ,  O(") CHARACTER            
+DPSF0080002                          NEXT     *   ,  O(") CHARACTER            
+DPSF0080003                          NEXT     *   ,  O(") CHARACTER            
+DPSF0080004                          NEXT     *   ,  O(") CHARACTER            
+DPSF0080005                          NEXT     *   ,  O(") CHARACTER            
+DPSF0080006                          NEXT     *   ,  O(") CHARACTER            
+DPSF0080007                          NEXT     *   ,  O(") CHARACTER            
+DPSF0080008                          NEXT     *   ,  O(") CHARACTER            
+DPSF0080009                          NEXT     *   ,  O(") CHARACTER            
+DPSF0080010                          NEXT     *   ,  O(") CHARACTER            
+DPSF0080011                          NEXT     *   ,  O(") CHARACTER            
+DPSF0080012                          NEXT     *   ,  O(") CHARACTER            
+DPSF0080013                          NEXT     *   ,  O(") CHARACTER            
+DPSF0080014                          NEXT     *   ,  O(") CHARACTER            
+DPSF0080015                          NEXT     *   ,  O(") CHARACTER            
+DPSF0080016                          NEXT     *   ,  O(") CHARACTER            
+DPSF0080017                          NEXT     *   ,  O(") CHARACTER            
+DPSF0080018                          NEXT     *   ,  O(") CHARACTER            
+DPSF0080019                          NEXT     *   ,  O(") CHARACTER            
+DPSF0080020                          NEXT     *   ,  O(") CHARACTER            
+DPSF0080021                          NEXT     *   ,  O(") CHARACTER            
+DPSF0080022                          NEXT     *   ,  O(") CHARACTER            
+DPSF0080023                          NEXT     *   ,  O(") CHARACTER            
+DPSF0080024                          NEXT     *   ,  O(") CHARACTER            
+DPSF0090001                          NEXT     *   ,  O(") CHARACTER            
+DPSF0090002                          NEXT     *   ,  O(") CHARACTER            
+DPSF0090003                          NEXT     *   ,  O(") CHARACTER            
+DPSF0090004                          NEXT     *   ,  O(") CHARACTER            
+DPSF0090005                          NEXT     *   ,  O(") CHARACTER            
+DPSF0090006                          NEXT     *   ,  O(") CHARACTER            
+DPSF0100001                          NEXT     *   ,  O(") CHARACTER            
+DPSF0100002                          NEXT     *   ,  O(") CHARACTER            
+DPSF0100003                          NEXT     *   ,  O(") CHARACTER            
+DPSF0100004                          NEXT     *   ,  O(") CHARACTER            
+DPSF0100005                          NEXT     *   ,  O(") CHARACTER            
+DPSF0100006                          NEXT     *   ,  O(") CHARACTER            
+DPSF0100007                          NEXT     *   ,  O(") CHARACTER            
+DPSF0110001                          NEXT     *   ,  O(") CHARACTER            
+DPSF0110002                          NEXT     *   ,  O(") CHARACTER            
+DPSF0110003                          NEXT     *   ,  O(") CHARACTER            
+DPSF0110004                          NEXT     *   ,  O(") CHARACTER            
+DPSF0110005                          NEXT     *   ,  O(") CHARACTER            
+DPSF0110006                          NEXT     *   ,  O(") CHARACTER            
+DPSF0110007                          NEXT     *   ,  O(") CHARACTER            
+DPSF0110008                          NEXT     *   ,  O(") CHARACTER            
+DPSF0110009                          NEXT     *   ,  O(") CHARACTER            
+DPSF0110010                          NEXT     *   ,  O(") CHARACTER            
+DPSF0110011                          NEXT     *   ,  O(") CHARACTER            
+DPSF0110012                          NEXT     *   ,  O(") CHARACTER            
+DPSF0110013                          NEXT     *   ,  O(") CHARACTER            
+DPSF0110014                          NEXT     *   ,  O(") CHARACTER            
+DPSF0110015                          NEXT     *   ,  O(") CHARACTER            
+DPSF0110016                          NEXT     *   ,  O(") CHARACTER            
+DPSF0110017                          NEXT     *   ,  O(") CHARACTER            
+DPSF0120001                          NEXT     *   ,  O(") CHARACTER            
+DPSF0120002                          NEXT     *   ,  O(") CHARACTER            
+DPSF0120003                          NEXT     *   ,  O(") CHARACTER            
+DPSF0120004                          NEXT     *   ,  O(") CHARACTER            
+DPSF0120005                          NEXT     *   ,  O(") CHARACTER            
+DPSF0120006                          NEXT     *   ,  O(") CHARACTER            
+DPSF0120007                          NEXT     *   ,  O(") CHARACTER            
+DPSF0120008                          NEXT     *   ,  O(") CHARACTER            
+DPSF0120009                          NEXT     *   ,  O(") CHARACTER            
+DPSF0120010                          NEXT     *   ,  O(") CHARACTER            
+DPSF0120011                          NEXT     *   ,  O(") CHARACTER            
+DPSF0120012                          NEXT     *   ,  O(") CHARACTER            
+DPSF0120013                          NEXT     *   ,  O(") CHARACTER            
+DPSF0120014                          NEXT     *   ,  O(") CHARACTER            
+DPSF0120015                          NEXT     *   ,  O(") CHARACTER            
+DPSF0120016                          NEXT     *   ,  O(") CHARACTER            
+DPSF0120017                          NEXT     *   ,  O(") CHARACTER            
+DPSF0120018                          NEXT     *   ,  O(") CHARACTER            
+DPSF0120019                          NEXT     *   ,  O(") CHARACTER            
+DPSF0120020                          NEXT     *   ,  O(") CHARACTER            
+DPSF0130001                          NEXT     *   ,  O(") CHARACTER            
+DPSF0130002                          NEXT     *   ,  O(") CHARACTER            
+DPSF0130003                          NEXT     *   ,  O(") CHARACTER            
+DPSF0130004                          NEXT     *   ,  O(") CHARACTER            
+DPSF0130005                          NEXT     *   ,  O(") CHARACTER            
+DPSF0130006                          NEXT     *   ,  O(") CHARACTER            
+DPSF0130007                          NEXT     *   ,  O(") CHARACTER            
+DPSF0130008                          NEXT     *   ,  O(") CHARACTER            
+DPSF0130009                          NEXT     *   ,  O(") CHARACTER            
+DPSF0130010                          NEXT     *   ,  O(") CHARACTER            
+DPSF0130011                          NEXT     *   ,  O(") CHARACTER            
+DPSF0130012                          NEXT     *   ,  O(") CHARACTER            
+DPSF0130013                          NEXT     *   ,  O(") CHARACTER            
+DPSF0130014                          NEXT     *   ,  O(") CHARACTER            
+DPSF0130015                          NEXT     *   ,  O(") CHARACTER            
+DPSF0140001                          NEXT     *   ,  O(") CHARACTER            
+DPSF0150001                          NEXT     *   ,  O(") CHARACTER            
+DPSF0160001                          NEXT     *   ,  O(") CHARACTER            
+DPSF0170001                          NEXT     *   ,  O(") CHARACTER            
+DPSF0180001                          NEXT     *   ,  O(") CHARACTER            
+DPSF0180002                          NEXT     *   ,  O(") CHARACTER            
+DPSF0180003                          NEXT     *   ,  O(") CHARACTER            
+DPSF0180004                          NEXT     *   ,  O(") CHARACTER            
+DPSF0180005                          NEXT     *   ,  O(") CHARACTER            
+DPSF0180006                          NEXT     *   ,  O(") CHARACTER            
+DPSF0180007                          NEXT     *   ,  O(") CHARACTER            
+DPSF0180008                          NEXT     *   ,  O(") CHARACTER            
+DPSF0180009                          NEXT     *   ,  O(") CHARACTER            
+DPSF0190001                          NEXT     *   ,  O(") CHARACTER            
+DPSF0200001                          NEXT     *   ,  O(") CHARACTER            
+DPSF0210001                          NEXT     *   ,  O(") CHARACTER            
+DPSF0210002                          NEXT     *   ,  O(") CHARACTER            
+DPSF0210003                          NEXT     *   ,  O(") CHARACTER            
+DPSF0220001                          NEXT     *   ,  O(") CHARACTER            
+DPSF0220002                          NEXT     *   ,  O(") CHARACTER            
+DPSF0230001                          NEXT     *   ,  O(") CHARACTER            
+DPSF0230002                          NEXT     *   ,  O(") CHARACTER            
+
+value used for ROWS parameter changed from 64 to 5
+
+Table CENSUS2010MATRIX:
+  1227 Rows successfully loaded.
+  0 Rows not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Space allocated for bind array:                 246390 bytes(5 rows)
+Read   buffer bytes: 1048576
+
+Total logical records skipped:          0
+Total logical records read:          1227
+Total logical records rejected:         0
+Total logical records discarded:        0
+
+Run began on Sat Dec 28 13:02:07 2013
+Run ended on Sat Dec 28 13:02:15 2013
+
+Elapsed time was:     00:00:07.92
+CPU time was:         00:00:00.40

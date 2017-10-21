@@ -1,0 +1,57 @@
+
+SQL*Loader: Release 11.2.0.3.0 - Production on Sun Mar 3 13:54:12 2013
+
+Copyright (c) 1982, 2011, Oracle and/or its affiliates.  All rights reserved.
+
+Control File:   census_bk.ctl
+Data File:      census_bk_puma.csv
+  Bad File:     census_bk_puma.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+
+Number to load: ALL
+Number to skip: 0
+Errors allowed: 50
+Bind array:     64 rows, maximum of 256000 bytes
+Continuation:    none specified
+Path used:      Conventional
+
+Table ASC_BKPUMA, loaded from every logical record.
+Insert option in effect for this table: TRUNCATE
+TRAILING NULLCOLS option in effect
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+COUNTY                              FIRST     *   ,  O(") CHARACTER            
+TRACT                                NEXT     *   ,  O(") CHARACTER            
+BG                                   NEXT     *   ,  O(") CHARACTER            
+STATE_CODE                           NEXT     *   ,  O(") CHARACTER            
+PUMA2K                               NEXT     *   ,  O(") CHARACTER            
+STATE                                NEXT     *   ,  O(") CHARACTER            
+CNTYNAME                             NEXT     *   ,  O(") CHARACTER            
+PUMA2KNAME                           NEXT     *   ,  O(") CHARACTER            
+POP10                                NEXT     *   ,  O(") CHARACTER            
+AFACT                                NEXT     *   ,  O(") CHARACTER            
+
+
+Table ASC_BKPUMA:
+  11422 Rows successfully loaded.
+  0 Rows not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Space allocated for bind array:                 165120 bytes(64 rows)
+Read   buffer bytes: 1048576
+
+Total logical records skipped:          0
+Total logical records read:         11422
+Total logical records rejected:         0
+Total logical records discarded:        0
+
+Run began on Sun Mar 03 13:54:12 2013
+Run ended on Sun Mar 03 13:54:21 2013
+
+Elapsed time was:     00:00:08.96
+CPU time was:         00:00:00.17

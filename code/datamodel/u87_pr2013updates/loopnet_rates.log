@@ -1,0 +1,60 @@
+
+SQL*Loader: Release 11.2.0.3.0 - Production on Sun Feb 9 11:20:28 2014
+
+Copyright (c) 1982, 2011, Oracle and/or its affiliates.  All rights reserved.
+
+Control File:   loopnet_rates.csv
+Data File:      loopnet_rates.csv
+  Bad File:     loopnet_rates.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+
+Number to load: ALL
+Number to skip: 0
+Errors allowed: 50
+Bind array:     64 rows, maximum of 256000 bytes
+Continuation:    none specified
+Path used:      Conventional
+
+Table TMP_TAX_VALUE, loaded from every logical record.
+Insert option in effect for this table: APPEND
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+NAME                                FIRST     *   ,  O(") CHARACTER            
+DESCRIPTION                          NEXT     *   ,  O(") CHARACTER            
+A_MEDIAN                             NEXT     *   ,  O(") CHARACTER            
+B_MEDIAN                             NEXT     *   ,  O(") CHARACTER            
+C_MEDIAN                             NEXT     *   ,  O(") CHARACTER            
+SALES_COUNT                          NEXT     *   ,  O(") CHARACTER            
+
+Record 69: Rejected - Error on table TMP_TAX_VALUE, column SALES_COUNT.
+Column not found before end of logical record (use TRAILING NULLCOLS)
+Record 70: Rejected - Error on table TMP_TAX_VALUE, column SALES_COUNT.
+Column not found before end of logical record (use TRAILING NULLCOLS)
+Record 71: Rejected - Error on table TMP_TAX_VALUE, column SALES_COUNT.
+Column not found before end of logical record (use TRAILING NULLCOLS)
+Record 72: Rejected - Error on table TMP_TAX_VALUE, column SALES_COUNT.
+Column not found before end of logical record (use TRAILING NULLCOLS)
+
+Table TMP_TAX_VALUE:
+  68 Rows successfully loaded.
+  4 Rows not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Space allocated for bind array:                  99072 bytes(64 rows)
+Read   buffer bytes: 1048576
+
+Total logical records skipped:          0
+Total logical records read:            72
+Total logical records rejected:         4
+Total logical records discarded:        0
+
+Run began on Sun Feb 09 11:20:28 2014
+Run ended on Sun Feb 09 11:20:31 2014
+
+Elapsed time was:     00:00:02.51
+CPU time was:         00:00:00.05

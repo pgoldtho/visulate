@@ -1,0 +1,100 @@
+- Add source id to mls_rets_responses
+- Modify mls_brevard_pkg.get_listings to delete only brevard listings
+- add source parameters to mls_rets_response insert statement
+- Add a new function to pr_rets_pkg for non-digest auth requests (mfr sets a session cookie after initial login)
+- Test changes to pr_rets_pkg and verify they have not broken the brevard mls functionality
+
+
+- create an archive table for mls_listings
+- modify brevard mls package to archive non active listings
+
+- Complete mls_mfr_pkg changes:
+
+DONE function get_select_vals return pr_rets_pkg.value_table;
+ 
+
+
+DONE  function get_id( p_source_id  in mls_listings.source_id%type
+                 , p_mls_number in mls_listings.mls_number%type)
+				 return mls_listings.mls_id%type;
+
+DONE  function get_tax_id( p_mls_tax_id  in varchar2
+                     , p_county      in varchar2)  
+			return varchar2;
+  
+  procedure get_listings(p_county in varchar2);
+done  - modify delete statement for delete only p_county listings   
+
+DONE  procedure process_listings(p_county      in varchar2);
+
+DONE  add new procedure to insert photo urls for a given sysid and mls_id
+  
+  procedure get_listings( p_ltype  in varchar2
+                        , p_county in varchar2);
+done  - add get_class_id call to decode p_ltype and add to v_url
+done  - remove hard coded county value from v_url
+done  - re-write rets request to use non digest-auth call 
+done  - initial rets request processing looks ok
+done  - modify v_url for mfr call
+done  - re-write second rets request to use non-digest
+done  - add source parameters to mls_rets_response insert statement
+
+
+  procedure process_listings( p_ltype   in varchar2
+                            , p_county  in varchar2);
+done  - modify cursor call to include p_county
+done  - add call to get_tax_id function to decode  v_values('TaxID')
+done  - replace v_values('TaxID') with  v_values('15')
+done  - add call to archive listings procedure
+
+
+  procedure set_listing( p_query_type  in mls_rets_responses.query_type%type
+                       , p_values      in pr_rets_pkg.value_table
+ 		       , p_prop_id     in pr_properties.prop_id%type
+		       , p_verified    in varchar2) is
+
+done  - copy query codes from get_select_vals for ease of reference
+done  - modify p_values index items
+done  - call the new photo urls procedure
+  
+ 
+						  
+  procedure set_price_ranges(p_county in varchar2);
+done  - modify to add county parameter
+  - move to a central location
+  - remove from brevard package
+
+  procedure update_mls(p_county in varchar2);
+done  - add p_county to procedure calls
+done  - change index SUB_PAGE parameter
+
+
+
+-------------------
+done - modify set_inactive package to archive old rows
+done - add geo_found_yn column to pr_properties
+done - modify code to use zipcode location  search where trusted_geo_found_yn = 'N'
+
+ function get_index_page( p_date  in date
+                         , p_county in varchar2) return clob;
+
+done  - move global text definitions to this function
+done  - modify to allow substitution by p_county
+						 
+  procedure set_index_page( X_TAB_NAME  in varchar2
+                          , X_MENU_NAME in varchar2
+			  , X_PAGE_NAME in varchar2
+			  , X_SUB_PAGE  in varchar2
+			  , X_DATE      in date);
+done  - add p_county to parameter list
+done  - pass through to get_index_page
+
+done - Propery details template must show different copyright notice for MFR listings
+done - Change email in contact us to sue@goldthorp.com
+change datatype for mls_id to varchar2 and record MLS number instead of sysid
+done - zoom out map
+
+done - PROP_ID=1005016 layout
+
+done - update brevard code to stop it switching off non brevard listings.
+add Mid Florida MLS to disclamers 

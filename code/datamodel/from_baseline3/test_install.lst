@@ -1,0 +1,2 @@
+SQL> @@test_schema.sql
+Unable to open test_schema.sql

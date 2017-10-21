@@ -1,0 +1,84 @@
+declare 
+	l_id pr_locations.loc_id%TYPE;
+	TYPE t_pl_tab IS TABLE OF pr_locations.loc_id%TYPE INDEX BY PLS_INTEGER;
+    	l_loc_id_list t_pl_tab;
+	l_empty		t_pl_tab;
+begin
+	dbms_output.put_line('Start');
+    for cur in (select upper(regexp_replace(trim( both ' ' from pr_records_pkg.standard_suffix(ADDRESS1)), '[[:space:]]+', chr(32))) addr1, 
+	upper(regexp_replace(trim( both ' ' from ADDRESS2), '[[:space:]]+', chr(32))) addr2, zipcode, count(*)
+	from rntmgr2.pr_locations
+	group by upper(regexp_replace(trim( both ' ' from pr_records_pkg.standard_suffix(ADDRESS1)), '[[:space:]]+', chr(32))), 
+	upper(regexp_replace(trim( both ' ' from ADDRESS2), '[[:space:]]+', chr(32))), zipcode  
+	having count(*) >1
+	)
+     LOOP
+	dbms_output.put_line('addr: ' || cur.addr1 || ', addr2: '|| cur.addr2 || ', zipcode: '|| cur.zipcode);
+	begin
+	    select loc_id into l_id from pr_locations
+		where upper(regexp_replace(trim( both ' ' from pr_records_pkg.standard_suffix(ADDRESS1)), '[[:space:]]+', chr(32)))=cur.addr1
+		and NVL(upper(regexp_replace(trim( both ' ' from ADDRESS2), '[[:space:]]+', chr(32))), ' ')=NVL(cur.addr2, ' ')
+		and zipcode = cur.zipcode
+		and geo_found_yn='Y'
+		and rownum=1;
+	exception
+		when NO_DATA_FOUND THEN
+		select loc_id into l_id from pr_locations
+		where upper(regexp_replace(trim( both ' ' from pr_records_pkg.standard_suffix(ADDRESS1)), '[[:space:]]+', chr(32)))=cur.addr1
+		and NVL(upper(regexp_replace(trim( both ' ' from ADDRESS2), '[[:space:]]+', chr(32))), ' ')=NVL(cur.addr2, ' ')
+		and zipcode = cur.zipcode
+		and geo_found_yn='N'
+		and rownum=1;
+	end;
+	/*
+		update pr_corporate_locations set loc_id = l_id where loc_id in (
+	select loc_id 
+	from pr_locations where 
+	  upper(regexp_replace(trim( both ' ' from pr_records_pkg.standard_suffix(ADDRESS1)), '[[:space:]]+', chr(32)))=cur.addr1
+	and NVL(upper(regexp_replace(trim( both ' ' from ADDRESS2), '[[:space:]]+', chr(32))), ' ')=NVL(cur.addr2, ' ')
+	and NVL(zipcode, ' ')=NVL(cur.zipcode, ' ')
+	and loc_id <> l_id
+	);
+	update pr_principal_locations set loc_id = l_id where  loc_id in (
+	select loc_id 
+	from pr_locations where 
+	  upper(regexp_replace(trim( both ' ' from pr_records_pkg.standard_suffix(ADDRESS1)), '[[:space:]]+', chr(32)))=cur.addr1
+	and NVL(upper(regexp_replace(trim( both ' ' from ADDRESS2), '[[:space:]]+', chr(32))), ' ')=NVL(cur.addr2, ' ')
+	and NVL(zipcode, ' ')=NVL(cur.zipcode, ' ')
+	and loc_id <> l_id
+	);
+	update pr_locations set address1 = cur.addr1, address2 = cur.addr2 where loc_id = l_id;
+	delete from  pr_locations  where loc_id in (
+	select loc_id 
+	from pr_locations where 
+	  upper(regexp_replace(trim( both ' ' from pr_records_pkg.standard_suffix(ADDRESS1)), '[[:space:]]+', chr(32)))=cur.addr1
+	and NVL(upper(regexp_replace(trim( both ' ' from ADDRESS2), '[[:space:]]+', chr(32))), ' ')=NVL(cur.addr2, ' ')
+	and NVL(zipcode, ' ')=NVL(cur.zipcode, ' ')
+	and loc_id <> l_id
+	);
+	*/
+		--/*
+	select loc_id BULK COLLECT INTO l_loc_id_list
+	from pr_locations where 
+	  upper(regexp_replace(trim( both ' ' from pr_records_pkg.standard_suffix(ADDRESS1)), '[[:space:]]+', chr(32)))=cur.addr1
+	and NVL(upper(regexp_replace(trim( both ' ' from ADDRESS2), '[[:space:]]+', chr(32))), ' ')=NVL(cur.addr2, ' ')
+	and zipcode = cur.zipcode
+	and loc_id <> l_id;
+	forall  i in l_loc_id_list.first.. l_loc_id_list.last
+	update pr_corporate_locations pcl set loc_id = l_id where loc_id = l_loc_id_list(i)
+	and not exists (select null from pr_corporate_locations pli 
+		where pli.loc_id = l_id and pli.corp_number = pcl.corp_number and pli.loc_type = pcl.loc_type) ;
+	forall  i in l_loc_id_list.first.. l_loc_id_list.last
+	update pr_principal_locations pcl set loc_id = l_id where loc_id = l_loc_id_list(i)
+	and not exists (select null from pr_principal_locations pli 
+		where pli.loc_id = l_id and pli.pn_id = pcl.pn_id) ;
+	
+	forall  i in l_loc_id_list.first.. l_loc_id_list.last
+	delete from  pr_locations  where loc_id = l_loc_id_list(i);
+	update pr_locations set address1 = cur.addr1, address2 = cur.addr2 where loc_id = l_id;
+	l_loc_id_list := l_empty;
+	dbms_session.free_unused_user_memory ;
+	--*/ 
+     END LOOP;
+end;
+/

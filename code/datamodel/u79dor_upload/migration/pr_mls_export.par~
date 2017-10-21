@@ -1,0 +1,4 @@
+DIRECTORY=dpump_dir1 
+DUMPFILE=pr_mls_data.dmp 
+TABLES=
+

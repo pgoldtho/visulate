@@ -1,0 +1,3 @@
+DIRECTORY=dpump_dir1 
+DUMPFILE=pr_corp_data.dmp 
+

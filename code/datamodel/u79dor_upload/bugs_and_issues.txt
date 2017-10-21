@@ -1,0 +1,261 @@
+===========================================================
+Drill down on city sales by year very slow.
+===========================================================
+rnt_search_class.php
+public function getCitySalesData($city, $county, $state, $year, $ucode)
+
+explain plan for 
+                        select p.prop_id
+                        ,      initcap(p.address1) address1
+                        ,      to_char(ps.sale_date, 'mm/dd/yyyy') sale_date
+                        ,      ps.price
+                        ,      p.sq_ft
+                        ,      round(ps.price/p.sq_ft, 2) sqft_price
+                        from rnt_cities c
+                        ,  rnt_city_zipcodes cz
+                        ,  pr_property_usage pu
+                        ,  pr_properties p
+                        ,  pr_property_sales ps
+                        where c.state = 'FL'
+                        and c.county = 'DESOTO'
+                        and c.name = 'ARCADIA'
+                        and cz.city_id = c.city_id
+                        and cz.zipcode = p.zipcode
+                        and p.prop_id = pu.prop_id
+                        and nvl(p.sq_ft, 0) > 1
+                        and (pu.ucode = 90001 or
+                             pu.ucode in (select ucode from pr_usage_codes where parent_ucode = 90001))
+                        and ps.prop_id = p.prop_id
+                        and to_char(ps.sale_date, 'yyyy') = '2011'
+                        and ps.price > 200
+                        order by ps.price/p.sq_ft;
+
+SELECT * FROM table(DBMS_XPLAN.DISPLAY);
+-----------------------------------------------------------------------------------------------------------
+| Id  | Operation                          | Name                 | Rows  | Bytes | Cost (%CPU)| Time     |
+-----------------------------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT                   |                      |     1 |    99 | 62233   (1)| 00:12:27 |
+|   1 |  SORT ORDER BY                     |                      |     1 |    99 | 62233   (1)| 00:12:27 |
+|*  2 |   FILTER                           |                      |       |       |            |          |
+|   3 |    NESTED LOOPS                    |                      |       |       |            |          |
+|   4 |     NESTED LOOPS                   |                      |     1 |    99 | 62232   (1)| 00:12:27 |
+|   5 |      NESTED LOOPS                  |                      |     1 |    88 | 62229   (1)| 00:12:27 |
+|   6 |       NESTED LOOPS                 |                      | 28229 |  2150K| 62226   (1)| 00:12:27 |
+|   7 |        NESTED LOOPS                |                      | 28229 |  1212K|  5746   (3)| 00:01:09 |
+|   8 |         TABLE ACCESS BY INDEX ROWID| RNT_CITIES           |     1 |    26 |     2   (0)| 00:00:01 |
+|*  9 |          INDEX UNIQUE SCAN         | RNT_CITIES_U1        |     1 |       |     1   (0)| 00:00:01 |
+|* 10 |         TABLE ACCESS FULL          | PR_PROPERTY_SALES    | 28229 |   496K|  5744   (3)| 00:01:09 |
+|* 11 |        TABLE ACCESS BY INDEX ROWID | PR_PROPERTIES        |     1 |    34 |     2   (0)| 00:00:01 |
+|* 12 |         INDEX UNIQUE SCAN          | PR_PROPERTIES_PK     |     1 |       |     1   (0)| 00:00:01 |
+|* 13 |       INDEX UNIQUE SCAN            | RNT_CITY_ZIPCODES_PK |     1 |    10 |     0   (0)| 00:00:01 |
+|* 14 |      INDEX RANGE SCAN              | PR_PROPERTY_USAGE_N1 |     1 |       |     2   (0)| 00:00:01 |
+|  15 |     TABLE ACCESS BY INDEX ROWID    | PR_PROPERTY_USAGE    |     1 |    11 |     3   (0)| 00:00:01 |
+|* 16 |    TABLE ACCESS BY INDEX ROWID     | PR_USAGE_CODES       |     1 |     8 |     1   (0)| 00:00:01 |
+|* 17 |     INDEX UNIQUE SCAN              | PR_USAGE_CODES_PK    |     1 |       |     0   (0)| 00:00:01 |
+-----------------------------------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   2 - filter("PU"."UCODE"=90001 OR  EXISTS (SELECT 0 FROM "PR_USAGE_CODES" "PR_USAGE_CODES" WHERE
+              "UCODE"=:B1 AND "PARENT_UCODE"=90001))
+   9 - access("C"."NAME"='ARCADIA' AND "C"."COUNTY"='DESOTO' AND "C"."STATE"='FL')
+  10 - filter("PS"."PRICE">200 AND TO_CHAR(INTERNAL_FUNCTION("PS"."SALE_DATE"),'yyyy')='2011')
+  11 - filter(NVL("P"."SQ_FT",0)>1)
+  12 - access("PS"."PROP_ID"="P"."PROP_ID")
+  13 - access("CZ"."CITY_ID"="C"."CITY_ID" AND "CZ"."ZIPCODE"=TO_NUMBER("P"."ZIPCODE"))
+  14 - access("P"."PROP_ID"="PU"."PROP_ID")
+  16 - filter("PARENT_UCODE"=90001)
+  17 - access("UCODE"=:B1)
+
+38 rows selected.
+--------------------------------------------------------------------------------------------------------------
+
+Analysis: zipcode column in pr_properties is varchar2.  Join to rnt_city_zipcodes is forcing a to_number conversion
+on join column.  This causes the index on that column to be ignored.  
+
+Fix:  Add to_char on other side of join.
+,  rnt_zipcodes z
+and to_char(z.zipcode) = p.zipcode
+
+===========================================================
+http://centos-pc/rental/visulate_search.php?REPORT_CODE=PROPERTY_DETAILS&PROP_ID=1789641
+lat/lon coordinates = 0.00/0.00
+===========================================================
+
+select GEO_LOCATION, GEO_COORDINATES from pr_properties where prop_id=1789641;
+
+GEO_LOCATION(SDO_GTYPE, SDO_SRID, SDO_POINT(X, Y, Z), SDO_ELEM_INFO, SDO_ORDINATES)
+------------------------------------------------------------------------------------------------------------------------------------
+GEO_COORDINATES(SDO_GTYPE, SDO_SRID, SDO_POINT(X, Y, Z), SDO_ELEM_INFO, SDO_ORDINATES)
+------------------------------------------------------------------------------------------------------------------------------------
+SDO_GEOMETRY(3, 8307, NULL, SDO_ELEM_INFO_ARRAY(1, 3, 1), SDO_ORDINATE_ARRAY(-85.936475, 30.2553336, -85.936502, 30.2553173, -85.936
+527, 30.2552992, -85.937, 30.2556336, -85.936998, 30.2557031, -85.936475, 30.2553336))
+
+geo_location is null
+
+select  MDSYS.SDO_GEOM.SDO_CENTROID(GEO_COORDINATES,0.5) center from pr_properties where prop_id=1789641;
+returns null
+
+from documentation
+http://docs.oracle.com/cd/E11882_01/appdev.112/e11830/sdo_objgeom.htm#i860848
+The function returns a null value if geom is not a polygon, multipolygon, point, or point cluster.
+
+-85.936475, 30.2553336,
+-85.936502, 30.2553173,
+-85.936527, 30.2552992,
+-85.937, 30.2556336,
+-85.936998, 30.2557031,
+-85.936475, 30.2553336
+
+compare with valid geometry object:
+select GEO_LOCATION, GEO_COORDINATES from pr_properties where prop_id=13401158
+SDO_GEOMETRY(2001, 8307, SDO_POINT_TYPE(-80.201078, 25.8921227, NULL), NULL, NULL)
+SDO_GEOMETRY(2003, 8307, NULL, SDO_ELEM_INFO_ARRAY(1, 1003, 1), SDO_ORDINATE_ARRAY(-80.201274, 25.8922502, -80.201263, 25.8919846, -
+80.200877, 25.8919968, -80.200887, 25.8921858, -80.200889, 25.8921985, -80.200893, 25.8922108, -80.200899, 25.8922224, -80.200907, 2
+5.8922329, -80.200917, 25.8922423, -80.200928, 25.8922501, -80.20094, 25.8922562, -80.200954, 25.8922605, -80.200967, 25.8922629, -8
+0.200982, 25.8922632, -80.201274, 25.8922502))
+
+Issue is SDO_GTYPE for 1789641 = 3 need to convert to 2003
+
+SQL> select distinct a.geo_coordinates.sdo_gtype from pr_properties A;
+
+GEO_COORDINATES.SDO_GTYPE
+-------------------------
+
+                     2007
+                     2003
+
+update pr_properties a set a.geo_coordinates.sdo_gtype = 2003 where prop_id= 13401158                    
+
+
+If sdo_gtype includes single digit values then
+
+SQL> exec sdo_migrate.to_current('PR_PROPERTIES', 'GEO_COORDINATES')
+ERROR at line 1:
+ORA-13203: failed to read USER_SDO_GEOM_METADATA view
+ORA-06512: at "MDSYS.MD", line 1723
+ORA-06512: at "MDSYS.MDERR", line 8
+ORA-06512: at "MDSYS.SDO_MIGRATE", line 357
+ORA-06512: at "MDSYS.SDO_MIGRATE", line 474
+ORA-06512: at line 1
+
+INSERT INTO user_sdo_geom_metadata
+    (TABLE_NAME,
+     COLUMN_NAME,
+     DIMINFO,
+     SRID)
+  VALUES (
+  'PR_PROPERTIES',
+  'GEO_COORDINATES',
+  SDO_DIM_ARRAY(
+    SDO_DIM_ELEMENT('Longitude', -180, 180, 1),  -- 1 meters tolerance
+    SDO_DIM_ELEMENT('Latitude', -90, 90, 1)  -- 1 meters tolerance
+     ),
+  8307   -- SRID for 'Longitude / Latitude (WGS 84)' coordinate system
+);
+commit;
+
+exec sdo_migrate.to_current('PR_PROPERTIES', 'GEO_COORDINATES')
+
+
+
+
+GEOM.SDO_GTYPE
+--------------
+          2007
+          2003
+
+
+coordinates are stored in location
+
+select source_id, count(*) from pr_properties where GEO_COORDINATES is null and geo_location is not null group by source_id order by source_id;
+
+ SOURCE_ID   COUNT(*)
+---------- ----------
+         1          5
+         3     151994
+         4      67857
+         5     144865
+        12       8349
+        13     110874
+        45     125060
+        46      50198
+
+8 rows selected.
+
+SQL> select source_id from pr_properties where prop_id=1789641;
+
+ SOURCE_ID
+----------
+        13
+
+SQL> select count(*) from pr_properties a where a.GEO_location.sdo_gtype =3;
+
+  COUNT(*)
+----------
+    292333
+
+drop index pr_properties_sidx;
+SQL> update pr_properties a  set  a.GEO_location.sdo_gtype=2003 where a.GEO_location.sdo_gtype=3;
+
+declare
+  cursor cur_coords is
+  select prop_id
+  ,      geo_location
+  ,      MDSYS.SDO_GEOM.SDO_CENTROID(GEO_location,0.5) centroid
+  from pr_properties a
+  where a.GEO_location.sdo_gtype=2003;
+begin
+  for c_rec in cur_coords loop
+    update pr_properties
+    set geo_location = c_rec.centroid
+    ,   geo_coordinates = c_rec.geo_location
+    where prop_id = c_rec.prop_id;
+    commit;
+  end loop;
+end;
+/
+  
+  
+
+
+===========================================================
+795 Pine Pl coordinates are incorrect
+===========================================================
+Property was mapped to a Volusia parcel via the alt_key
+
+SQL> select alt_key, co_no from pr_nal where parcel_id='31163301060180';
+
+ALT_KEY                    CO
+-------------------------- --
+2507888                    74
+
+seed lookup values for brevard tax_ids
+declare
+  cursor cur_prop is
+  select p.prop_id
+  ,      l.parcel_id
+  from pr_properties p
+  ,    brvd_parcel_lookups l
+  where p.source_id = 3
+  and p.source_pk = l.tax_id
+  order by p.prop_id;
+begin
+  for p_rec in cur_prop loop
+    update pr_properties
+    set alt_key = replace(replace(p_rec.parcel_id, '.'), chr(13))
+    where prop_id = p_rec.prop_id;
+    commit;
+  end loop;
+end;
+/
+
+create index pr_properties_tmp on pr_properties(source_id, alt_key);
+@fix_brvd_updates
+drop index pr_properties_tmp;
+CREATE INDEX pr_properties_sidx ON pr_properties(geo_location) INDEXTYPE IS mdsys.spatial_index;
+
+
+
+

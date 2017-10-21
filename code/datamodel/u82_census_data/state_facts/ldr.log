@@ -1,0 +1,100 @@
+
+SQL*Loader: Release 11.2.0.3.0 - Production on Mon May 27 12:21:36 2013
+
+Copyright (c) 1982, 2011, Oracle and/or its affiliates.  All rights reserved.
+
+Control File:   ldr.ctl
+Data File:      DataSet.csv
+  Bad File:     DataSet.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+
+Number to load: ALL
+Number to skip: 0
+Errors allowed: 50
+Bind array:     64 rows, maximum of 256000 bytes
+Continuation:    none specified
+Path used:      Conventional
+
+Table LDR_COUNTY_DATA, loaded from every logical record.
+Insert option in effect for this table: INSERT
+TRAILING NULLCOLS option in effect
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+STATECOU                            FIRST     *   ,  O(") CHARACTER            
+PST0452                              NEXT     *   ,  O(") CHARACTER            
+PST0402                              NEXT     *   ,  O(") CHARACTER            
+PST1202                              NEXT     *   ,  O(") CHARACTER            
+POP0102                              NEXT     *   ,  O(") CHARACTER            
+AGE1352                              NEXT     *   ,  O(") CHARACTER            
+AGE2952                              NEXT     *   ,  O(") CHARACTER            
+AGE7752                              NEXT     *   ,  O(") CHARACTER            
+SEX2552                              NEXT     *   ,  O(") CHARACTER            
+RHI1252                              NEXT     *   ,  O(") CHARACTER            
+RHI2252                              NEXT     *   ,  O(") CHARACTER            
+RHI3252                              NEXT     *   ,  O(") CHARACTER            
+RHI4252                              NEXT     *   ,  O(") CHARACTER            
+RHI5252                              NEXT     *   ,  O(") CHARACTER            
+RHI6252                              NEXT     *   ,  O(") CHARACTER            
+RHI7252                              NEXT     *   ,  O(") CHARACTER            
+RHI8252                              NEXT     *   ,  O(") CHARACTER            
+POP7152                              NEXT     *   ,  O(") CHARACTER            
+POP6452                              NEXT     *   ,  O(") CHARACTER            
+POP8152                              NEXT     *   ,  O(") CHARACTER            
+EDU6352                              NEXT     *   ,  O(") CHARACTER            
+EDU6852                              NEXT     *   ,  O(") CHARACTER            
+VET6052                              NEXT     *   ,  O(") CHARACTER            
+LFE3052                              NEXT     *   ,  O(") CHARACTER            
+HSG0102                              NEXT     *   ,  O(") CHARACTER            
+HSG4452                              NEXT     *   ,  O(") CHARACTER            
+HSG0962                              NEXT     *   ,  O(") CHARACTER            
+HSG4952                              NEXT     *   ,  O(") CHARACTER            
+HSD4102                              NEXT     *   ,  O(") CHARACTER            
+HSD3102                              NEXT     *   ,  O(") CHARACTER            
+INC9102                              NEXT     *   ,  O(") CHARACTER            
+INC1102                              NEXT     *   ,  O(") CHARACTER            
+PVY0202                              NEXT     *   ,  O(") CHARACTER            
+BZA0102                              NEXT     *   ,  O(") CHARACTER            
+BZA1102                              NEXT     *   ,  O(") CHARACTER            
+BZA1152                              NEXT     *   ,  O(") CHARACTER            
+NES0102                              NEXT     *   ,  O(") CHARACTER            
+SBO0012                              NEXT     *   ,  O(") CHARACTER            
+SBO3152                              NEXT     *   ,  O(") CHARACTER            
+SBO1152                              NEXT     *   ,  O(") CHARACTER            
+SBO2152                              NEXT     *   ,  O(") CHARACTER            
+SBO5152                              NEXT     *   ,  O(") CHARACTER            
+SBO4152                              NEXT     *   ,  O(") CHARACTER            
+SBO0152                              NEXT     *   ,  O(") CHARACTER            
+MAN4502                              NEXT     *   ,  O(") CHARACTER            
+WTN2202                              NEXT     *   ,  O(") CHARACTER            
+RTN1302                              NEXT     *   ,  O(") CHARACTER            
+RTN1312                              NEXT     *   ,  O(") CHARACTER            
+AFN1202                              NEXT     *   ,  O(") CHARACTER            
+BPS0302                              NEXT     *   ,  O(") CHARACTER            
+LND1102                              NEXT     *   ,  O(") CHARACTER            
+POP0602                              NEXT     *   ,  O(") CHARACTER            
+
+value used for ROWS parameter changed from 64 to 19
+
+Table LDR_COUNTY_DATA:
+  3195 Rows successfully loaded.
+  0 Rows not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Space allocated for bind array:                 254904 bytes(19 rows)
+Read   buffer bytes: 1048576
+
+Total logical records skipped:          0
+Total logical records read:          3195
+Total logical records rejected:         0
+Total logical records discarded:        0
+
+Run began on Mon May 27 12:21:36 2013
+Run ended on Mon May 27 12:21:42 2013
+
+Elapsed time was:     00:00:05.85
+CPU time was:         00:00:00.26

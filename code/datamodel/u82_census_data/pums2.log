@@ -1,0 +1,240 @@
+
+SQL*Loader: Release 11.2.0.3.0 - Production on Sat Feb 9 10:04:09 2013
+
+Copyright (c) 1982, 2011, Oracle and/or its affiliates.  All rights reserved.
+
+Control File:   pums2.ctl
+Data File:      ss11hfl.csv
+  Bad File:     ss11hfl.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+
+Number to load: ALL
+Number to skip: 0
+Errors allowed: 50
+Bind array:     64 rows, maximum of 256000 bytes
+Continuation:    none specified
+Path used:      Conventional
+
+Table ASC_PUMS_HOUSING, loaded from every logical record.
+Insert option in effect for this table: TRUNCATE
+TRAILING NULLCOLS option in effect
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+RT                                  FIRST     *   ,  O(") CHARACTER            
+SERIALNO                             NEXT     *   ,  O(") CHARACTER            
+DIVISION                             NEXT     *   ,  O(") CHARACTER            
+PUMA                                 NEXT     *   ,  O(") CHARACTER            
+REGION                               NEXT     *   ,  O(") CHARACTER            
+ST                                   NEXT     *   ,  O(") CHARACTER            
+ADJHSG                               NEXT     *   ,  O(") CHARACTER            
+ADJINC                               NEXT     *   ,  O(") CHARACTER            
+WGTP                                 NEXT     *   ,  O(") CHARACTER            
+NP                                   NEXT     *   ,  O(") CHARACTER            
+HTYPE                                NEXT     *   ,  O(") CHARACTER            
+ACR                                  NEXT     *   ,  O(") CHARACTER            
+AGS                                  NEXT     *   ,  O(") CHARACTER            
+BDS                                  NEXT     *   ,  O(") CHARACTER            
+BLD                                  NEXT     *   ,  O(") CHARACTER            
+BUS                                  NEXT     *   ,  O(") CHARACTER            
+CONP                                 NEXT     *   ,  O(") CHARACTER            
+ELEP                                 NEXT     *   ,  O(") CHARACTER            
+FS                                   NEXT     *   ,  O(") CHARACTER            
+FULP                                 NEXT     *   ,  O(") CHARACTER            
+GASP                                 NEXT     *   ,  O(") CHARACTER            
+HFL                                  NEXT     *   ,  O(") CHARACTER            
+INSP                                 NEXT     *   ,  O(") CHARACTER            
+MHP                                  NEXT     *   ,  O(") CHARACTER            
+MRGI                                 NEXT     *   ,  O(") CHARACTER            
+MRGP                                 NEXT     *   ,  O(") CHARACTER            
+MRGT                                 NEXT     *   ,  O(") CHARACTER            
+MRGX                                 NEXT     *   ,  O(") CHARACTER            
+RMS                                  NEXT     *   ,  O(") CHARACTER            
+RNTM                                 NEXT     *   ,  O(") CHARACTER            
+RNTP                                 NEXT     *   ,  O(") CHARACTER            
+SMP                                  NEXT     *   ,  O(") CHARACTER            
+TEL                                  NEXT     *   ,  O(") CHARACTER            
+TEN                                  NEXT     *   ,  O(") CHARACTER            
+VACS                                 NEXT     *   ,  O(") CHARACTER            
+VAL                                  NEXT     *   ,  O(") CHARACTER            
+VEH                                  NEXT     *   ,  O(") CHARACTER            
+WATP                                 NEXT     *   ,  O(") CHARACTER            
+YBL                                  NEXT     *   ,  O(") CHARACTER            
+FES                                  NEXT     *   ,  O(") CHARACTER            
+FINCP                                NEXT     *   ,  O(") CHARACTER            
+FPARC                                NEXT     *   ,  O(") CHARACTER            
+GRNTP                                NEXT     *   ,  O(") CHARACTER            
+GRPIP                                NEXT     *   ,  O(") CHARACTER            
+HHL                                  NEXT     *   ,  O(") CHARACTER            
+HHT                                  NEXT     *   ,  O(") CHARACTER            
+HINCP                                NEXT     *   ,  O(") CHARACTER            
+HUGCL                                NEXT     *   ,  O(") CHARACTER            
+HUPAC                                NEXT     *   ,  O(") CHARACTER            
+HUPAOC                               NEXT     *   ,  O(") CHARACTER            
+HUPARC                               NEXT     *   ,  O(") CHARACTER            
+KIT                                  NEXT     *   ,  O(") CHARACTER            
+LNGI                                 NEXT     *   ,  O(") CHARACTER            
+MV                                   NEXT     *   ,  O(") CHARACTER            
+NOC                                  NEXT     *   ,  O(") CHARACTER            
+NPF                                  NEXT     *   ,  O(") CHARACTER            
+NPP                                  NEXT     *   ,  O(") CHARACTER            
+NR                                   NEXT     *   ,  O(") CHARACTER            
+NRC                                  NEXT     *   ,  O(") CHARACTER            
+OCPIP                                NEXT     *   ,  O(") CHARACTER            
+PARTNER                              NEXT     *   ,  O(") CHARACTER            
+PLM                                  NEXT     *   ,  O(") CHARACTER            
+PSF                                  NEXT     *   ,  O(") CHARACTER            
+R18                                  NEXT     *   ,  O(") CHARACTER            
+R60                                  NEXT     *   ,  O(") CHARACTER            
+R65                                  NEXT     *   ,  O(") CHARACTER            
+RESMODE                              NEXT     *   ,  O(") CHARACTER            
+SMOCP                                NEXT     *   ,  O(") CHARACTER            
+SMX                                  NEXT     *   ,  O(") CHARACTER            
+SRNT                                 NEXT     *   ,  O(") CHARACTER            
+SVAL                                 NEXT     *   ,  O(") CHARACTER            
+TAXP                                 NEXT     *   ,  O(") CHARACTER            
+WIF                                  NEXT     *   ,  O(") CHARACTER            
+WKEXREL                              NEXT     *   ,  O(") CHARACTER            
+WORKSTAT                             NEXT     *   ,  O(") CHARACTER            
+FACRP                                NEXT     *   ,  O(") CHARACTER            
+FAGSP                                NEXT     *   ,  O(") CHARACTER            
+FBDSP                                NEXT     *   ,  O(") CHARACTER            
+FBLDP                                NEXT     *   ,  O(") CHARACTER            
+FBUSP                                NEXT     *   ,  O(") CHARACTER            
+FCONP                                NEXT     *   ,  O(") CHARACTER            
+FELEP                                NEXT     *   ,  O(") CHARACTER            
+FFSP                                 NEXT     *   ,  O(") CHARACTER            
+FFULP                                NEXT     *   ,  O(") CHARACTER            
+FGASP                                NEXT     *   ,  O(") CHARACTER            
+FHFLP                                NEXT     *   ,  O(") CHARACTER            
+FINSP                                NEXT     *   ,  O(") CHARACTER            
+FKITP                                NEXT     *   ,  O(") CHARACTER            
+FMHP                                 NEXT     *   ,  O(") CHARACTER            
+FMRGIP                               NEXT     *   ,  O(") CHARACTER            
+FMRGP                                NEXT     *   ,  O(") CHARACTER            
+FMRGTP                               NEXT     *   ,  O(") CHARACTER            
+FMRGXP                               NEXT     *   ,  O(") CHARACTER            
+FMVP                                 NEXT     *   ,  O(") CHARACTER            
+FPLMP                                NEXT     *   ,  O(") CHARACTER            
+FRMSP                                NEXT     *   ,  O(") CHARACTER            
+FRNTMP                               NEXT     *   ,  O(") CHARACTER            
+FRNTP                                NEXT     *   ,  O(") CHARACTER            
+FSMP                                 NEXT     *   ,  O(") CHARACTER            
+FSMXHP                               NEXT     *   ,  O(") CHARACTER            
+FSMXSP                               NEXT     *   ,  O(") CHARACTER            
+FTAXP                                NEXT     *   ,  O(") CHARACTER            
+FTELP                                NEXT     *   ,  O(") CHARACTER            
+FTENP                                NEXT     *   ,  O(") CHARACTER            
+FVACSP                               NEXT     *   ,  O(") CHARACTER            
+FVALP                                NEXT     *   ,  O(") CHARACTER            
+FVEHP                                NEXT     *   ,  O(") CHARACTER            
+FWATP                                NEXT     *   ,  O(") CHARACTER            
+FYBLP                                NEXT     *   ,  O(") CHARACTER            
+WGTP1                                NEXT     *   ,  O(") CHARACTER            
+WGTP2                                NEXT     *   ,  O(") CHARACTER            
+WGTP3                                NEXT     *   ,  O(") CHARACTER            
+WGTP4                                NEXT     *   ,  O(") CHARACTER            
+WGTP5                                NEXT     *   ,  O(") CHARACTER            
+WGTP6                                NEXT     *   ,  O(") CHARACTER            
+WGTP7                                NEXT     *   ,  O(") CHARACTER            
+WGTP8                                NEXT     *   ,  O(") CHARACTER            
+WGTP9                                NEXT     *   ,  O(") CHARACTER            
+WGTP10                               NEXT     *   ,  O(") CHARACTER            
+WGTP11                               NEXT     *   ,  O(") CHARACTER            
+WGTP12                               NEXT     *   ,  O(") CHARACTER            
+WGTP13                               NEXT     *   ,  O(") CHARACTER            
+WGTP14                               NEXT     *   ,  O(") CHARACTER            
+WGTP15                               NEXT     *   ,  O(") CHARACTER            
+WGTP16                               NEXT     *   ,  O(") CHARACTER            
+WGTP17                               NEXT     *   ,  O(") CHARACTER            
+WGTP18                               NEXT     *   ,  O(") CHARACTER            
+WGTP19                               NEXT     *   ,  O(") CHARACTER            
+WGTP20                               NEXT     *   ,  O(") CHARACTER            
+WGTP21                               NEXT     *   ,  O(") CHARACTER            
+WGTP22                               NEXT     *   ,  O(") CHARACTER            
+WGTP23                               NEXT     *   ,  O(") CHARACTER            
+WGTP24                               NEXT     *   ,  O(") CHARACTER            
+WGTP25                               NEXT     *   ,  O(") CHARACTER            
+WGTP26                               NEXT     *   ,  O(") CHARACTER            
+WGTP27                               NEXT     *   ,  O(") CHARACTER            
+WGTP28                               NEXT     *   ,  O(") CHARACTER            
+WGTP29                               NEXT     *   ,  O(") CHARACTER            
+WGTP30                               NEXT     *   ,  O(") CHARACTER            
+WGTP31                               NEXT     *   ,  O(") CHARACTER            
+WGTP32                               NEXT     *   ,  O(") CHARACTER            
+WGTP33                               NEXT     *   ,  O(") CHARACTER            
+WGTP34                               NEXT     *   ,  O(") CHARACTER            
+WGTP35                               NEXT     *   ,  O(") CHARACTER            
+WGTP36                               NEXT     *   ,  O(") CHARACTER            
+WGTP37                               NEXT     *   ,  O(") CHARACTER            
+WGTP38                               NEXT     *   ,  O(") CHARACTER            
+WGTP39                               NEXT     *   ,  O(") CHARACTER            
+WGTP40                               NEXT     *   ,  O(") CHARACTER            
+WGTP41                               NEXT     *   ,  O(") CHARACTER            
+WGTP42                               NEXT     *   ,  O(") CHARACTER            
+WGTP43                               NEXT     *   ,  O(") CHARACTER            
+WGTP44                               NEXT     *   ,  O(") CHARACTER            
+WGTP45                               NEXT     *   ,  O(") CHARACTER            
+WGTP46                               NEXT     *   ,  O(") CHARACTER            
+WGTP47                               NEXT     *   ,  O(") CHARACTER            
+WGTP48                               NEXT     *   ,  O(") CHARACTER            
+WGTP49                               NEXT     *   ,  O(") CHARACTER            
+WGTP50                               NEXT     *   ,  O(") CHARACTER            
+WGTP51                               NEXT     *   ,  O(") CHARACTER            
+WGTP52                               NEXT     *   ,  O(") CHARACTER            
+WGTP53                               NEXT     *   ,  O(") CHARACTER            
+WGTP54                               NEXT     *   ,  O(") CHARACTER            
+WGTP55                               NEXT     *   ,  O(") CHARACTER            
+WGTP56                               NEXT     *   ,  O(") CHARACTER            
+WGTP57                               NEXT     *   ,  O(") CHARACTER            
+WGTP58                               NEXT     *   ,  O(") CHARACTER            
+WGTP59                               NEXT     *   ,  O(") CHARACTER            
+WGTP60                               NEXT     *   ,  O(") CHARACTER            
+WGTP61                               NEXT     *   ,  O(") CHARACTER            
+WGTP62                               NEXT     *   ,  O(") CHARACTER            
+WGTP63                               NEXT     *   ,  O(") CHARACTER            
+WGTP64                               NEXT     *   ,  O(") CHARACTER            
+WGTP65                               NEXT     *   ,  O(") CHARACTER            
+WGTP66                               NEXT     *   ,  O(") CHARACTER            
+WGTP67                               NEXT     *   ,  O(") CHARACTER            
+WGTP68                               NEXT     *   ,  O(") CHARACTER            
+WGTP69                               NEXT     *   ,  O(") CHARACTER            
+WGTP70                               NEXT     *   ,  O(") CHARACTER            
+WGTP71                               NEXT     *   ,  O(") CHARACTER            
+WGTP72                               NEXT     *   ,  O(") CHARACTER            
+WGTP73                               NEXT     *   ,  O(") CHARACTER            
+WGTP74                               NEXT     *   ,  O(") CHARACTER            
+WGTP75                               NEXT     *   ,  O(") CHARACTER            
+WGTP76                               NEXT     *   ,  O(") CHARACTER            
+WGTP77                               NEXT     *   ,  O(") CHARACTER            
+WGTP78                               NEXT     *   ,  O(") CHARACTER            
+WGTP79                               NEXT     *   ,  O(") CHARACTER            
+WGTP80                               NEXT     *   ,  O(") CHARACTER            
+
+value used for ROWS parameter changed from 64 to 5
+Record 1: Rejected - Error on table ASC_PUMS_HOUSING, column RT.
+ORA-12899: value too large for column "RNTMGR1"."ASC_PUMS_HOUSING"."RT" (actual: 2, maximum: 1)
+
+
+Table ASC_PUMS_HOUSING:
+  469731 Rows successfully loaded.
+  1 Row not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Space allocated for bind array:                 243810 bytes(5 rows)
+Read   buffer bytes: 1048576
+
+Total logical records skipped:          0
+Total logical records read:        469732
+Total logical records rejected:         1
+Total logical records discarded:        0
+
+Run began on Sat Feb 09 10:04:09 2013
+Run ended on Sat Feb 09 10:54:41 2013
+
+Elapsed time was:     00:50:31.48
+CPU time was:         00:01:59.82

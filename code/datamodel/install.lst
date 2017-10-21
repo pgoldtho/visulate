@@ -1,0 +1,27 @@
+SQL> conn rntmgr/rntmgr
+Connected.
+SQL> 
+SQL> @@update.sql
+SQL> --------------------------------------------------------------------------
+SQL> -- Play this script in TESTRNTMGR@XE to make it look like RNTMGR@XE
+SQL> -- 								     --
+SQL> -- Please review the script before using it to make sure it won't	     --
+SQL> -- cause any unacceptable data loss.				     --
+SQL> -- 								     --
+SQL> -- TESTRNTMGR@XE Schema Extracted by User TESTRNTMGR
+SQL> -- RNTMGR@XE Schema Extracted by User RNTMGR
+SQL> DROP PACKAGE BODY RNT_SUPPLIERS_PKG;
+DROP PACKAGE BODY RNT_SUPPLIERS_PKG
+*
+ERROR at line 1:
+ORA-04043: object RNT_SUPPLIERS_PKG does not exist 
+
+
+
+SQL> conn rntmgr/rivenrent@visland
+Connected.
+SQL> @@update_35\install.sql
+SQL> REM Copyright Visulate 2007
+SQL> set echo on
+SQL> set feedback on
+SQL> spool install_35.lst

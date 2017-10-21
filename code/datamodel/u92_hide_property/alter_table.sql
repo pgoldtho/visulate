@@ -1,0 +1,1 @@
+alter table pr_properties add (hidden  varchar2(1));

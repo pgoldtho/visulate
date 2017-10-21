@@ -1,0 +1,35 @@
+Comment out geospatial calls in 
+pr_reports.class.php - line 1392
+$query = "SELECT corp_name name
+	,   corp_number
+	,   address1
+	,   lat
+	,   lon
+	,   prop_id
+	FROM  table(pr_geo_utils_pkg.get_nearby_corps(". $property["LAT"].", ". $property["LON"]."))
+	where loc_type = 'PRIN'";
+	
+function getSimilar($prop_id) - Line 180
+	
+
+visulate_feeds.php - line 49
+  $listings = $dbReport->getGeoLocProperties($lat, $long);
+
+drop index pr_properties_sidx;
+drop index pr_locations_sidx; 
+
+@fix_properties
+@fix_locations
+@pr_geo_utils_pkg.sql
+
+
+ALTER SESSION SET SORT_AREA_SIZE = 20000000;
+CREATE INDEX pr_properties_sidx ON pr_properties(geo_location)
+INDEXTYPE IS mdsys.spatial_index
+parameters ('tablespace=pr_property_data2');
+
+  
+CREATE INDEX pr_locations_sidx ON pr_locations(geo_location)
+  INDEXTYPE IS mdsys.spatial_index;  
+
+Install updated code  

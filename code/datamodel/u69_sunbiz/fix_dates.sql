@@ -1,0 +1,15 @@
+update sunbiz set cor_file_date = '02281992' where cor_number = 'P93000000150';
+update sunbiz set cor_file_date = '08312001' where cor_number = 'L07000066831'; 
+update sunbiz set cor_file_date = '03312006' where cor_number = 'P06000060872'; 
+update sunbiz set cor_file_date = '03312007' where cor_number = 'P07000053082'; 
+update sunbiz set cor_file_date = '01302002' where cor_number = 'P02000021024'; 
+update sunbiz set cor_file_date = '01302003' where cor_number = 'P03000014184'; 
+update sunbiz set cor_file_date = '08312004' where cor_number = 'P04000126454'; 
+update sunbiz set cor_file_date = '03301992' where cor_number = 'A92000000245'; 
+update sunbiz set cor_file_date = '05311990' where cor_number = 'S22476';
+update sunbiz set cor_file_date = '05312006' where cor_number = 'P06000075516'; 
+update sunbiz set cor_file_date = '05311992' where cor_number = 'V52087';
+update sunbiz set cor_file_date = '08312005' where cor_number = 'P05000120829'; 
+update sunbiz set cor_file_date = '03302002' where cor_number = 'L09000057249'; 
+update sunbiz set cor_file_date = '07312003' where cor_number = 'L10000003549'; 
+commit;

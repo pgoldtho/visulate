@@ -1,0 +1,3 @@
+DIRECTORY=dpump_dir1 
+DUMPFILE=pr_broker_data.dmp 
+REMAP_TABLESPACE=rnt_data2:pr_corp_data2

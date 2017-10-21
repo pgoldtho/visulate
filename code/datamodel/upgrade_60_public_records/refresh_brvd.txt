@@ -1,0 +1,56 @@
+create table brd_properties as 
+ select  *
+ from pr_brvd_properties_mv
+ where not exists (select 1 
+                   from pr_properties 
+                   where address1 =  rtrim("SiteHouseNo"||' '||"SiteStreetname"||' '||"SiteType"||' '||"SiteDir"))
+ and "SiteStreetname" is not null
+
+
+create table brd_buildings as 
+ select  *
+ from pr_brvd_building_mv
+ where "TaxAcct" in (select "TaxAcct" from brd_properties);
+
+
+create table brd_sales as 
+select * 
+from pr_brvd_sales_mv
+where to_char("SaleDate", 'yyyy') > 2008;
+
+
+
+
+@brevard2.sql
+@brevard5.sql
+-- @brevard6.sql
+@brevard8.sql
+@brevard10.sql
+
+
+alter table pr_properties modify acreage number;
+
+
+ create table brd_acres as
+ select p.prop_id
+ ,      b."Acreage"
+ from pr_properties p
+ ,    pr_brvd_properties_mv b
+ where b."TaxAcct" = p.source_pk
+
+
+declare
+  cursor cur_acres is
+  select prop_id
+  ,      "Acreage" acreage
+  from brd_acres;
+begin
+  for a_rec in cur_acres loop
+    update pr_properties
+    set acreage = a_rec.acreage
+    where prop_id = a_rec.prop_id;
+
+    commit;
+  end loop;
+end;
+/

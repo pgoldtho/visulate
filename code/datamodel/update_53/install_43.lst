@@ -1,0 +1,272 @@
+SQL> 
+SQL> @@table.sql
+SQL> alter table RNT_EXPENSE_ITEMS add (ITEM_UNIT VARCHAR2(2));
+alter table RNT_EXPENSE_ITEMS add (ITEM_UNIT VARCHAR2(2))
+                                   *
+ERROR at line 1:
+ORA-01430: column being added already exists in table 
+
+
+SQL> 
+SQL> update RNT_EXPENSE_ITEMS
+  2  set ITEM_UNIT = 'FT';
+
+0 rows updated.
+
+SQL> 
+SQL> commit;
+
+Commit complete.
+
+SQL> 
+SQL> alter table RNT_EXPENSE_ITEMS modify (ITEM_UNIT VARCHAR2(2) not null);
+alter table RNT_EXPENSE_ITEMS modify (ITEM_UNIT VARCHAR2(2) not null)
+                                      *
+ERROR at line 1:
+ORA-01442: column to be modified to NOT NULL is already NOT NULL 
+
+
+SQL> @@rnt_expense_items_v.sql
+SQL> CREATE OR REPLACE VIEW RNT_EXPENSE_ITEMS_V
+  2  (EXPENSE_ID, SUPPLIER_ID, ITEM_NAME, ITEM_COST, ESTIMATE,
+  3   ACTUAL, EXPENSE_ITEM_ID, ORDER_ROW, ITEM_UNIT, CHECKSUM,
+  4   SUPPLIER_NAME)
+  5  AS
+  6  select ei.EXPENSE_ID
+  7  ,	    ei.SUPPLIER_ID
+  8  ,	    ei.ITEM_NAME
+  9  ,	    ei.ITEM_COST
+ 10  ,	    ei.ESTIMATE
+ 11  ,	    ei.ACTUAL
+ 12  ,	    ei.EXPENSE_ITEM_ID
+ 13  ,	    ei.ORDER_ROW
+ 14  ,	    ei.ITEM_UNIT
+ 15  ,	    rnt_sys_checksum_rec_pkg.get_checksum('EXPENSE_ID='||ei.EXPENSE_ID||'SUPPLIER_ID='||ei.SUPPLIER_ID||'ITEM_NAME='||ei.ITEM_NAME||'ITEM_COST='||ei.ITEM_COST||'ESTIMATE='||ei.ESTIMATE||'ACTUAL='||ei.ACTUAL||'EXPENSE_ITEM_ID='||ei.EXPENSE_ITEM_ID||'ORDER_ROW='||ei.ORDER_ROW||'ITEM_UNIT='||ei.ITEM_UNIT) as CHECKSUM
+ 16  ,	    s.NAME as SUPPLIER_NAME
+ 17  from RNT_EXPENSE_ITEMS ei,
+ 18  	  RNT_SUPPLIERS_ALL s
+ 19  where ei.SUPPLIER_ID = s.SUPPLIER_ID
+ 20  /
+
+View created.
+
+SQL> 
+SQL> @@rnt_expense_items_pkg.sql
+SQL> CREATE OR REPLACE package RNT_EXPENSE_ITEMS_PKG as
+  2  /*******************************************************************************
+  3  	Copyright (c) Visulate 2007	   All rights reserved worldwide
+  4  	 Name:	    RNT_EXPENSE_ITEMS_PKG
+  5  	 Purpose:   API's for RNT_EXPENSE_ITEMS table
+  6  	 Revision History
+  7  	 Ver	    Date	Author		 Description
+  8  	 --------   ---------	---------------- ---------------------
+  9  	 1.0	    31-MAY-08	Auto Generated	 Initial Version
+ 10  *******************************************************************************/
+ 11    function get_checksum( X_EXPENSE_ITEM_ID IN RNT_EXPENSE_ITEMS.EXPENSE_ITEM_ID%TYPE)
+ 12  		 return RNT_EXPENSE_ITEMS_V.CHECKSUM%TYPE;
+ 13  
+ 14    procedure update_row( X_EXPENSE_ID IN RNT_EXPENSE_ITEMS.EXPENSE_ID%TYPE
+ 15  			   , X_SUPPLIER_ID IN RNT_EXPENSE_ITEMS.SUPPLIER_ID%TYPE
+ 16  			   , X_ITEM_NAME IN RNT_EXPENSE_ITEMS.ITEM_NAME%TYPE
+ 17  			   , X_ITEM_COST IN RNT_EXPENSE_ITEMS.ITEM_COST%TYPE
+ 18  			   , X_ESTIMATE IN RNT_EXPENSE_ITEMS.ESTIMATE%TYPE
+ 19  			   , X_ACTUAL IN RNT_EXPENSE_ITEMS.ACTUAL%TYPE
+ 20  			   , X_EXPENSE_ITEM_ID IN RNT_EXPENSE_ITEMS.EXPENSE_ITEM_ID%TYPE
+ 21  			   , X_CHECKSUM IN RNT_EXPENSE_ITEMS_V.CHECKSUM%TYPE
+ 22  			   , X_ORDER_ROW IN RNT_EXPENSE_ITEMS.ORDER_ROW%TYPE);
+ 23  
+ 24    function insert_row( X_SUPPLIER_ID IN RNT_EXPENSE_ITEMS.SUPPLIER_ID%TYPE
+ 25  			  , X_ITEM_NAME IN RNT_EXPENSE_ITEMS.ITEM_NAME%TYPE
+ 26  			  , X_ITEM_COST IN RNT_EXPENSE_ITEMS.ITEM_COST%TYPE
+ 27  			  , X_ESTIMATE IN RNT_EXPENSE_ITEMS.ESTIMATE%TYPE
+ 28  			  , X_ACTUAL IN RNT_EXPENSE_ITEMS.ACTUAL%TYPE
+ 29  			  , X_EXPENSE_ID IN RNT_EXPENSE_ITEMS.EXPENSE_ID%TYPE
+ 30  			  , X_ORDER_ROW IN RNT_EXPENSE_ITEMS.ORDER_ROW%TYPE
+ 31  			  )
+ 32  		   return RNT_EXPENSE_ITEMS.EXPENSE_ITEM_ID%TYPE;
+ 33  
+ 34    procedure delete_row( X_EXPENSE_ITEM_ID IN RNT_EXPENSE_ITEMS.EXPENSE_ITEM_ID%TYPE);
+ 35  
+ 36  end RNT_EXPENSE_ITEMS_PKG;
+ 37  /
+
+Package created.
+
+SQL> 
+SQL> 
+SQL> CREATE OR REPLACE package body RNT_EXPENSE_ITEMS_PKG as
+  2  /*******************************************************************************
+  3  	Copyright (c) Visulate 2007	   All rights reserved worldwide
+  4  	 Name:	    RNT_EXPENSE_ITEMS_PKG
+  5  	 Purpose:   API's for RNT_EXPENSE_ITEMS table
+  6  	 Revision History
+  7  	 Ver	    Date	Author		 Description
+  8  	 --------   ---------	---------------- ---------------------
+  9  	 1.0	    31-MAY-08	Auto Generated	 Initial Version
+ 10  
+ 11  ********************************************************************************/
+ 12  -------------------------------------------------
+ 13  --  Private Procedures and Functions
+ 14  -------------------------------------------------
+ 15  
+ 16  
+ 17    procedure lock_row( X_EXPENSE_ITEM_ID IN RNT_EXPENSE_ITEMS.EXPENSE_ITEM_ID%TYPE) is
+ 18  	  cursor c is
+ 19  	  select * from RNT_EXPENSE_ITEMS
+ 20  	  where EXPENSE_ITEM_ID = X_EXPENSE_ITEM_ID
+ 21  	  for update nowait;
+ 22  
+ 23    begin
+ 24  	 open c;
+ 25  	 close c;
+ 26    exception
+ 27  	 when OTHERS then
+ 28  	   if SQLCODE = -54 then
+ 29  	     RAISE_APPLICATION_ERROR(-20001, 'Cannot changed record. Record is locked.');
+ 30  	   end if;
+ 31    end lock_row;
+ 32  
+ 33  
+ 34  function check_unique(X_EXPENSE_ITEM_ID  RNT_EXPENSE_ITEMS.EXPENSE_ITEM_ID%TYPE,
+ 35  			   X_EXPENSE_ID  RNT_EXPENSE_ITEMS.EXPENSE_ID%TYPE,
+ 36  			   X_SUPPLIER_ID  RNT_EXPENSE_ITEMS.SUPPLIER_ID%TYPE,
+ 37  			   X_ITEM_NAME	 RNT_EXPENSE_ITEMS.ITEM_NAME%TYPE
+ 38  			   ) return boolean
+ 39  is
+ 40    x NUMBER;
+ 41  begin
+ 42  	select 1
+ 43  	into x
+ 44  	from DUAL
+ 45  	where exists (
+ 46  			select 1
+ 47  			from RNT_EXPENSE_ITEMS
+ 48  			where (EXPENSE_ITEM_ID != X_EXPENSE_ITEM_ID or X_EXPENSE_ITEM_ID is null)
+ 49  			  and EXPENSE_ID = X_EXPENSE_ID
+ 50  			  and SUPPLIER_ID = X_SUPPLIER_ID
+ 51  			  and ITEM_NAME = X_ITEM_NAME
+ 52  		      );
+ 53    return false;
+ 54  exception
+ 55    when NO_DATA_FOUND then
+ 56  	  return true;
+ 57  end;
+ 58  
+ 59  -------------------------------------------------
+ 60  --  Public Procedures and Functions
+ 61  -------------------------------------------------
+ 62    function get_checksum( X_EXPENSE_ITEM_ID IN RNT_EXPENSE_ITEMS.EXPENSE_ITEM_ID%TYPE)
+ 63  		 return RNT_EXPENSE_ITEMS_V.CHECKSUM%TYPE is
+ 64  
+ 65  	 v_return_value 	      RNT_EXPENSE_ITEMS_V.CHECKSUM%TYPE;
+ 66    begin
+ 67  	 select CHECKSUM
+ 68  	 into v_return_value
+ 69  	 from RNT_EXPENSE_ITEMS_V
+ 70  	 where EXPENSE_ITEM_ID = X_EXPENSE_ITEM_ID;
+ 71  	 return v_return_value;
+ 72    end get_checksum;
+ 73  
+ 74    procedure update_row( X_EXPENSE_ID IN RNT_EXPENSE_ITEMS.EXPENSE_ID%TYPE
+ 75  			   , X_SUPPLIER_ID IN RNT_EXPENSE_ITEMS.SUPPLIER_ID%TYPE
+ 76  			   , X_ITEM_NAME IN RNT_EXPENSE_ITEMS.ITEM_NAME%TYPE
+ 77  			   , X_ITEM_COST IN RNT_EXPENSE_ITEMS.ITEM_COST%TYPE
+ 78  			   , X_ESTIMATE IN RNT_EXPENSE_ITEMS.ESTIMATE%TYPE
+ 79  			   , X_ACTUAL IN RNT_EXPENSE_ITEMS.ACTUAL%TYPE
+ 80  			   , X_EXPENSE_ITEM_ID IN RNT_EXPENSE_ITEMS.EXPENSE_ITEM_ID%TYPE
+ 81  			   , X_CHECKSUM IN RNT_EXPENSE_ITEMS_V.CHECKSUM%TYPE
+ 82  			   , X_ORDER_ROW IN RNT_EXPENSE_ITEMS.ORDER_ROW%TYPE)
+ 83    is
+ 84  	  l_checksum	      RNT_EXPENSE_ITEMS_V.CHECKSUM%TYPE;
+ 85    begin
+ 86  	  lock_row(X_EXPENSE_ITEM_ID);
+ 87  
+ 88  	   -- validate checksum
+ 89  	   l_checksum := get_checksum(X_EXPENSE_ITEM_ID);
+ 90  	   if X_CHECKSUM != l_checksum then
+ 91  	      RAISE_APPLICATION_ERROR(-20002, 'Record has been changed another user.');
+ 92  	   end if;
+ 93  
+ 94  	 if not check_unique(X_EXPENSE_ITEM_ID, X_EXPENSE_ID, X_SUPPLIER_ID, X_ITEM_NAME) then
+ 95  	     RAISE_APPLICATION_ERROR(-20620, 'Item Name must be unique for supplier.');
+ 96  	   end if;
+ 97  
+ 98  	  update RNT_EXPENSE_ITEMS
+ 99  	  set SUPPLIER_ID = X_SUPPLIER_ID
+100  	  , ITEM_NAME = X_ITEM_NAME
+101  	  , ITEM_COST = X_ITEM_COST
+102  	  , ESTIMATE = X_ESTIMATE
+103  	  , ACTUAL = X_ACTUAL
+104  	  , EXPENSE_ITEM_ID = X_EXPENSE_ITEM_ID
+105  	  , ORDER_ROW = X_ORDER_ROW
+106  	  where EXPENSE_ITEM_ID = X_EXPENSE_ITEM_ID;
+107  
+108    end update_row;
+109  
+110    function insert_row( X_SUPPLIER_ID IN RNT_EXPENSE_ITEMS.SUPPLIER_ID%TYPE
+111  			  , X_ITEM_NAME IN RNT_EXPENSE_ITEMS.ITEM_NAME%TYPE
+112  			  , X_ITEM_COST IN RNT_EXPENSE_ITEMS.ITEM_COST%TYPE
+113  			  , X_ESTIMATE IN RNT_EXPENSE_ITEMS.ESTIMATE%TYPE
+114  			  , X_ACTUAL IN RNT_EXPENSE_ITEMS.ACTUAL%TYPE
+115  			  , X_EXPENSE_ID IN RNT_EXPENSE_ITEMS.EXPENSE_ID%TYPE
+116  			  , X_ORDER_ROW IN RNT_EXPENSE_ITEMS.ORDER_ROW%TYPE
+117  			  )
+118  		   return RNT_EXPENSE_ITEMS.EXPENSE_ITEM_ID%TYPE
+119    is
+120  	  x	      number;
+121  	  l_order_row RNT_EXPENSE_ITEMS.ORDER_ROW%TYPE := X_ORDER_ROW;
+122    begin
+123  
+124  	  if not check_unique(NULL, X_EXPENSE_ID, X_SUPPLIER_ID, X_ITEM_NAME) then
+125  	     RAISE_APPLICATION_ERROR(-20620, 'Item Name must be unique for supplier.');
+126  	  end if;
+127  
+128  
+129  	 if l_order_row is null then
+130  	    select round(NVL(max(ORDER_ROW), 0)+5, -1)+10
+131  	    into l_order_row
+132  	    from RNT_EXPENSE_ITEMS
+133  	    where EXPENSE_ID = X_EXPENSE_ID
+134  	      and SUPPLIER_ID = X_SUPPLIER_ID;
+135  	 end if;
+136  
+137  	  insert into RNT_EXPENSE_ITEMS
+138  	  ( EXPENSE_ITEM_ID
+139  	  , SUPPLIER_ID
+140  	  , ITEM_NAME
+141  	  , ITEM_COST
+142  	  , ESTIMATE
+143  	  , ACTUAL
+144  	  , EXPENSE_ID
+145  	  , ORDER_ROW)
+146  	  values
+147  	  ( RNT_EXPENSE_ITEMS_SEQ.NEXTVAL
+148  	  , X_SUPPLIER_ID
+149  	  , X_ITEM_NAME
+150  	  , X_ITEM_COST
+151  	  , X_ESTIMATE
+152  	  , X_ACTUAL
+153  	  , X_EXPENSE_ID
+154  	  , l_order_row)
+155  	  returning EXPENSE_ITEM_ID into x;
+156  
+157  	  return x;
+158    end insert_row;
+159  
+160    procedure delete_row( X_EXPENSE_ITEM_ID IN RNT_EXPENSE_ITEMS.EXPENSE_ITEM_ID%TYPE) is
+161  
+162    begin
+163  	 delete from RNT_EXPENSE_ITEMS
+164  	 where EXPENSE_ITEM_ID = X_EXPENSE_ITEM_ID;
+165  
+166    end delete_row;
+167  
+168  end RNT_EXPENSE_ITEMS_PKG;
+169  /
+
+Package body created.
+
+SQL> 
+SQL> 
+SQL> 
+SQL> spool off

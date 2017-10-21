@@ -1,0 +1,21 @@
+svn add /home/pgoldtho/visulate/visulate/code/database/public_records/rent_estimates
+svn add /home/pgoldtho/visulate/visulate/code/datamodel/u79dor_upload/values
+svn add /home/pgoldtho/visulate/visulate/code/datamodel/u79dor_upload/zipweight.sql
+svn add /home/pgoldtho/visulate/visulate/specs/datamodel/dor_upload.doc
+svn add /home/pgoldtho/visulate/visulate/specs/wiki-requirements-template.txt
+svn add /home/pgoldtho/visulate/visulate/public_website/images/map_pin_red.png
+svn add /home/pgoldtho/visulate/visulate/GIS/single.xml
+svn add /home/pgoldtho/visulate/visulate/GIS/geocode.cgi
+
+Install instructions
+ 
+  @seed_sources.sql
+  @alter_table.sql
+  @set_zipwt.sql
+ visulate/visulate/code/database/plsql/pr_records_pkg.sql  
+
+
+ 
+
+ 
+

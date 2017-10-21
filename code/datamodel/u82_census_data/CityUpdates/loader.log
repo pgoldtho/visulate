@@ -1,0 +1,99 @@
+
+SQL*Loader: Release 11.2.0.3.0 - Production on Fri Jul 12 19:43:35 2013
+
+Copyright (c) 1982, 2011, Oracle and/or its affiliates.  All rights reserved.
+
+Control File:   loader.ctl
+Data File:      merged2.csv
+  Bad File:     merged2.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+
+Number to load: ALL
+Number to skip: 0
+Errors allowed: 50
+Bind array:     64 rows, maximum of 256000 bytes
+Continuation:    none specified
+Path used:      Conventional
+
+Table LDR_CITY_QFACTS, loaded from every logical record.
+Insert option in effect for this table: TRUNCATE
+TRAILING NULLCOLS option in effect
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+CITY                                FIRST     *   ;  O(") CHARACTER            
+POPULATION_LATEST                    NEXT     *   ;  O(") CHARACTER            
+POPULATION_BASE                      NEXT     *   ;  O(") CHARACTER            
+POPULATION_GROWTH                    NEXT     *   ;  O(") CHARACTER            
+POPULATION_RECENT                    NEXT     *   ;  O(") CHARACTER            
+UNDER5_PCT                           NEXT     *   ;  O(") CHARACTER            
+UNDER18_PCT                          NEXT     *   ;  O(") CHARACTER            
+OVER65_PCT                           NEXT     *   ;  O(") CHARACTER            
+FEMALE_PCT                           NEXT     *   ;  O(") CHARACTER            
+WHITE_PCT                            NEXT     *   ;  O(") CHARACTER            
+BLACK_PCT                            NEXT     *   ;  O(") CHARACTER            
+AMERICAN_INDIAN_PCT                  NEXT     *   ;  O(") CHARACTER            
+ASIAN_PCT                            NEXT     *   ;  O(") CHARACTER            
+PACIFIC_ISLANDER_PCT                 NEXT     *   ;  O(") CHARACTER            
+MULTI_RACES_PCT                      NEXT     *   ;  O(") CHARACTER            
+LATINO_PCT                           NEXT     *   ;  O(") CHARACTER            
+NOT_HISPANIC_PCT                     NEXT     *   ;  O(") CHARACTER            
+SAME_HOUSE1YEAR_PCT                  NEXT     *   ;  O(") CHARACTER            
+FOREIGN_PCT                          NEXT     *   ;  O(") CHARACTER            
+LANGUAGE_NON_ENGLISH_PCT             NEXT     *   ;  O(") CHARACTER            
+HIGH_SCHOOL_PCT                      NEXT     *   ;  O(") CHARACTER            
+GRADUATE_PCT                         NEXT     *   ;  O(") CHARACTER            
+VETERANS                             NEXT     *   ;  O(") CHARACTER            
+TIME2WORK                            NEXT     *   ;  O(") CHARACTER            
+HOUSING_UNITS                        NEXT     *   ;  O(") CHARACTER            
+HOMEOWNERSHIP_RATE                   NEXT     *   ;  O(") CHARACTER            
+HOUSING_UNITS_MULTI_PCT              NEXT     *   ;  O(") CHARACTER            
+MEDIAN_VALUE                         NEXT     *   ;  O(") CHARACTER            
+HOUSEHOLDS                           NEXT     *   ;  O(") CHARACTER            
+PERSONS_PER_HOUSEHOLD                NEXT     *   ;  O(") CHARACTER            
+PER_CAPITA_INCOME                    NEXT     *   ;  O(") CHARACTER            
+MEDIAN_HOUSEHOLD_INCOME              NEXT     *   ;  O(") CHARACTER            
+POVERTY_PCT                          NEXT     *   ;  O(") CHARACTER            
+BUSINESS_CITY                        NEXT     *   ;  O(") CHARACTER            
+TOTAL_FIRMS                          NEXT     *   ;  O(") CHARACTER            
+BLACK_OWNED_PCT                      NEXT     *   ;  O(") CHARACTER            
+AMERICAN_INDIAN_OWNED_PCT            NEXT     *   ;  O(") CHARACTER            
+ASIAN_OWNED_PCT                      NEXT     *   ;  O(") CHARACTER            
+PACIFIC_ISLANDER_OWNED_PCT           NEXT     *   ;  O(") CHARACTER            
+HISPANIC_OWNED_PCT                   NEXT     *   ;  O(") CHARACTER            
+WOMEN_OWNED_PCT                      NEXT     *   ;  O(") CHARACTER            
+MANUFACTURERS_SHIPMENTS              NEXT     *   ;  O(") CHARACTER            
+WHOLESALER_SALES                     NEXT     *   ;  O(") CHARACTER            
+RETAIL_SALES                         NEXT     *   ;  O(") CHARACTER            
+RETAIL_SALES_PER_CAPITA              NEXT     *   ;  O(") CHARACTER            
+ACCOMMODATION_FOOD_SALES             NEXT     *   ;  O(") CHARACTER            
+GEOGRAPHY_QUICKFACTS                 NEXT     *   ;  O(") CHARACTER            
+LAND_AREA                            NEXT     *   ;  O(") CHARACTER            
+POPULATION_DENSITY                   NEXT     *   ;  O(") CHARACTER            
+FIPS_CODE                            NEXT     *   ;  O(") CHARACTER            
+COUNTY                               NEXT     *   ;  O(") CHARACTER            
+
+value used for ROWS parameter changed from 64 to 19
+
+Table LDR_CITY_QFACTS:
+  203 Rows successfully loaded.
+  0 Rows not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Space allocated for bind array:                 250002 bytes(19 rows)
+Read   buffer bytes: 1048576
+
+Total logical records skipped:          0
+Total logical records read:           203
+Total logical records rejected:         0
+Total logical records discarded:        0
+
+Run began on Fri Jul 12 19:43:35 2013
+Run ended on Fri Jul 12 19:43:38 2013
+
+Elapsed time was:     00:00:03.26
+CPU time was:         00:00:00.08

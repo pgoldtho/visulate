@@ -1,0 +1,26 @@
+load data
+ infile re_salesperson.csv
+ truncate into table ldr_license_edu
+ FIELDS TERMINATED BY ',' optionally enclosed by '"'
+ TRAILING NULLCOLS
+( Board                  
+, Licensee_Name          
+, DBA_Name               
+, nRank                  
+, Address1               
+, Address2               
+, Address3               
+, City                   
+, State                  
+, Zip                    
+, County                 
+, License_Number         
+, Primary_Status         
+, Secondary_Status       
+, License_Date           
+, Effective_Date         
+, Expiration_Date        
+, Alternate_License_Number 
+, Sole_Proprietor          
+, Employer                 
+, Employer_License_Number  )

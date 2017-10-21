@@ -1,0 +1,25 @@
+select c.city_id
+    ,      pu.ucode
+    ,      to_char(s.sale_date, 'YYYY') sale_yr
+    ,      round(max (s.price/nvl(p.sq_ft, p.acreage)), 2) a_max
+    ,      round(PERCENTILE_DISC(0.875) within group (order by s.price/nvl(p.sq_ft, p.acreage)), 2) a_median
+    ,      round(PERCENTILE_DISC(0.75) within group (order by s.price/nvl(p.sq_ft, p.acreage)), 2) a_min
+    ,      round(PERCENTILE_DISC(0.5) within group (order by s.price/nvl(p.sq_ft, p.acreage)), 2) b_median
+    ,      round(PERCENTILE_DISC(0.25) within group (order by s.price/nvl(p.sq_ft, p.acreage)), 2) c_max
+    ,      round(PERCENTILE_DISC(0.175) within group (order by s.price/nvl(p.sq_ft, p.acreage)), 2) c_median
+    ,      round(min (s.price/nvl(p.sq_ft, p.acreage)), 2) c_min
+    ,      count(*) sales_count
+    from pr_properties p
+    ,    pr_property_sales s
+    ,    pr_property_usage pu
+    ,    rnt_city_zipcodes cz
+    ,    rnt_cities c
+    where c.city_id = cz.city_id
+    and to_char(cz.zipcode) = p.zipcode
+    and c.county='FRANKLIN'
+    and c.state='FL'
+    and pu.prop_id = p.prop_id
+    and p.prop_id = s.prop_id
+    and s.price > 200
+    group by c.city_id, pu.ucode, to_char(s.sale_date, 'YYYY')
+/

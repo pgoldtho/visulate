@@ -1,0 +1,3 @@
+select line||text from user_source where line > 390 and line < 410
+ and name='RNT_ACCOUNTS_PAYABLE_PKG'
+/

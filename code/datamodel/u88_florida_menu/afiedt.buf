@@ -1,0 +1,11 @@
+select tab_name, tab_title, parent_tab,
+                         'L'||(level - 1) as tab_type,
+                         level - 1 as level_menu,
+                         display_seq, tab_href, checksum,
+                         sys_connect_by_path(tab_title, '->') as path,
+                         connect_by_isleaf as is_leaf
+                  from    rnt_menu_tabs_v
+                  start   with     parent_tab = 'mobi' 
+                  connect by prior tab_name   = parent_tab
+                  order   siblings by display_seq
+/

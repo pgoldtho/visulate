@@ -1,0 +1,41 @@
+==Overview==
+Rules and logic for income valuation estimates in Visulate
+===Problem Description===
+Need to generate a pro-forma income statement and income valuation for any property located in Florida.
+===Solution===
+Extend Visulate's existing business logic to reflect information from Census and DOR data.
+===Business Need===
+Include in REO Rental offering.
+==Requirements==
+  ===Functional Requirements===
+       ====1. Customer Requirement====
+       Produce an accurate pro-forma estimate that can be used as a start point for investment analysis.
+       ====2. Use Cases====
+       2.1 - Web Page Display
+       2.2 - Spread Sheet Inclusion
+       ====3. Functionality and Feature Description====
+         =====Current behavior=====
+         Seed values are stored in the pr_values table for city, ucode, class and year.  
+         property display uses sq ft of property to produce estimates.        
+         
+         =====New functionality=====
+         Use Census data to seed base values residential rents in each city.
+         Use sales data for seed base values for commercial rents in each city.
+         =====New concepts=====
+         =====User Interface=====
+       ====4. Preconditions and Assumptions====
+       ====5. Limitations====
+       ====6. Dependencies and Impact Analysis====
+       ====7. Known issues====
+  ===User Interface Requirements===
+  ===Performance Requirements===
+==Design==
+  ===Data Model===
+    ====Schema Changes====
+    ====Seed Data====
+    ====Data Upgrade====
+  ===Code===
+    ====APIs====
+    ====Non-API Code Changes====
+  ===User Interface===
+==Test Plans==

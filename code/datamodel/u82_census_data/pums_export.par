@@ -1,0 +1,4 @@
+DIRECTORY=dpump_dir1 
+DUMPFILE=pums_data.dmp 
+REUSE_DUMPFILES=y
+TABLES=pr_pums_data,pr_pums_values,asc_pums_housing,asc_zipuma,asc_bkpuma,asc_millage_rates,asc_tax_values,tmp_prop_pums
