@@ -1,6 +1,6 @@
 {
   "projectId": "visulate",
-  "indexedAt": "2026-09-07T21:39:02.890Z",
+  "indexedAt": "2026-09-12T21:59:28.028Z",
   "dbConnectionId": "pdb21",
   "objects": {
     "PR_LOCATIONS": {
@@ -2206,7 +2206,6 @@
   },
   "files": {
     "README.md": [],
-    "code/.DS_Store": [],
     "code/._.DS_Store": [],
     "code/database/admin/drcp.sql": [],
     "code/database/data_updates/bugfix_GIS.sql": [
@@ -2229,6 +2228,7 @@
       "PR_PROPERTY_SALES",
       "PR_VALUES"
     ],
+    "code/database/data_updates/trigger.sql": [],
     "code/database/db_build/acl.sql": [],
     "code/database/db_build/acl2.sql": [],
     "code/database/db_build/aws/acl.sql": [],
