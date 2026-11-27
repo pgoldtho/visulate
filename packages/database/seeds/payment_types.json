@@ -1,0 +1,281 @@
+[
+  {
+    "payment_type_name": "Rental Income",
+    "receivable_yn": "Y",
+    "payable_yn": "N",
+    "depreciation_term": 0,
+    "service_life": 0,
+    "noi_yn": "Y",
+    "description": "Standard monthly residential or commercial tenant rent."
+  },
+  {
+    "payment_type_name": "Section 8 Rent",
+    "receivable_yn": "Y",
+    "payable_yn": "N",
+    "depreciation_term": 0,
+    "service_life": 0,
+    "noi_yn": "Y",
+    "description": "Housing authority voucher subsidy payment."
+  },
+  {
+    "payment_type_name": "Late Fee Income",
+    "receivable_yn": "Y",
+    "payable_yn": "N",
+    "depreciation_term": 0,
+    "service_life": 0,
+    "noi_yn": "Y",
+    "description": "Late payment charge or NSF fee."
+  },
+  {
+    "payment_type_name": "Security Deposit",
+    "receivable_yn": "Y",
+    "payable_yn": "Y",
+    "depreciation_term": 0,
+    "service_life": 0,
+    "noi_yn": "N",
+    "description": "Refundable security deposit collected or refunded."
+  },
+  {
+    "payment_type_name": "Other Income",
+    "receivable_yn": "Y",
+    "payable_yn": "N",
+    "depreciation_term": 0,
+    "service_life": 0,
+    "noi_yn": "Y",
+    "description": "Application fees, parking space, laundry, or pet fees."
+  },
+  {
+    "payment_type_name": "Interest Income",
+    "receivable_yn": "Y",
+    "payable_yn": "N",
+    "depreciation_term": 0,
+    "service_life": 0,
+    "noi_yn": "N",
+    "description": "Bank account or seller-financing note interest earned."
+  },
+  {
+    "payment_type_name": "Advertising",
+    "receivable_yn": "N",
+    "payable_yn": "Y",
+    "depreciation_term": 0,
+    "service_life": 0,
+    "noi_yn": "Y",
+    "description": "Listing marketing, signboards, and advertising."
+  },
+  {
+    "payment_type_name": "Auto and Travel",
+    "receivable_yn": "N",
+    "payable_yn": "Y",
+    "depreciation_term": 0,
+    "service_life": 0,
+    "noi_yn": "Y",
+    "description": "Property visit mileage and vehicle travel expense."
+  },
+  {
+    "payment_type_name": "Cleaning/Janitorial Expense",
+    "receivable_yn": "N",
+    "payable_yn": "Y",
+    "depreciation_term": 0,
+    "service_life": 0,
+    "noi_yn": "Y",
+    "description": "Turnover cleaning and common area upkeep."
+  },
+  {
+    "payment_type_name": "Commissions",
+    "receivable_yn": "N",
+    "payable_yn": "Y",
+    "depreciation_term": 0,
+    "service_life": 0,
+    "noi_yn": "Y",
+    "description": "Broker leasing fees and tenant placement fees."
+  },
+  {
+    "payment_type_name": "Insurance",
+    "receivable_yn": "N",
+    "payable_yn": "Y",
+    "depreciation_term": 0,
+    "service_life": 0,
+    "noi_yn": "Y",
+    "description": "Hazard, general liability, and windstorm policy premiums."
+  },
+  {
+    "payment_type_name": "Interest Expense",
+    "receivable_yn": "N",
+    "payable_yn": "Y",
+    "depreciation_term": 0,
+    "service_life": 0,
+    "noi_yn": "N",
+    "description": "Mortgage note interest charges."
+  },
+  {
+    "payment_type_name": "Lawn Service",
+    "receivable_yn": "N",
+    "payable_yn": "Y",
+    "depreciation_term": 0,
+    "service_life": 0,
+    "noi_yn": "Y",
+    "description": "Routine grounds maintenance and mowing."
+  },
+  {
+    "payment_type_name": "Legal and Other Fees",
+    "receivable_yn": "N",
+    "payable_yn": "Y",
+    "depreciation_term": 0,
+    "service_life": 0,
+    "noi_yn": "Y",
+    "description": "Eviction filings, legal retainer, and professional fees."
+  },
+  {
+    "payment_type_name": "Management Fees",
+    "receivable_yn": "N",
+    "payable_yn": "Y",
+    "depreciation_term": 0,
+    "service_life": 0,
+    "noi_yn": "Y",
+    "description": "Monthly property management percentage fee."
+  },
+  {
+    "payment_type_name": "Pest Control",
+    "receivable_yn": "N",
+    "payable_yn": "Y",
+    "depreciation_term": 0,
+    "service_life": 0,
+    "noi_yn": "Y",
+    "description": "Pest extermination and termite warranty coverage."
+  },
+  {
+    "payment_type_name": "Property Taxes",
+    "receivable_yn": "N",
+    "payable_yn": "Y",
+    "depreciation_term": 0,
+    "service_life": 0,
+    "noi_yn": "Y",
+    "description": "County ad valorem property tax bills."
+  },
+  {
+    "payment_type_name": "Repairs & Maintenance",
+    "receivable_yn": "N",
+    "payable_yn": "Y",
+    "depreciation_term": 0,
+    "service_life": 0,
+    "noi_yn": "Y",
+    "description": "Non-capitalized plumbing, electrical, and routine maintenance."
+  },
+  {
+    "payment_type_name": "Supplies",
+    "receivable_yn": "N",
+    "payable_yn": "Y",
+    "depreciation_term": 0,
+    "service_life": 0,
+    "noi_yn": "Y",
+    "description": "Hardware, locks, light fixtures, and smoke alarms."
+  },
+  {
+    "payment_type_name": "Weather Event",
+    "receivable_yn": "N",
+    "payable_yn": "Y",
+    "depreciation_term": 0,
+    "service_life": 0,
+    "noi_yn": "Y",
+    "description": "Storm cleanup, tree removal, and hurricane shutter boarding."
+  },
+  {
+    "payment_type_name": "Capital Improvements",
+    "receivable_yn": "N",
+    "payable_yn": "Y",
+    "depreciation_term": 10,
+    "service_life": 10,
+    "noi_yn": "N",
+    "description": "Capitalized major building components and renovations."
+  },
+  {
+    "payment_type_name": "Carpet Installation/Replacement",
+    "receivable_yn": "N",
+    "payable_yn": "Y",
+    "depreciation_term": 5,
+    "service_life": 5,
+    "noi_yn": "N",
+    "description": "Flooring replacement depreciated over 5-year recovery period."
+  },
+  {
+    "payment_type_name": "Equipment Purchase",
+    "receivable_yn": "N",
+    "payable_yn": "Y",
+    "depreciation_term": 5,
+    "service_life": 5,
+    "noi_yn": "N",
+    "description": "Major appliances and machinery with 5-year recovery period."
+  },
+  {
+    "payment_type_name": "Landscaping",
+    "receivable_yn": "N",
+    "payable_yn": "Y",
+    "depreciation_term": 3,
+    "service_life": 3,
+    "noi_yn": "N",
+    "description": "Major landscaping installation depreciated over 3 years."
+  },
+  {
+    "payment_type_name": "Building Purchase",
+    "receivable_yn": "N",
+    "payable_yn": "Y",
+    "depreciation_term": 27.5,
+    "service_life": 27.5,
+    "noi_yn": "N",
+    "description": "Real estate building acquisition cost basis."
+  },
+  {
+    "payment_type_name": "Land Purchase",
+    "receivable_yn": "N",
+    "payable_yn": "Y",
+    "depreciation_term": 0,
+    "service_life": 0,
+    "noi_yn": "N",
+    "description": "Non-depreciable land acquisition cost basis."
+  },
+  {
+    "payment_type_name": "Utilities: Electricity",
+    "receivable_yn": "N",
+    "payable_yn": "Y",
+    "depreciation_term": 0,
+    "service_life": 0,
+    "noi_yn": "Y",
+    "description": "Electric utility services."
+  },
+  {
+    "payment_type_name": "Utilities: Gas",
+    "receivable_yn": "N",
+    "payable_yn": "Y",
+    "depreciation_term": 0,
+    "service_life": 0,
+    "noi_yn": "Y",
+    "description": "Gas utility services."
+  },
+  {
+    "payment_type_name": "Utilities: Irrigation",
+    "receivable_yn": "N",
+    "payable_yn": "Y",
+    "depreciation_term": 0,
+    "service_life": 0,
+    "noi_yn": "Y",
+    "description": "Irrigation water utility services."
+  },
+  {
+    "payment_type_name": "Utilities: Telephone",
+    "receivable_yn": "N",
+    "payable_yn": "Y",
+    "depreciation_term": 0,
+    "service_life": 0,
+    "noi_yn": "Y",
+    "description": "Telephone and internet connectivity."
+  },
+  {
+    "payment_type_name": "Utilities: Water/Sewer/Trash",
+    "receivable_yn": "N",
+    "payable_yn": "Y",
+    "depreciation_term": 0,
+    "service_life": 0,
+    "noi_yn": "Y",
+    "description": "Water, wastewater, and dumpster sanitation."
+  }
+]
