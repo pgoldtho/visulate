@@ -1,6 +1,6 @@
 ---
 title: "Implementation Plan: Property Management Modernization"
-status: ready_for_review
+status: approved
 phase: design
 slug: property-management
 doc_type: implementation-plan
