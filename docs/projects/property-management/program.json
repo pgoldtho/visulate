@@ -1,0 +1,196 @@
+{
+  "version": 1,
+  "slug": "property-management",
+  "title": "Property Management",
+  "projectType": "modernization",
+  "sourceDb": "pdb22",
+  "sourceSchemas": [
+    "RNTMGR2"
+  ],
+  "targetDb": "",
+  "sourceDialect": "oracle",
+  "targetDialect": "postgres",
+  "sourceRepos": [
+    "visulate"
+  ],
+  "programRepo": "visulate",
+  "programBranch": "migration/property-management",
+  "targetStack": "",
+  "downtimeNotes": "",
+  "phase": "implementation",
+  "discovery": {
+    "readmeStatus": "not_started",
+    "commentStatus": "not_started",
+    "commentResumeOffset": 0
+  },
+  "gates": {
+    "requirements": {
+      "status": "approved",
+      "docPath": "docs/projects/property-management/01-requirements-sow.md",
+      "approvedAt": "2026-11-27T18:40:26.566Z",
+      "approvedBy": "user"
+    },
+    "design": {
+      "status": "approved",
+      "planPath": "docs/projects/property-management/02-designs/implementation-plan.md",
+      "dataMigrationPlanPath": "docs/projects/property-management/02-designs/data-migration-plan.md",
+      "docs": [
+        {
+          "title": "Technical Design Document: Core Schema & Entity Model",
+          "path": "docs/projects/property-management/02-designs/01-core-schema-tdd.md",
+          "status": "draft"
+        },
+        {
+          "title": "Technical Design Document: Application Services, PL/SQL Disposition & AI Helpers",
+          "path": "docs/projects/property-management/02-designs/02-application-services-tdd.md",
+          "status": "draft"
+        }
+      ],
+      "approvedAt": "2026-11-27T18:40:30.734Z",
+      "approvedBy": "user"
+    }
+  },
+  "workPackages": [
+    {
+      "id": "wp-01-schema",
+      "title": "Target PostgreSQL Schema & Migration Scripts",
+      "summary": "Target PostgreSQL 16+ DDL migrations (32 operational tables including RBAC, suppliers, valuation log, and Section 8), PostGIS spatial types, audit triggers, ANSI views, migration & seed runners, and accounting fixtures with 100% legacy parity.",
+      "designDoc": "docs/projects/property-management/02-designs/01-core-schema-tdd.md",
+      "specPath": "docs/projects/property-management/02-designs/work-packages/wp-01-schema.md",
+      "targetRepo": "visulate",
+      "branch": "feat/wp-01-schema",
+      "status": "review",
+      "scope": [
+        "schema",
+        "database",
+        "postgis",
+        "ddl",
+        "seeds"
+      ],
+      "dependsOn": []
+    },
+    {
+      "id": "wp-02-data-migration",
+      "title": "Oracle to PostgreSQL Data Extraction & Loading Pipeline",
+      "summary": "Self-contained native Python streaming ETL pipeline (python-oracledb pure thin mode + psycopg3 memory COPY streaming) from Oracle to PostgreSQL through 2025-12-31 cutoff with sequence synchronization.",
+      "designDoc": "docs/projects/property-management/02-designs/data-migration-plan.md",
+      "specPath": "docs/projects/property-management/02-designs/work-packages/wp-02-data-migration.md",
+      "targetRepo": "visulate",
+      "branch": "feat/wp-02-data-migration",
+      "status": "review",
+      "scope": [
+        "data-migration",
+        "etl",
+        "python",
+        "psycopg3"
+      ],
+      "dependsOn": [
+        "wp-01-schema"
+      ]
+    },
+    {
+      "id": "wp-03-backend-domain-services",
+      "title": "Core Property, Tenancy & Contact Backend Services",
+      "summary": "TypeScript backend services for Properties, Units, Tenants, Leases, and Contacts replacing legacy PHP classes with REST APIs and optimistic concurrency.",
+      "designDoc": "docs/projects/property-management/02-designs/02-application-services-tdd.md",
+      "specPath": "docs/projects/property-management/02-designs/work-packages/wp-03-backend-domain-services.md",
+      "targetRepo": "visulate",
+      "branch": "feat/wp-03-backend-domain-services",
+      "status": "pending",
+      "scope": [
+        "backend",
+        "domain-services",
+        "api",
+        "typescript"
+      ],
+      "dependsOn": [
+        "wp-01-schema"
+      ]
+    },
+    {
+      "id": "wp-04-accounting-ledger-engine",
+      "title": "General Ledger, Billing & Double-Entry Accounting Service",
+      "summary": "Double-entry accounting, rent roll billing, payment FIFO allocation, and AP bill manager deconstructing legacy PL/SQL packages.",
+      "designDoc": "docs/projects/property-management/02-designs/02-application-services-tdd.md",
+      "specPath": "docs/projects/property-management/02-designs/work-packages/wp-04-accounting-ledger-engine.md",
+      "targetRepo": "visulate",
+      "branch": "feat/wp-04-accounting-ledger-engine",
+      "status": "pending",
+      "scope": [
+        "accounting",
+        "ledger",
+        "billing",
+        "plsql-disposition"
+      ],
+      "dependsOn": [
+        "wp-01-schema",
+        "wp-03-backend-domain-services"
+      ]
+    },
+    {
+      "id": "wp-05-ai-intake-copilot",
+      "title": "Document OCR, Smart Payment Allocation & Natural Language Copilot",
+      "summary": "Multimodal OCR for vendor bills, smart payment matcher, conversational transaction copilot, and Yardi 2026-2027 interim backfill parser.",
+      "designDoc": "docs/projects/property-management/02-designs/02-application-services-tdd.md",
+      "specPath": "docs/projects/property-management/02-designs/work-packages/wp-05-ai-intake-copilot.md",
+      "targetRepo": "visulate",
+      "branch": "feat/wp-05-ai-intake-copilot",
+      "status": "pending",
+      "scope": [
+        "ai",
+        "ocr",
+        "multimodal",
+        "copilot",
+        "yardi-ingest"
+      ],
+      "dependsOn": [
+        "wp-03-backend-domain-services",
+        "wp-04-accounting-ledger-engine"
+      ]
+    },
+    {
+      "id": "wp-06-web-frontend",
+      "title": "Responsive Nuxt 3 / Vue 3 / shadcn-vue UI & Management Dashboard",
+      "summary": "Nuxt 3 (Vue 3) / Tailwind CSS / shadcn-vue responsive web dashboard replacing 179 Smarty templates and dynamic Oracle CMS menus with interactive client views.",
+      "designDoc": "docs/projects/property-management/02-designs/02-application-services-tdd.md",
+      "specPath": "docs/projects/property-management/02-designs/work-packages/wp-06-web-frontend.md",
+      "targetRepo": "visulate",
+      "branch": "feat/wp-06-web-frontend",
+      "status": "pending",
+      "scope": [
+        "frontend",
+        "ui",
+        "vue",
+        "nuxt",
+        "tailwind",
+        "shadcn-vue"
+      ],
+      "dependsOn": [
+        "wp-03-backend-domain-services",
+        "wp-04-accounting-ledger-engine"
+      ]
+    },
+    {
+      "id": "wp-07-verification-reconciliation",
+      "title": "End-to-End Financial Integrity & Data Reconciliation Suite",
+      "summary": "Automated SQL verification suite testing dual-database row counts, zero-variance trial balance reconciliation, and payment allocation integrity.",
+      "designDoc": "docs/projects/property-management/02-designs/data-migration-plan.md",
+      "specPath": "docs/projects/property-management/02-designs/work-packages/wp-07-verification-reconciliation.md",
+      "targetRepo": "visulate",
+      "branch": "feat/wp-07-verification-reconciliation",
+      "status": "pending",
+      "scope": [
+        "qa",
+        "reconciliation",
+        "audit",
+        "financial-parity"
+      ],
+      "dependsOn": [
+        "wp-02-data-migration",
+        "wp-04-accounting-ledger-engine"
+      ]
+    }
+  ],
+  "createdAt": "2026-11-25T16:32:03.044Z",
+  "updatedAt": "2026-11-27T18:40:30.734Z"
+}

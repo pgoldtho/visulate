@@ -1,0 +1,25 @@
+{
+  "name": "@visulate/database",
+  "version": "1.0.0",
+  "description": "Target PostgreSQL schema migrations, PostGIS spatial models, and seed fixtures",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "migrate": "ts-node src/migrate.ts",
+    "seed": "ts-node src/seed.ts",
+    "seed:dry-run": "ts-node src/seed.ts --dry-run",
+    "test:schema": "ts-node tests/schema_validation.test.ts",
+    "test": "npm run test:schema"
+  },
+  "dependencies": {
+    "pg": "^8.11.3",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/pg": "^8.11.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}

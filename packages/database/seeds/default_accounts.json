@@ -1,0 +1,310 @@
+[
+  {
+    "account_number": "1100",
+    "name": "Cash",
+    "account_type": "ASSET",
+    "current_balance_yn": "Y",
+    "description": "Default cash and operating bank account."
+  },
+  {
+    "account_number": "1110",
+    "name": "Escrow - Tax and Insurance",
+    "account_type": "ASSET",
+    "current_balance_yn": "Y",
+    "description": "Escrow reserve balance held by mortgage servicer for property taxes and hazard insurance."
+  },
+  {
+    "account_number": "1130",
+    "name": "Escrow - Mortgage Principal",
+    "account_type": "ASSET",
+    "current_balance_yn": "Y",
+    "description": "Principal amortization holding account for loan payments."
+  },
+  {
+    "account_number": "1150",
+    "name": "Escrow - Mortgage P&I",
+    "account_type": "ASSET",
+    "current_balance_yn": "Y",
+    "description": "Combined principal and interest clearing account for recurring unamortized mortgage disbursements."
+  },
+  {
+    "account_number": "1200",
+    "name": "Accounts Receivable",
+    "account_type": "ASSET",
+    "current_balance_yn": "Y",
+    "description": "Uncollected rent and charges due from tenants."
+  },
+  {
+    "account_number": "1300",
+    "name": "Capital Improvements",
+    "account_type": "ASSET",
+    "current_balance_yn": "N",
+    "description": "Property improvements and capitalized upgrades subject to depreciation."
+  },
+  {
+    "account_number": "1400",
+    "name": "Reserve Fund",
+    "account_type": "ASSET",
+    "current_balance_yn": "Y",
+    "description": "Operating and replacement reserve funds held in liquid savings/money market accounts."
+  },
+  {
+    "account_number": "1500",
+    "name": "Supplies Inventory",
+    "account_type": "ASSET",
+    "current_balance_yn": "Y",
+    "description": "Maintenance supplies, fixtures, and materials inventory on hand."
+  },
+  {
+    "account_number": "1700",
+    "name": "Land",
+    "account_type": "ASSET",
+    "current_balance_yn": "N",
+    "description": "Non-depreciable real property land basis."
+  },
+  {
+    "account_number": "1750",
+    "name": "Buildings",
+    "account_type": "ASSET",
+    "current_balance_yn": "N",
+    "description": "Depreciable real property building and structure basis."
+  },
+  {
+    "account_number": "1780",
+    "name": "Accumulated Depreciation - Buildings",
+    "account_type": "ASSET",
+    "current_balance_yn": "N",
+    "description": "Contra-asset tracking cumulative MACRS/straight-line building depreciation."
+  },
+  {
+    "account_number": "1800",
+    "name": "Equipment",
+    "account_type": "ASSET",
+    "current_balance_yn": "N",
+    "description": "Appliances, HVAC units, maintenance equipment, and personal property."
+  },
+  {
+    "account_number": "1880",
+    "name": "Accumulated Depreciation - Equipment",
+    "account_type": "ASSET",
+    "current_balance_yn": "N",
+    "description": "Contra-asset tracking cumulative depreciation on equipment and appliances."
+  },
+  {
+    "account_number": "1900",
+    "name": "Notes Receivable",
+    "account_type": "ASSET",
+    "current_balance_yn": "N",
+    "description": "Promissory notes, mortgages, or seller financing due to the business."
+  },
+  {
+    "account_number": "2100",
+    "name": "Notes Payable",
+    "account_type": "LIABILITY",
+    "current_balance_yn": "N",
+    "description": "Long-term mortgages and secured loans payable against properties."
+  },
+  {
+    "account_number": "2200",
+    "name": "Accounts Payable",
+    "account_type": "LIABILITY",
+    "current_balance_yn": "Y",
+    "description": "Amounts owed to contractors, vendors, and suppliers for goods and services."
+  },
+  {
+    "account_number": "2300",
+    "name": "Tenant Deposits",
+    "account_type": "LIABILITY",
+    "current_balance_yn": "Y",
+    "description": "Security and pet deposits held on behalf of tenants."
+  },
+  {
+    "account_number": "2400",
+    "name": "Pre-Paid Rent",
+    "account_type": "LIABILITY",
+    "current_balance_yn": "Y",
+    "description": "Advance rental payments and last month's rent collected prior to due date."
+  },
+  {
+    "account_number": "3000",
+    "name": "Business Owner Capital",
+    "account_type": "EQUITY",
+    "current_balance_yn": "N",
+    "description": "Owner equity contributions and initial capital investments."
+  },
+  {
+    "account_number": "3500",
+    "name": "Business Owner Drawing",
+    "account_type": "EQUITY",
+    "current_balance_yn": "N",
+    "description": "Owner withdrawals and partnership distributions."
+  },
+  {
+    "account_number": "4100",
+    "name": "Rental Income",
+    "account_type": "REVENUE",
+    "current_balance_yn": "N",
+    "description": "Gross rental income from residential and commercial property leases."
+  },
+  {
+    "account_number": "4110",
+    "name": "Late Fees",
+    "account_type": "REVENUE",
+    "current_balance_yn": "N",
+    "description": "Late charges and non-sufficient funds (NSF) penalty fees."
+  },
+  {
+    "account_number": "4120",
+    "name": "Other Income",
+    "account_type": "REVENUE",
+    "current_balance_yn": "N",
+    "description": "Application fees, parking fees, laundry service, and miscellaneous revenue."
+  },
+  {
+    "account_number": "4130",
+    "name": "Mortgage Interest Income",
+    "account_type": "REVENUE",
+    "current_balance_yn": "N",
+    "description": "Interest earned on seller-financed notes or bank balances."
+  },
+  {
+    "account_number": "4140",
+    "name": "Escrow Mortgage Income",
+    "account_type": "REVENUE",
+    "current_balance_yn": "N",
+    "description": "Escrow servicing collections and interest on escrow reserves."
+  },
+  {
+    "account_number": "5000",
+    "name": "Advertising Expense",
+    "account_type": "EXPENSE",
+    "current_balance_yn": "N",
+    "description": "Marketing, signage, online syndication, and leasing advertisements."
+  },
+  {
+    "account_number": "5100",
+    "name": "Auto and Travel Expense",
+    "account_type": "EXPENSE",
+    "current_balance_yn": "N",
+    "description": "Mileage, vehicle maintenance, and travel incurred for property management."
+  },
+  {
+    "account_number": "5200",
+    "name": "Cleaning / Janitorial",
+    "account_type": "EXPENSE",
+    "current_balance_yn": "N",
+    "description": "Unit turnover turnover cleaning, carpet shampooing, and common area janitorial."
+  },
+  {
+    "account_number": "5300",
+    "name": "Commissions and Fees",
+    "account_type": "EXPENSE",
+    "current_balance_yn": "N",
+    "description": "Real estate leasing commissions, tenant screening fees, and merchant processing."
+  },
+  {
+    "account_number": "5400",
+    "name": "Insurance Expense",
+    "account_type": "EXPENSE",
+    "current_balance_yn": "N",
+    "description": "Hazard, liability, flood, and umbrella insurance policy premiums."
+  },
+  {
+    "account_number": "5500",
+    "name": "Interest Expense",
+    "account_type": "EXPENSE",
+    "current_balance_yn": "N",
+    "description": "Mortgage loan interest and line-of-credit financing charges."
+  },
+  {
+    "account_number": "5600",
+    "name": "Lawn Maintenance",
+    "account_type": "EXPENSE",
+    "current_balance_yn": "N",
+    "description": "Grounds keeping, tree trimming, and routine lawn mowing services."
+  },
+  {
+    "account_number": "5700",
+    "name": "Management Fees",
+    "account_type": "EXPENSE",
+    "current_balance_yn": "N",
+    "description": "Professional property management service fees."
+  },
+  {
+    "account_number": "5800",
+    "name": "Pest Control",
+    "account_type": "EXPENSE",
+    "current_balance_yn": "N",
+    "description": "Routine extermination and termite protection treatments."
+  },
+  {
+    "account_number": "5900",
+    "name": "Professional Fees",
+    "account_type": "EXPENSE",
+    "current_balance_yn": "N",
+    "description": "Legal counsel, CPA accounting, tax preparation, and architectural fees."
+  },
+  {
+    "account_number": "6000",
+    "name": "Property Taxes",
+    "account_type": "EXPENSE",
+    "current_balance_yn": "N",
+    "description": "County ad valorem property taxes and non-ad valorem assessments."
+  },
+  {
+    "account_number": "6100",
+    "name": "Repairs & Maintenance",
+    "account_type": "EXPENSE",
+    "current_balance_yn": "N",
+    "description": "Routine plumbing, electrical, roofing, and structural repairs."
+  },
+  {
+    "account_number": "6200",
+    "name": "Weather Events",
+    "account_type": "EXPENSE",
+    "current_balance_yn": "N",
+    "description": "Hurricane preparation, storm cleanup, and snow removal emergency expenditures."
+  },
+  {
+    "account_number": "6300",
+    "name": "Supplies Expense",
+    "account_type": "EXPENSE",
+    "current_balance_yn": "N",
+    "description": "Non-capitalized operating supplies, locks, smoke detectors, and air filters."
+  },
+  {
+    "account_number": "6400",
+    "name": "Utilities: Electric",
+    "account_type": "EXPENSE",
+    "current_balance_yn": "N",
+    "description": "Electric power utility bills for vacant units and common areas."
+  },
+  {
+    "account_number": "6500",
+    "name": "Utilities: Gas",
+    "account_type": "EXPENSE",
+    "current_balance_yn": "N",
+    "description": "Natural gas and propane utilities."
+  },
+  {
+    "account_number": "6600",
+    "name": "Utilities: Irrigation",
+    "account_type": "EXPENSE",
+    "current_balance_yn": "N",
+    "description": "Sprinkler and irrigation water utility disbursements."
+  },
+  {
+    "account_number": "6700",
+    "name": "Utilities: Telephone",
+    "account_type": "EXPENSE",
+    "current_balance_yn": "N",
+    "description": "Office phone, security dialers, and internet connectivity services."
+  },
+  {
+    "account_number": "6800",
+    "name": "Utilities: Water/Sewer/Trash",
+    "account_type": "EXPENSE",
+    "current_balance_yn": "N",
+    "description": "Municipal water, sanitary sewer, and dumpster trash collection services."
+  }
+]

@@ -1,0 +1,1068 @@
+{
+  "adapter": "oracle->postgres",
+  "db": "pdb22",
+  "owner": "RNTMGR2",
+  "summary": {
+    "total_objects": 708,
+    "total_columns": 2430,
+    "total_plsql_lines": 24864,
+    "invalid_object_count": 9,
+    "db_link_count": 0,
+    "base_cost": 462.2,
+    "construct_cost": 1867.9,
+    "datatype_cost": 63.0,
+    "dblink_cost": 0.0,
+    "total_cost_units": 2393.1,
+    "complexity_level": "C-5",
+    "complexity_description": "High complexity (multi-phase modernization / subsystem decomposition recommended)",
+    "estimated_db_effort_days": 239.3
+  },
+  "object_breakdown": [
+    {
+      "object_type": "INDEX",
+      "count": 272,
+      "unit_cost": 0.1,
+      "subtotal_cost": 27.2
+    },
+    {
+      "object_type": "MATERIALIZED VIEW",
+      "count": 7,
+      "unit_cost": 3.0,
+      "subtotal_cost": 21.0
+    },
+    {
+      "object_type": "PACKAGE",
+      "count": 74,
+      "unit_cost": 1.0,
+      "subtotal_cost": 74.0
+    },
+    {
+      "object_type": "PACKAGE BODY",
+      "count": 74,
+      "unit_cost": 3.0,
+      "subtotal_cost": 222.0
+    },
+    {
+      "object_type": "PROCEDURE",
+      "count": 1,
+      "unit_cost": 2.0,
+      "subtotal_cost": 2.0
+    },
+    {
+      "object_type": "SEQUENCE",
+      "count": 51,
+      "unit_cost": 0.1,
+      "subtotal_cost": 5.1
+    },
+    {
+      "object_type": "TABLE",
+      "count": 149,
+      "unit_cost": 0.1,
+      "subtotal_cost": 14.9
+    },
+    {
+      "object_type": "TYPE",
+      "count": 16,
+      "unit_cost": 2.0,
+      "subtotal_cost": 32.0
+    },
+    {
+      "object_type": "VIEW",
+      "count": 64,
+      "unit_cost": 1.0,
+      "subtotal_cost": 64.0
+    }
+  ],
+  "datatype_counts": {
+    "NUMBER": 1291,
+    "VARCHAR2": 1015,
+    "DATE": 75,
+    "SDO_GEOMETRY": 16,
+    "CLOB": 15,
+    "BLOB": 7,
+    "CHAR": 3,
+    "XMLTYPE": 3,
+    "FLOAT": 3,
+    "ROWID": 2
+  },
+  "datatype_risks": [
+    {
+      "table": "DR$PR_PROPERTIES_CTX$K",
+      "column": "TEXTKEY",
+      "source_type": "ROWID",
+      "target_type": "text",
+      "risk": "high",
+      "note": "Oracle ROWID has no stable equivalent in PostgreSQL; replace with surrogate/primary key."
+    },
+    {
+      "table": "DR$PR_PROPERTIES_CTX$U",
+      "column": "RID",
+      "source_type": "ROWID",
+      "target_type": "text",
+      "risk": "high",
+      "note": "Oracle ROWID has no stable equivalent in PostgreSQL; replace with surrogate/primary key."
+    },
+    {
+      "table": "MLS_LISTINGS",
+      "column": "GEO_LOCATION",
+      "source_type": "SDO_GEOMETRY",
+      "target_type": "geometry",
+      "risk": "high",
+      "note": "Requires PostGIS extension."
+    },
+    {
+      "table": "MLS_LISTINGS_ARCHIVE",
+      "column": "GEO_LOCATION",
+      "source_type": "SDO_GEOMETRY",
+      "target_type": "geometry",
+      "risk": "high",
+      "note": "Requires PostGIS extension."
+    },
+    {
+      "table": "MLS_RETS_RESPONSES",
+      "column": "RESPONSE",
+      "source_type": "XMLTYPE",
+      "target_type": "xml",
+      "risk": "high",
+      "note": "Verify XML functions (EXTRACTVALUE/XMLTABLE) or consider migrating to jsonb."
+    },
+    {
+      "table": "PR_COMMERCIAL_PROPERTIES_V",
+      "column": "GEO_LOCATION",
+      "source_type": "SDO_GEOMETRY",
+      "target_type": "geometry",
+      "risk": "high",
+      "note": "Requires PostGIS extension."
+    },
+    {
+      "table": "PR_COMMERCIAL_PROPERTIES_V",
+      "column": "GEO_COORDINATES",
+      "source_type": "SDO_GEOMETRY",
+      "target_type": "geometry",
+      "risk": "high",
+      "note": "Requires PostGIS extension."
+    },
+    {
+      "table": "PR_GEO",
+      "column": "GEOM",
+      "source_type": "SDO_GEOMETRY",
+      "target_type": "geometry",
+      "risk": "high",
+      "note": "Requires PostGIS extension."
+    },
+    {
+      "table": "PR_GEO",
+      "column": "GEOM_POINT",
+      "source_type": "SDO_GEOMETRY",
+      "target_type": "geometry",
+      "risk": "high",
+      "note": "Requires PostGIS extension."
+    },
+    {
+      "table": "PR_GEO_STAGE",
+      "column": "GEOM",
+      "source_type": "SDO_GEOMETRY",
+      "target_type": "geometry",
+      "risk": "high",
+      "note": "Requires PostGIS extension."
+    },
+    {
+      "table": "PR_GEO_STAGE",
+      "column": "GEOM_POINT",
+      "source_type": "SDO_GEOMETRY",
+      "target_type": "geometry",
+      "risk": "high",
+      "note": "Requires PostGIS extension."
+    },
+    {
+      "table": "PR_LOCATIONS",
+      "column": "GEO_LOCATION",
+      "source_type": "SDO_GEOMETRY",
+      "target_type": "geometry",
+      "risk": "high",
+      "note": "Requires PostGIS extension."
+    },
+    {
+      "table": "PR_LOCATIONS_TMP",
+      "column": "GEO_LOCATION",
+      "source_type": "SDO_GEOMETRY",
+      "target_type": "geometry",
+      "risk": "high",
+      "note": "Requires PostGIS extension."
+    },
+    {
+      "table": "PR_PROPERTIES",
+      "column": "GEO_LOCATION",
+      "source_type": "SDO_GEOMETRY",
+      "target_type": "geometry",
+      "risk": "high",
+      "note": "Requires PostGIS extension."
+    },
+    {
+      "table": "PR_PROPERTIES",
+      "column": "GEO_COORDINATES",
+      "source_type": "SDO_GEOMETRY",
+      "target_type": "geometry",
+      "risk": "high",
+      "note": "Requires PostGIS extension."
+    },
+    {
+      "table": "PR_PROPERTIES_V",
+      "column": "GEO_LOCATION",
+      "source_type": "SDO_GEOMETRY",
+      "target_type": "geometry",
+      "risk": "high",
+      "note": "Requires PostGIS extension."
+    },
+    {
+      "table": "RNT_CITIES",
+      "column": "GEO_LOCATION",
+      "source_type": "SDO_GEOMETRY",
+      "target_type": "geometry",
+      "risk": "high",
+      "note": "Requires PostGIS extension."
+    },
+    {
+      "table": "RNT_CITIES_V",
+      "column": "GEO_LOCATION",
+      "source_type": "SDO_GEOMETRY",
+      "target_type": "geometry",
+      "risk": "high",
+      "note": "Requires PostGIS extension."
+    },
+    {
+      "table": "RNT_MENU_PAGES",
+      "column": "HEADER_CONTENT",
+      "source_type": "XMLTYPE",
+      "target_type": "xml",
+      "risk": "high",
+      "note": "Verify XML functions (EXTRACTVALUE/XMLTABLE) or consider migrating to jsonb."
+    },
+    {
+      "table": "RNT_MENU_PAGES_V",
+      "column": "HEADER_CONTENT",
+      "source_type": "XMLTYPE",
+      "target_type": "xml",
+      "risk": "high",
+      "note": "Verify XML functions (EXTRACTVALUE/XMLTABLE) or consider migrating to jsonb."
+    },
+    {
+      "table": "RNT_ZIPCODES",
+      "column": "GEO_LOCATION",
+      "source_type": "SDO_GEOMETRY",
+      "target_type": "geometry",
+      "risk": "high",
+      "note": "Requires PostGIS extension."
+    }
+  ],
+  "construct_findings": [
+    {
+      "construct": "TYPE_ROWTYPE",
+      "category": "plsql_type",
+      "severity": "low",
+      "occurrences": 3508,
+      "cost": 1218.5,
+      "hint": "Verify %TYPE/%ROWTYPE anchors exist in PostgreSQL or replace with explicit types.",
+      "objects": [
+        "MLS_BREVARD_PKG",
+        "MLS_LISTINGS_PKG",
+        "MLS_MFR_PKG",
+        "MLS_PHOTOS_PKG",
+        "MLS_PRICE_RANGES_PKG",
+        "MLS_SEF_PKG",
+        "PROP_CLASS_PKG",
+        "PR_CORPORATE_LOCATIONS_PKG",
+        "PR_CORPORATE_POSITIONS_PKG",
+        "PR_CORPORATIONS_PKG",
+        "PR_LOCATIONS_PKG",
+        "PR_PRINCIPALS_PKG",
+        "PR_PRINCIPAL_LOCATIONS_PKG",
+        "PR_PROPERTIES_PKG",
+        "PR_PROPERTY_LISTINGS_PKG",
+        "PR_PROPERTY_USAGE_PKG",
+        "PR_PROP_CLASS_PKG",
+        "PR_PUMS_PKG",
+        "PR_RECORDS_PKG",
+        "PR_RETS_PKG",
+        "PR_VALUES_PKG",
+        "RNT_ACCOUNTS_PAYABLE_PKG",
+        "RNT_ACCOUNTS_PKG",
+        "RNT_ACCOUNTS_RECEIVABLE_PKG",
+        "RNT_ACCOUNT_BALANCES_PKG",
+        "RNT_ACCOUNT_PERIODS_PKG",
+        "RNT_ACCOUNT_TYPES_PKG",
+        "RNT_AGREEMENT_ACTIONS_PKG",
+        "RNT_BUSINESS_UNITS_PKG",
+        "RNT_BU_SUPPLIERS_PKG",
+        "RNT_CITIES_PKG",
+        "RNT_CITY_MEDIA_PKG",
+        "RNT_DEFAULT_ACCOUNTS_PKG",
+        "RNT_DEFAULT_PT_RULES_PKG",
+        "RNT_DOC_TEMPLATES_PKG",
+        "RNT_ERROR_DESCRIPTION_PKG",
+        "RNT_EXPENSE_ITEMS_PKG",
+        "RNT_LEADS_PKG",
+        "RNT_LEAD_ACTIONS_PKG",
+        "RNT_LEDGER_ENTRIES_PKG",
+        "RNT_LEDGER_PKG",
+        "RNT_LOANS_PKG",
+        "RNT_MENUS_PKG",
+        "RNT_MENU_LINKS_PKG",
+        "RNT_MENU_PAGES_PKG",
+        "RNT_MENU_ROLES_PKG",
+        "RNT_MENU_TABS_PKG",
+        "RNT_PAYMENTS_PKG",
+        "RNT_PAYMENT_ALLOCATIONS_PKG",
+        "RNT_PEOPLE_PKG",
+        "RNT_PROPERTIES_PKG",
+        "RNT_PROPERTY_ESTIMATES_PKG",
+        "RNT_PROPERTY_EXPENSES_PKG",
+        "RNT_PROPERTY_LINKS_PKG",
+        "RNT_PROPERTY_PHOTOS_PKG",
+        "RNT_PROPERTY_UNITS_PKG",
+        "RNT_PROPERTY_VALUE_PKG",
+        "RNT_PT_RULES_PKG",
+        "RNT_REGIONS_PKG",
+        "RNT_SECTION8_OFFICES_PKG",
+        "RNT_SUMMARY_PKG",
+        "RNT_SUPPLIERS_ALL_PKG",
+        "RNT_TENANCY_AGREEMENT_PKG",
+        "RNT_TENANT_PKG",
+        "RNT_USERS_PKG",
+        "RNT_USER_ASSIGNMENTS_PKG",
+        "RNT_USER_MAIL_PKG",
+        "SUNBIZ_PKG"
+      ],
+      "service_extraction_candidate": false
+    },
+    {
+      "construct": "UTL_HTTP",
+      "category": "network_io",
+      "severity": "high",
+      "occurrences": 95,
+      "cost": 190.0,
+      "hint": "Move outbound HTTP calls out of the database into an application service.",
+      "objects": [
+        "MLS_BREVARD_PKG",
+        "MLS_MFR_PKG",
+        "MLS_SEF_PKG",
+        "PR_RETS_PKG"
+      ],
+      "service_extraction_candidate": true
+    },
+    {
+      "construct": "DBMS_LOB",
+      "category": "oracle_pkg",
+      "severity": "high",
+      "occurrences": 31,
+      "cost": 93.0,
+      "hint": "Replace with PostgreSQL bytea/text functions or object storage.",
+      "objects": [
+        "MLS_PRICE_RANGES_PKG",
+        "PR_RETS_PKG",
+        "RNT_AGREEMENT_ACTIONS_V",
+        "RNT_CITIES_V",
+        "RNT_DOC_TEMPLATES_V",
+        "RNT_MENU_PAGES_V",
+        "RNT_REGIONS_V"
+      ],
+      "service_extraction_candidate": true
+    },
+    {
+      "construct": "OUTER_JOIN_PLUS",
+      "category": "oracle_sql",
+      "severity": "high",
+      "occurrences": 46,
+      "cost": 92.0,
+      "hint": "Convert legacy (+) outer join syntax to explicit ANSI LEFT/RIGHT OUTER JOIN.",
+      "objects": [
+        "RNT_ACCOUNTS_RECEIVABLE_PKG",
+        "RNT_LEDGER_PKG",
+        "RNT_PAYMENTS_PKG",
+        "RNT_PROPERTIES_PKG",
+        "RNT_SUMMARY_PKG",
+        "RNT_ACCNTS_PAYABLE_EXPENSES_V",
+        "RNT_ACCOUNTS_PAYABLE_PROP_V",
+        "RNT_ACCOUNTS_RECEIVABLE_PROP_V",
+        "RNT_CITIES_V",
+        "RNT_PROPERTY_EXPENSES_V",
+        "RNT_SUPPLIERS_V",
+        "RNT_TENANCY_AGREEMENT_V",
+        "RNT_TENANT_V",
+        "RNT_TENANT_V1"
+      ],
+      "service_extraction_candidate": false
+    },
+    {
+      "construct": "UTL_SMTP_MAIL",
+      "category": "network_io",
+      "severity": "high",
+      "occurrences": 14,
+      "cost": 70.0,
+      "hint": "Move email dispatch out of PL/SQL into an application notification service.",
+      "objects": [
+        "RNT_USER_MAIL_PKG",
+        "SEND_MAIL"
+      ],
+      "service_extraction_candidate": true
+    },
+    {
+      "construct": "DB_LINK_REF",
+      "category": "db_link",
+      "severity": "high",
+      "occurrences": 15,
+      "cost": 60.0,
+      "hint": "Replace Oracle DB Links with API integration, postgres_fdw, or merged bounded context.",
+      "objects": [
+        "MLS_BREVARD_PKG",
+        "MLS_MFR_PKG",
+        "MLS_SEF_PKG",
+        "PR_RETS_PKG",
+        "RNT_ACCOUNTS_RECEIVABLE_PKG",
+        "RNT_SYS_CHECKSUM_REC_PKG",
+        "RNT_USERS_PKG",
+        "RNT_USER_MAIL_PKG"
+      ],
+      "service_extraction_candidate": true
+    },
+    {
+      "construct": "PIPELINED",
+      "category": "plsql_func",
+      "severity": "medium",
+      "occurrences": 14,
+      "cost": 42.0,
+      "hint": "Convert to PostgreSQL RETURNS SETOF / RETURN NEXT.",
+      "objects": [
+        "PR_GEO_UTILS_PKG",
+        "PR_RECORDS_PKG",
+        "RNT_GEN_PERIODS_PKG"
+      ],
+      "service_extraction_candidate": false
+    },
+    {
+      "construct": "NVL_NVL2",
+      "category": "oracle_sql",
+      "severity": "low",
+      "occurrences": 129,
+      "cost": 27.0,
+      "hint": "Convert NVL to COALESCE and NVL2 to CASE WHEN ... IS NOT NULL.",
+      "objects": [
+        "MLS_MFR_PKG",
+        "MLS_SEF_PKG",
+        "PR_LOCATIONS_PKG",
+        "PR_PUMS_PKG",
+        "PR_RECORDS_PKG",
+        "RNT_ACCOUNTS_PAYABLE_PKG",
+        "RNT_ACCOUNTS_RECEIVABLE_PKG",
+        "RNT_AGREEMENT_ACTIONS_PKG",
+        "RNT_EXPENSE_ITEMS_PKG",
+        "RNT_LEDGER_PKG",
+        "RNT_LOANS_PKG",
+        "RNT_PAYMENTS_PKG",
+        "RNT_SUMMARY_PKG",
+        "SUNBIZ_PKG",
+        "RNT_PAYMENTS_V"
+      ],
+      "service_extraction_candidate": false
+    },
+    {
+      "construct": "SYSDATE",
+      "category": "oracle_sql",
+      "severity": "low",
+      "occurrences": 72,
+      "cost": 14.4,
+      "hint": "Replace with CURRENT_TIMESTAMP or clock_timestamp() depending on transaction semantics.",
+      "objects": [
+        "MLS_BREVARD_PKG",
+        "MLS_MFR_PKG",
+        "MLS_PRICE_RANGES_PKG",
+        "MLS_SEF_PKG",
+        "PR_RECORDS_PKG",
+        "PR_RETS_PKG",
+        "RNT_ACCOUNTS_RECEIVABLE_PKG",
+        "RNT_LEDGER_PKG",
+        "RNT_PAYMENTS_PKG",
+        "RNT_PROPERTIES_PKG",
+        "RNT_PROPERTY_LINKS_PKG",
+        "RNT_SUMMARY_PKG",
+        "RNT_TENANCY_AGREEMENT_PKG",
+        "RNT_USERS_PKG",
+        "RNT_USER_MAIL_PKG",
+        "SEND_MAIL"
+      ],
+      "service_extraction_candidate": false
+    },
+    {
+      "construct": "ROWNUM",
+      "category": "oracle_sql",
+      "severity": "medium",
+      "occurrences": 10,
+      "cost": 10.0,
+      "hint": "Replace with LIMIT/OFFSET or ROW_NUMBER() OVER (...).",
+      "objects": [
+        "MLS_BREVARD_PKG",
+        "MLS_MFR_PKG",
+        "MLS_SEF_PKG",
+        "PR_LOCATIONS_PKG",
+        "PR_RECORDS_PKG"
+      ],
+      "service_extraction_candidate": false
+    },
+    {
+      "construct": "BULK_COLLECT_FORALL",
+      "category": "plsql_perf",
+      "severity": "medium",
+      "occurrences": 4,
+      "cost": 10.0,
+      "hint": "Replace with set-based SQL, UNNEST arrays, or batch application writes.",
+      "objects": [
+        "PR_RECORDS_PKG",
+        "SUNBIZ_PKG"
+      ],
+      "service_extraction_candidate": false
+    },
+    {
+      "construct": "DBMS_OUTPUT",
+      "category": "oracle_pkg",
+      "severity": "low",
+      "occurrences": 19,
+      "cost": 9.5,
+      "hint": "Replace with RAISE NOTICE or application logging.",
+      "objects": [
+        "PR_LOCATIONS_PKG",
+        "PR_PUMS_PKG",
+        "PR_RETS_PKG",
+        "RNT_ACCOUNTS_RECEIVABLE_PKG",
+        "RNT_LEDGER_PKG",
+        "RNT_SYS_CHECKSUM_REC_PKG",
+        "SUNBIZ_PKG"
+      ],
+      "service_extraction_candidate": false
+    },
+    {
+      "construct": "EXECUTE_IMMEDIATE",
+      "category": "dynamic_sql",
+      "severity": "medium",
+      "occurrences": 4,
+      "cost": 8.0,
+      "hint": "Convert to PL/pgSQL EXECUTE ... USING with bind parameters.",
+      "objects": [
+        "MLS_PRICE_RANGES_PKG",
+        "PR_RECORDS_PKG"
+      ],
+      "service_extraction_candidate": false
+    },
+    {
+      "construct": "CONNECT_BY",
+      "category": "hierarchical_sql",
+      "severity": "high",
+      "occurrences": 2,
+      "cost": 6.0,
+      "hint": "Rewrite using ANSI/PostgreSQL WITH RECURSIVE CTE.",
+      "objects": [
+        "RNT_SUMMARY_PKG",
+        "RNT_BUSINESS_UNITS_V"
+      ],
+      "service_extraction_candidate": false
+    },
+    {
+      "construct": "FROM_DUAL",
+      "category": "oracle_sql",
+      "severity": "low",
+      "occurrences": 50,
+      "cost": 5.0,
+      "hint": "Omit FROM DUAL in PostgreSQL SELECT statements.",
+      "objects": [
+        "MLS_MFR_PKG",
+        "MLS_SEF_PKG",
+        "RNT_ACCOUNTS_PAYABLE_PKG",
+        "RNT_ACCOUNTS_RECEIVABLE_PKG",
+        "RNT_AGREEMENT_ACTIONS_PKG",
+        "RNT_BUSINESS_UNITS_PKG",
+        "RNT_BU_SUPPLIERS_PKG",
+        "RNT_ERROR_DESCRIPTION_PKG",
+        "RNT_EXPENSE_ITEMS_PKG",
+        "RNT_LOANS_PKG",
+        "RNT_PAYMENTS_PKG",
+        "RNT_PEOPLE_PKG",
+        "RNT_PROPERTIES_PKG",
+        "RNT_PROPERTY_ESTIMATES_PKG",
+        "RNT_PROPERTY_UNITS_PKG",
+        "RNT_PROPERTY_VALUE_PKG",
+        "RNT_SECTION8_OFFICES_PKG",
+        "RNT_SUMMARY_PKG",
+        "RNT_SUPPLIERS_ALL_PKG",
+        "RNT_TENANCY_AGREEMENT_PKG",
+        "RNT_TENANT_PKG",
+        "RNT_USERS_PKG",
+        "RNT_USER_ASSIGNMENTS_PKG"
+      ],
+      "service_extraction_candidate": false
+    },
+    {
+      "construct": "EXCEPTION_PRAGMA",
+      "category": "plsql_err",
+      "severity": "medium",
+      "occurrences": 3,
+      "cost": 4.5,
+      "hint": "Map Oracle ORA- error codes to PostgreSQL SQLSTATE codes.",
+      "objects": [
+        "RNT_PROPERTIES_PKG",
+        "RNT_SYS_CHECKSUM_REC_PKG"
+      ],
+      "service_extraction_candidate": false
+    },
+    {
+      "construct": "MERGE_INTO",
+      "category": "oracle_sql",
+      "severity": "medium",
+      "occurrences": 2,
+      "cost": 4.0,
+      "hint": "Verify against PostgreSQL 15+ MERGE or INSERT ... ON CONFLICT.",
+      "objects": [
+        "PR_PUMS_PKG",
+        "SUNBIZ_PKG"
+      ],
+      "service_extraction_candidate": false
+    },
+    {
+      "construct": "DECODE",
+      "category": "oracle_sql",
+      "severity": "low",
+      "occurrences": 6,
+      "cost": 3.0,
+      "hint": "Convert to standard SQL CASE WHEN expression.",
+      "objects": [
+        "RNT_ACCOUNTS_RECEIVABLE_PKG",
+        "RNT_PAYMENTS_PKG",
+        "RNT_SUMMARY_PKG"
+      ],
+      "service_extraction_candidate": false
+    },
+    {
+      "construct": "START_WITH",
+      "category": "hierarchical_sql",
+      "severity": "medium",
+      "occurrences": 1,
+      "cost": 1.0,
+      "hint": "Move START WITH predicate into recursive CTE anchor query.",
+      "objects": [
+        "RNT_BUSINESS_UNITS_V"
+      ],
+      "service_extraction_candidate": false
+    }
+  ],
+  "service_extraction_candidates": [
+    {
+      "object": "PR_RECORDS_PKG",
+      "type": "PACKAGE BODY",
+      "lines": 1959,
+      "reasons": [
+        "Large procedural unit (1959 LOC)"
+      ]
+    },
+    {
+      "object": "RNT_LEDGER_PKG",
+      "type": "PACKAGE BODY",
+      "lines": 1187,
+      "reasons": [
+        "Large procedural unit (1187 LOC)"
+      ]
+    },
+    {
+      "object": "RNT_ACCOUNTS_RECEIVABLE_PKG",
+      "type": "PACKAGE BODY",
+      "lines": 1070,
+      "reasons": [
+        "Large procedural unit (1070 LOC)"
+      ]
+    },
+    {
+      "object": "PR_PUMS_PKG",
+      "type": "PACKAGE BODY",
+      "lines": 1008,
+      "reasons": [
+        "Large procedural unit (1008 LOC)"
+      ]
+    },
+    {
+      "object": "MLS_MFR_PKG",
+      "type": "PACKAGE BODY",
+      "lines": 937,
+      "reasons": [
+        "UTL_HTTP (1x)",
+        "DB_LINK_REF (3x)"
+      ]
+    },
+    {
+      "object": "MLS_SEF_PKG",
+      "type": "PACKAGE BODY",
+      "lines": 878,
+      "reasons": [
+        "UTL_HTTP (1x)",
+        "DB_LINK_REF (3x)"
+      ]
+    },
+    {
+      "object": "MLS_BREVARD_PKG",
+      "type": "PACKAGE BODY",
+      "lines": 827,
+      "reasons": [
+        "UTL_HTTP (5x)",
+        "DB_LINK_REF (3x)"
+      ]
+    },
+    {
+      "object": "RNT_PROPERTIES_PKG",
+      "type": "PACKAGE BODY",
+      "lines": 818,
+      "reasons": [
+        "Large procedural unit (818 LOC)"
+      ]
+    },
+    {
+      "object": "RNT_ACCOUNTS_PAYABLE_PKG",
+      "type": "PACKAGE BODY",
+      "lines": 594,
+      "reasons": [
+        "Large procedural unit (594 LOC)"
+      ]
+    },
+    {
+      "object": "PR_RETS_PKG",
+      "type": "PACKAGE BODY",
+      "lines": 518,
+      "reasons": [
+        "DBMS_LOB (3x)",
+        "UTL_HTTP (82x)",
+        "DB_LINK_REF (1x)"
+      ]
+    },
+    {
+      "object": "SUNBIZ_PKG",
+      "type": "PACKAGE BODY",
+      "lines": 460,
+      "reasons": [
+        "Large procedural unit (460 LOC)"
+      ]
+    },
+    {
+      "object": "RNT_USERS_PKG",
+      "type": "PACKAGE BODY",
+      "lines": 458,
+      "reasons": [
+        "DB_LINK_REF (1x)"
+      ]
+    },
+    {
+      "object": "RNT_SUMMARY_PKG",
+      "type": "PACKAGE BODY",
+      "lines": 455,
+      "reasons": [
+        "Large procedural unit (455 LOC)"
+      ]
+    },
+    {
+      "object": "PR_LOCATIONS_PKG",
+      "type": "PACKAGE BODY",
+      "lines": 445,
+      "reasons": [
+        "Large procedural unit (445 LOC)"
+      ]
+    },
+    {
+      "object": "RNT_TENANCY_AGREEMENT_PKG",
+      "type": "PACKAGE BODY",
+      "lines": 424,
+      "reasons": [
+        "Large procedural unit (424 LOC)"
+      ]
+    },
+    {
+      "object": "MLS_PRICE_RANGES_PKG",
+      "type": "PACKAGE BODY",
+      "lines": 389,
+      "reasons": [
+        "DBMS_LOB (12x)"
+      ]
+    },
+    {
+      "object": "RNT_AGREEMENT_ACTIONS_PKG",
+      "type": "PACKAGE BODY",
+      "lines": 265,
+      "reasons": [
+        "Large procedural unit (265 LOC)"
+      ]
+    },
+    {
+      "object": "RNT_PROPERTY_ESTIMATES_PKG",
+      "type": "PACKAGE BODY",
+      "lines": 264,
+      "reasons": [
+        "Large procedural unit (264 LOC)"
+      ]
+    },
+    {
+      "object": "RNT_PEOPLE_PKG",
+      "type": "PACKAGE BODY",
+      "lines": 259,
+      "reasons": [
+        "Large procedural unit (259 LOC)"
+      ]
+    },
+    {
+      "object": "RNT_USER_MAIL_PKG",
+      "type": "PACKAGE",
+      "lines": 170,
+      "reasons": [
+        "DB_LINK_REF (2x)"
+      ]
+    },
+    {
+      "object": "RNT_ACCOUNTS_RECEIVABLE_PKG",
+      "type": "PACKAGE",
+      "lines": 149,
+      "reasons": [
+        "DB_LINK_REF (1x)"
+      ]
+    },
+    {
+      "object": "PR_RETS_PKG",
+      "type": "PACKAGE",
+      "lines": 129,
+      "reasons": [
+        "UTL_HTTP (6x)"
+      ]
+    },
+    {
+      "object": "RNT_USER_MAIL_PKG",
+      "type": "PACKAGE BODY",
+      "lines": 119,
+      "reasons": [
+        "UTL_SMTP_MAIL (4x)"
+      ]
+    },
+    {
+      "object": "RNT_SYS_CHECKSUM_REC_PKG",
+      "type": "PACKAGE BODY",
+      "lines": 82,
+      "reasons": [
+        "DB_LINK_REF (1x)"
+      ]
+    },
+    {
+      "object": "SEND_MAIL",
+      "type": "PROCEDURE",
+      "lines": 35,
+      "reasons": [
+        "UTL_SMTP_MAIL (10x)"
+      ]
+    },
+    {
+      "object": "RNT_CITIES_V",
+      "type": "VIEW",
+      "lines": 29,
+      "reasons": [
+        "DBMS_LOB (4x)"
+      ]
+    },
+    {
+      "object": "RNT_MENU_PAGES_V",
+      "type": "VIEW",
+      "lines": 21,
+      "reasons": [
+        "DBMS_LOB (4x)"
+      ]
+    },
+    {
+      "object": "RNT_AGREEMENT_ACTIONS_V",
+      "type": "VIEW",
+      "lines": 19,
+      "reasons": [
+        "DBMS_LOB (2x)"
+      ]
+    },
+    {
+      "object": "RNT_REGIONS_V",
+      "type": "VIEW",
+      "lines": 13,
+      "reasons": [
+        "DBMS_LOB (4x)"
+      ]
+    },
+    {
+      "object": "RNT_DOC_TEMPLATES_V",
+      "type": "VIEW",
+      "lines": 10,
+      "reasons": [
+        "DBMS_LOB (2x)"
+      ]
+    }
+  ],
+  "invalid_objects": [
+    {
+      "OBJECT_TYPE": "MATERIALIZED VIEW",
+      "OBJECT_NAME": "PR_COMMERCIAL_SALES_MV"
+    },
+    {
+      "OBJECT_TYPE": "MATERIALIZED VIEW",
+      "OBJECT_NAME": "PR_COMMERCIAL_SUMMARY_MV"
+    },
+    {
+      "OBJECT_TYPE": "MATERIALIZED VIEW",
+      "OBJECT_NAME": "PR_COUNTY_SUMMARY_MV"
+    },
+    {
+      "OBJECT_TYPE": "MATERIALIZED VIEW",
+      "OBJECT_NAME": "PR_LAND_SALES_MV"
+    },
+    {
+      "OBJECT_TYPE": "MATERIALIZED VIEW",
+      "OBJECT_NAME": "PR_LAND_SUMMARY_MV"
+    },
+    {
+      "OBJECT_TYPE": "MATERIALIZED VIEW",
+      "OBJECT_NAME": "PR_SALES_MV"
+    },
+    {
+      "OBJECT_TYPE": "MATERIALIZED VIEW",
+      "OBJECT_NAME": "PR_SALES_SUMMARY_MV"
+    },
+    {
+      "OBJECT_TYPE": "PACKAGE BODY",
+      "OBJECT_NAME": "PR_RETS_PKG"
+    },
+    {
+      "OBJECT_TYPE": "PACKAGE BODY",
+      "OBJECT_NAME": "RNT_USER_MAIL_PKG"
+    }
+  ],
+  "db_links": [],
+  "data_volumes": {
+    "total_rows": 497076,
+    "total_bytes": 2708733952,
+    "large_tables": [],
+    "medium_tables": [
+      {
+        "table": "RNT_ACCOUNTS_PAYABLE",
+        "rows": 29042,
+        "size_bytes": 369098752,
+        "size_human": "352.0 MB",
+        "has_lob": false
+      },
+      {
+        "table": "MLS_LISTINGS_ARCHIVE",
+        "rows": 0,
+        "size_bytes": 285212672,
+        "size_human": "272.0 MB",
+        "has_lob": false
+      },
+      {
+        "table": "PR_LOCATIONS",
+        "rows": 0,
+        "size_bytes": 268435456,
+        "size_human": "256.0 MB",
+        "has_lob": false
+      },
+      {
+        "table": "TMP_TAX_VALUES",
+        "rows": 0,
+        "size_bytes": 201326592,
+        "size_human": "192.0 MB",
+        "has_lob": false
+      },
+      {
+        "table": "PR_PROPERTIES",
+        "rows": 0,
+        "size_bytes": 201326592,
+        "size_human": "192.0 MB",
+        "has_lob": false
+      },
+      {
+        "table": "PR_PROPERTY_SALES",
+        "rows": 0,
+        "size_bytes": 184549376,
+        "size_human": "176.0 MB",
+        "has_lob": false
+      },
+      {
+        "table": "PR_CORPORATIONS",
+        "rows": 0,
+        "size_bytes": 142606336,
+        "size_human": "136.0 MB",
+        "has_lob": false
+      },
+      {
+        "table": "PR_PRINCIPALS",
+        "rows": 0,
+        "size_bytes": 134217728,
+        "size_human": "128.0 MB",
+        "has_lob": false
+      },
+      {
+        "table": "PR_PROPERTY_PHOTOS",
+        "rows": 0,
+        "size_bytes": 125829120,
+        "size_human": "120.0 MB",
+        "has_lob": false
+      },
+      {
+        "table": "PR_CORPORATE_POSITIONS",
+        "rows": 0,
+        "size_bytes": 117440512,
+        "size_human": "112.0 MB",
+        "has_lob": false
+      },
+      {
+        "table": "PR_CORPORATE_LOCATIONS",
+        "rows": 0,
+        "size_bytes": 109051904,
+        "size_human": "104.0 MB",
+        "has_lob": false
+      },
+      {
+        "table": "MLS_PHOTOS_ARCHIVE",
+        "rows": 0,
+        "size_bytes": 100663296,
+        "size_human": "96.0 MB",
+        "has_lob": false
+      },
+      {
+        "table": "PR_PRINCIPAL_LOCATIONS",
+        "rows": 0,
+        "size_bytes": 83886080,
+        "size_human": "80.0 MB",
+        "has_lob": false
+      },
+      {
+        "table": "PR_OWNERS",
+        "rows": 0,
+        "size_bytes": 75497472,
+        "size_human": "72.0 MB",
+        "has_lob": false
+      }
+    ],
+    "lob_tables": [
+      "DR$PR_PROPERTIES_CTX$I",
+      "DR$PR_PROPERTIES_CTX$R",
+      "MDRT_12936$",
+      "MDRT_12937$",
+      "MDRT_12938$",
+      "MDRT_12939$",
+      "MDRT_1293A$",
+      "MLS_RETS_RESPONSES",
+      "RNT_AGREEMENT_ACTIONS",
+      "RNT_AGREEMENT_ACTIONS_V",
+      "RNT_CITIES",
+      "RNT_CITIES_V",
+      "RNT_COUNTY_DESCRIPTIONS",
+      "RNT_DOC_TEMPLATES",
+      "RNT_DOC_TEMPLATES_V",
+      "RNT_MENU_PAGES",
+      "RNT_MENU_PAGES_V",
+      "RNT_REGIONS",
+      "RNT_REGIONS_V"
+    ],
+    "total_size_human": "2.52 GB"
+  }
+}

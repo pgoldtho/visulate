@@ -1,0 +1,32 @@
+# LibreOffice / OpenOffice lock files
+.~lock.*#
+.~lock.*
+~$*
+
+# OS temporary & metadata files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Node dependencies & logs
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python virtual environments & bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+
+# Environment files
+.env
+.env.local
+.env.*.local

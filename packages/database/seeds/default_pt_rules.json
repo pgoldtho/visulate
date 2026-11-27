@@ -1,0 +1,597 @@
+[
+  {
+    "payment_type_name": "Advertising",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled - Bill received",
+    "debit_account": "5000",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Advertising",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid - Payment disbursed",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Auto and Travel",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "5100",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Auto and Travel",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Building Purchase",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "1750",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Building Purchase",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Building Purchase",
+    "transaction_type": "DEP",
+    "transaction_desc": "Building Depreciation",
+    "debit_account": "1780",
+    "credit_account": "1750"
+  },
+  {
+    "payment_type_name": "Building Sale",
+    "transaction_type": "ARS",
+    "transaction_desc": "AR Scheduled",
+    "debit_account": "1200",
+    "credit_account": "1750"
+  },
+  {
+    "payment_type_name": "Building Sale",
+    "transaction_type": "ARP",
+    "transaction_desc": "AR Paid",
+    "debit_account": "1100",
+    "credit_account": "1200"
+  },
+  {
+    "payment_type_name": "Capital Improvements",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "1300",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Capital Improvements",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Capital Improvements",
+    "transaction_type": "DEP",
+    "transaction_desc": "Improvement Depreciation",
+    "debit_account": "1780",
+    "credit_account": "1300"
+  },
+  {
+    "payment_type_name": "Carpet Installation/Replacement",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "1300",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Carpet Installation/Replacement",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Cleaning/Janitorial Expense",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "5200",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Cleaning/Janitorial Expense",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Commissions",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "5300",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Commissions",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Equipment Purchase",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "1800",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Equipment Purchase",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Equipment Purchase",
+    "transaction_type": "DEP",
+    "transaction_desc": "Equipment Depreciation",
+    "debit_account": "1880",
+    "credit_account": "1800"
+  },
+  {
+    "payment_type_name": "Insurance",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "5400",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Insurance",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Inventory Purchase",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "1500",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Inventory Purchase",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Landscaping",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "1300",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Landscaping",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Land Purchase",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "1700",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Land Purchase",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Land Sale",
+    "transaction_type": "ARS",
+    "transaction_desc": "AR Scheduled",
+    "debit_account": "1200",
+    "credit_account": "1700"
+  },
+  {
+    "payment_type_name": "Land Sale",
+    "transaction_type": "ARP",
+    "transaction_desc": "AR Paid",
+    "debit_account": "1100",
+    "credit_account": "1200"
+  },
+  {
+    "payment_type_name": "Late Fee Income",
+    "transaction_type": "ARS",
+    "transaction_desc": "AR Scheduled",
+    "debit_account": "1200",
+    "credit_account": "4110"
+  },
+  {
+    "payment_type_name": "Late Fee Income",
+    "transaction_type": "ARP",
+    "transaction_desc": "AR Paid",
+    "debit_account": "1100",
+    "credit_account": "1200"
+  },
+  {
+    "payment_type_name": "Lawn Service",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "5600",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Lawn Service",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Legal and Other Fees",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "5900",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Legal and Other Fees",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Management Fees",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "5700",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Management Fees",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Mortgage Interest Income",
+    "transaction_type": "ARS",
+    "transaction_desc": "AR Scheduled",
+    "debit_account": "1200",
+    "credit_account": "4130"
+  },
+  {
+    "payment_type_name": "Mortgage Interest Income",
+    "transaction_type": "ARP",
+    "transaction_desc": "AR Paid",
+    "debit_account": "1100",
+    "credit_account": "1200"
+  },
+  {
+    "payment_type_name": "Mortgage Interest Payment",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "5500",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Mortgage Interest Payment",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Mortgage Payment P&I Income",
+    "transaction_type": "ARS",
+    "transaction_desc": "AR Scheduled",
+    "debit_account": "1200",
+    "credit_account": "4140"
+  },
+  {
+    "payment_type_name": "Mortgage Payment P&I Income",
+    "transaction_type": "ARP",
+    "transaction_desc": "AR Paid",
+    "debit_account": "1100",
+    "credit_account": "1200"
+  },
+  {
+    "payment_type_name": "Mortgage Payment P&I",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "1150",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Mortgage Payment P&I",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Mortgage Payment Principal Income",
+    "transaction_type": "ARS",
+    "transaction_desc": "AR Scheduled",
+    "debit_account": "1200",
+    "credit_account": "1900"
+  },
+  {
+    "payment_type_name": "Mortgage Payment Principal Income",
+    "transaction_type": "ARP",
+    "transaction_desc": "AR Paid",
+    "debit_account": "1100",
+    "credit_account": "1200"
+  },
+  {
+    "payment_type_name": "Mortgage Payment Principal",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "1130",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Mortgage Payment Principal",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Other Income",
+    "transaction_type": "ARS",
+    "transaction_desc": "AR Scheduled",
+    "debit_account": "1200",
+    "credit_account": "4120"
+  },
+  {
+    "payment_type_name": "Other Income",
+    "transaction_type": "ARP",
+    "transaction_desc": "AR Paid",
+    "debit_account": "1100",
+    "credit_account": "1200"
+  },
+  {
+    "payment_type_name": "Interest Income",
+    "transaction_type": "ARS",
+    "transaction_desc": "AR Scheduled",
+    "debit_account": "1200",
+    "credit_account": "4130"
+  },
+  {
+    "payment_type_name": "Interest Income",
+    "transaction_type": "ARP",
+    "transaction_desc": "AR Paid",
+    "debit_account": "1100",
+    "credit_account": "1200"
+  },
+  {
+    "payment_type_name": "Interest Expense",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "5500",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Interest Expense",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Pest Control",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "5800",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Pest Control",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Property Taxes",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "6000",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Property Taxes",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Rental Income",
+    "transaction_type": "ARS",
+    "transaction_desc": "AR Scheduled",
+    "debit_account": "1200",
+    "credit_account": "4100"
+  },
+  {
+    "payment_type_name": "Rental Income",
+    "transaction_type": "ARP",
+    "transaction_desc": "AR Paid",
+    "debit_account": "1100",
+    "credit_account": "1200"
+  },
+  {
+    "payment_type_name": "Repairs & Maintenance",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "6100",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Repairs & Maintenance",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Section 8 Rent",
+    "transaction_type": "ARS",
+    "transaction_desc": "AR Scheduled",
+    "debit_account": "1200",
+    "credit_account": "4100"
+  },
+  {
+    "payment_type_name": "Section 8 Rent",
+    "transaction_type": "ARP",
+    "transaction_desc": "AR Paid",
+    "debit_account": "1100",
+    "credit_account": "1200"
+  },
+  {
+    "payment_type_name": "Security Deposit",
+    "transaction_type": "ARS",
+    "transaction_desc": "AR Scheduled - Deposit billed",
+    "debit_account": "1200",
+    "credit_account": "2300"
+  },
+  {
+    "payment_type_name": "Security Deposit",
+    "transaction_type": "ARP",
+    "transaction_desc": "AR Paid - Deposit collected",
+    "debit_account": "1100",
+    "credit_account": "1200"
+  },
+  {
+    "payment_type_name": "Security Deposit",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled - Deposit refund scheduled",
+    "debit_account": "2300",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Security Deposit",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid - Deposit refunded",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Weather Event",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "6200",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Weather Event",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Supplies",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "6300",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Supplies",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Utilities: Electricity",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "6400",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Utilities: Electricity",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Utilities: Gas",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "6500",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Utilities: Gas",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Utilities: Irrigation",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "6600",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Utilities: Irrigation",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Utilities: Telephone",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "6700",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Utilities: Telephone",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  },
+  {
+    "payment_type_name": "Utilities: Water/Sewer/Trash",
+    "transaction_type": "APS",
+    "transaction_desc": "AP Scheduled",
+    "debit_account": "6800",
+    "credit_account": "2200"
+  },
+  {
+    "payment_type_name": "Utilities: Water/Sewer/Trash",
+    "transaction_type": "APP",
+    "transaction_desc": "AP Paid",
+    "debit_account": "2200",
+    "credit_account": "1100"
+  }
+]

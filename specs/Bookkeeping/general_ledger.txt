@@ -1,0 +1,1405 @@
+﻿Visulate Requirements 
+ – Double Entry Bookkeeping.
+Peter Goldthorp, June 2009
+Overview
+The current version of Visulate uses single entry bookkeeping.  It maintains accounts payable and accounts receivable journals and tracks payments against them.  This limits its ability to support financial accounting.  It cannot support any activity that relies on account balances.  These include balance sheet creation, depreciation schedules, tracking owner’s capital, syndication agreements and  general business expenditure that does not relate to an individual property.  
+Requirements
+Enhance Visulate to support double entry bookkeeping.  
+Functional Requirements
+Chart of Accounts
+Users should be able to record a chart of accounts for each business unit.  A chart of accounts is a list of accounts that a business uses to track assets, liabilities, income, expenses and capital.  Each account is classified with an account type which describes its characteristics.   
+Visulate should maintain a default chart of accounts.  This will be used to create an initial chart of accounts for each business unit.  It will be copied to the business when a new business unit is created, once copied there is no connection between the default account and the business unit.  The user will be able to add or remove accounts from the business’s chart of accounts without affecting the default chart.
+Payment Rules
+The accounts payable and receivable screens are optimized to minimize data entry requirements.  The user presses an “Update List” button to generate a list of scheduled payments based on tenancy agreements and property expenses, pressing a “Paid” button for each scheduled entry records payment against it.  We need the ability to default the accounts that are debited and credited for each transaction.  This will limit the data entry requirements for new transactions and provide a mechanism to retrofit accounts onto existing ones.
+Visulate classifies each transaction with a payment type (e.g. Rent, Repairs, Capital Improvements, etc).  These payment types should be used in conjunction with the transaction type to define payment rules for the business unit.  Every transaction is classified using one of the following types:
+    • AP Scheduled – an accounts payable record has been created.
+    • AP Paid – a payment has been entered for an accounts payable record.
+    • AR Scheduled - an accounts receivable record has been created.
+    • AR Paid – a payment has been received for an accounts receivable record.
+Payment rules record the debit and credit accounts for each unique combination of payment type and transaction type.  The following table shows some examples:
+Transaction Type
+Payment Type
+Debit Account
+Credit Account
+AP Scheduled
+Advertising
+6100 Advertising Expense
+2200 Accounts Payable
+AP Payment
+Advertising
+2200 Accounts Payable
+1100 Cash
+AP Scheduled
+Auto and Travel
+6200 Travel Expense
+2200 Accounts Payable
+AP Payment
+Auto and Travel 
+2200 Accounts Payable
+1100 Cash
+AP Scheduled
+Capital Improvements
+1300 Capital Improvements
+2200 Accounts Payable
+AP Payment
+Capital Improvements
+2200 Accounts Payable
+1100 Cash
+AP Scheduled
+Carpet and Flooring
+1300 Capital Improvements
+2200 Accounts Payable
+AP Payment
+Carpet and Flooring
+2200 Accounts Payable
+1100 Cash
+AR Scheduled
+Rent
+1200 Accounts Receivable
+4000 Rental Income
+AR Payment
+Rent
+1100 Cash
+1200 Accounts Receivable
+
+Default payment rules should be maintained that map to the default chart of accounts.  They should be copied to the business unit on creation and made available for users to edit.
+Accounts Payable and Receivable
+The AP and AR screens need to be modified to utilize payment rules.  A Debit/Credit column should be added to each row.  It should allow the user to override the payment rule for the transaction.  A drop down list should allow the user to select account values as shown in the following table:
+Screen
+Transaction Type
+Account Type
+Accounts Payable
+AP Scheduled
+Debit
+Accounts Payable
+AP Paid
+Credit
+Accounts Receivable
+AR Scheduled
+Credit
+Accounts Receivable
+AR Paid
+Debit
+
+We should also implement two usability enhancements based on user feedback:  
+    1. The AR and AP screens should be divided into 2 sub-tabs for scheduled and unscheduled payments.
+    2. Provide a way to see all unpaid and partially transactions on a single page.  Currently the user has to go back to previous months to record payments for tenants who are in arrears on their rent. 
+In addition to this the AR and AP screens will need to accommodate closed accounting periods.  The requirements for this are described in a separate section of this document.
+Journal Entries
+Some transactions do not result in a payment.  For example the value of a property or an asset will depreciate over time.  These transactions need to be reflected in the books without creating a payment.  Visulate must provide the ability to record journal entries.  These entries should create rows in the general ledger and optionally allow a property to be assigned to them.
+General Ledger
+The General Ledger should be the main accounting record for a business unit.  It will maintain entries for each AP, AR and Journal transaction.  Every transaction should be posted to the ledger recording the accounts that were debited and credited.
+A General Ledger summary screen should allow the user to review ledger entries for a given period.  It should provide a summary page that lists the sum of the debits and credit for the accounting period and a drill down screen where the user can review details of each transaction that touched the account.
+The General Ledger screen should also allow the user to close the books for a business unit (see Accounting  Periods section below).
+Reports
+Two new reports should be created:
+    1. Balance Sheet – should summarize the assets, liabilities and equity for a business unit on a given date.
+    2. Income Statement – should provide a summary of the revenues, expenses and profit or loss for a business unit in a given period
+Accounting Periods 
+An accounting period will typically be a month, quarter or year.  At the end of an accounting period some accounts need to be zeroed out while others remain open.  Account balances for balance sheet accounts (assets, liabilities and equity) are carried over from one period to the next.  Income statement accounts (revenue, expenses and cost of goods sold) are reset to zero at the start of each period.
+The user should be able to close the books at the end of an accounting period.  This process should calculate balances for each balance sheet account and record it in the database.  Once closed, users should not be able to edit the account entries for that period.  For example, a user should not be able to modify accounts payable or receivable entries for 2008 after the 2008 books have been closed.
+An “undo close books” feature should also be available.  This should remove the most recent calculated balances from the database and re-open the accounting period for edits.
+Use Cases
+    • Create Business Unit
+        1. User enters business unit details on the existing screen
+        2. System reads the default chart of accounts and payment type rules and creates corresponding entries for the business unit.
+        3. User reviews the chart of accounts and payment type rules and makes changes if necessary.
+    • Track Accounts Payable and Receivable
+        1. User presses the “Update List” button to generate payment rows.
+        2. System populates the debit and credit accounts automatically based on “scheduled” payment rules for the business unit.
+        3. User reviews the scheduled payment assignment and updates it if necessary.
+        4. User presses the “Paid” button 
+        5. System populates the debit and credit accounts automatically based on the “paid” payment rules for the business unit.
+        6. User reviews the scheduled and paid assignments, updates if necessary then presses the “Save” button.
+    • Close Books for Accounting Period
+        1. User verifies all the AR and AP transactions have been recorded for the period.
+        2. User creates Journal entries to reflect depreciation and other transactions.
+        3. User reviews General Ledger entries to verify they are correct.
+        4. User enters a period end date on the GL screen and presses the “Close Books” button.
+        5. System calculates account balances for each balance sheet account.
+        6. System locks entries to prevent insertion or modification of rows for the closed period.
+
+New Concepts
+Accounts and Account Types
+Double entry bookkeeping accounts as described in the chart of accounts.  Each account is classified into one and only one account type.  The list of account types is fixed.  It includes assets, liabilities, equity, revenue, cost of goods sold and expenses.  Users can create new accounts using the chart of account screen.
+Payment Types
+A classification mechanism for payments, each payment is marked with an entry that describes it.  Examples include rent, capital improvements, depreciation and contra (a full list appears in the seed data requirements section).   The list of payment types is fixed.  Users cannot create new ones.
+Transaction Types
+Transaction types are classification mechanism for rows in the AR and AP journals.  Each row must be one of the following AR Scheduled, AR Paid, AP Scheduled AP Paid.
+Payment Rules
+Payment rules define account mappings for each unique combination of payment and transaction type.  They are used to seed the default debit and credit rows on the AR and AP screens.  The user may override these rules as required.
+Data Model Changes
+Double entry bookkeeping introduces eight new tables. No changes to existing tables are required.  A database view will be created to simplify general ledger reporting.
+Tables
+The following new tables have been created:
+RNT_ACCOUNT_TYPES
+Records generic account types e.g. Asset, Liability, Equity and Expense
+Name
+Datatype
+Length
+Mandatory
+Comments
+ACCOUNT_TYPE
+VARCHAR2
+(32)
+Yes
+Unique name for account type classification
+DISPLAY_TITLE
+VARCHAR2
+(32)
+Yes
+Value to display on screens and reports
+
+RNT_ACCOUNTS
+Records the chart of accounts for a business unit. Each business unit has its own chart of accounts. An initial chart of accounts can be generated from rnt_default_accounts and then edited to add, remove or rename the defaults. Each account must be recorded in the context of a business unit. Optional foreign keys to rnt_user_assignments and rnt_people_bu allow an account to be associated with a Visulate user or tenant.
+Name
+Datatype
+Length
+Mandatory
+Comments
+ACCOUNT_ID
+NUMBER
+
+Yes
+System generated unique identifier
+ACCOUNT_NUMBER
+NUMBER
+
+Yes
+Unique account number in the context of the account's business unit
+BUSINESS_ID
+NUMBER
+
+Yes
+The business unit that this account belongs to. Foreign key to rnt_business_units
+NAME
+VARCHAR2
+(64)
+Yes
+The display name for this account.
+ACCOUNT_TYPE
+VARCHAR2
+(32)
+Yes
+Foreign key to rnt_account_types
+USER_ASSIGN_ID
+NUMBER
+
+
+Identifies the Visulate user that owns this account.
+PEOPLE_BUSINESS_ID
+NUMBER
+
+
+Identifies the tenant that owns the account.
+CURRENT_BALANCE_YN
+VARCHAR2
+(1)
+Yes
+Does this account represent a current asset or liability on the balance sheet?
+
+RNT_ACCOUNT_PERIODS
+Records accounting periods
+Name
+Datatype
+Length
+Mandatory
+Comments
+PERIOD_ID
+NUMBER
+
+Yes
+System generated unique identifier
+BUSINESS_ID
+NUMBER
+
+Yes
+Foreign key to RNT_BUSINESS_UNITS
+START_DATE
+DATE
+
+Yes
+The first date in the accounting period
+CLOSED_YN
+VARCHAR2
+1
+Yes
+Is this accounting period closed?
+
+RNT_ACCOUNT_BALANCES
+Records accounting period balances.
+Name
+Datatype
+Length
+Mandatory
+Comments
+ACCOUNT_ID
+NUMBER
+
+Yes
+Foreign key to RNT_ACCOUNTS
+PERIOD_ID
+NUMBER
+
+Yes
+Foreign key to RNT_ACCOUNT_PERIODS
+OPENING_BALANCE
+NUMBER
+
+Yes
+The balance recorded in this account at the start of the accounting period
+
+RNT_PT_RULES
+Records rules for assigning payment types to an account.
+Name
+Datatype
+Length
+Mandatory
+Comments
+BUSINESS_ID
+NUMBER
+
+Yes
+Foreign key to rnt_business unit
+PAYMENT_TYPE_ID
+NUMBER
+
+Yes
+Foreign key to rnt_payment_types
+TRANSACTION_TYPE
+VARCHAR2
+(32)
+Yes
+AR|AP Scheduled or Paid
+DEBIT_ACCOUNT
+NUMBER
+
+Yes
+Account to debit for transactions of this type
+CREDIT_ACCOUNT
+NUMBER
+
+Yes
+Account to credit for transactions of this type.
+RNT_LEDGER_ENTRIES
+Records the general ledger for a business unit
+Name
+Datatype
+Length
+Mandatory
+Comments
+LEDGER_ID
+NUMBER
+
+Yes
+System generated unique identifier
+ENTRY_DATE
+DATE
+
+Yes
+Transaction date
+DESCRIPTION
+VARCHAR2
+(240)
+Yes
+Short description of the transaction
+DEBIT_ACCOUNT
+NUMBER
+
+Yes
+The account to debit for the transaction
+CREDIT_ACCOUNT
+NUMBER
+
+Yes
+The account to credit for the transaction
+AR_ID
+NUMBER
+
+
+Foreign key to the accounts receivable entry for this transaction
+AP_ID
+NUMBER
+
+
+Foreign key to the accounts payable entry for this transaction
+PAY_ALLOC_ID
+NUMBER
+
+
+Foreign key to the payment details for this transaction
+PAYMENT_TYPE_ID
+NUMBER
+
+Yes
+Foreign key to rnt_payment_types
+PROPERTY_ID
+NUMBER
+
+
+Foreign key to rnt_properties.
+Query Text
+
+RNT_DEFAULT_ACCOUNTS
+Records a default chart of accounts. Used to generate an initial chart of accounts for a business unit.
+Name
+Datatype
+Length
+Mandatory
+Comments
+ACCOUNT_NUMBER
+NUMBER
+
+Yes
+4 digit identifier
+NAME
+VARCHAR2
+(64)
+Yes
+Unique account name
+ACCOUNT_TYPE
+VARCHAR2
+(32)
+Yes
+Foreign key to rnt_account_types
+CURRENT_BALANCE_YN
+VARCHAR2
+(1)
+Yes
+Does this account represent a current asset or liability on the balance sheet?
+RNT_DEFAULT_PT_RULES
+Records default rules for populating rnt_pt_rules
+Name
+Datatype
+Length
+Mandatory
+Comments
+PAYMENT_TYPE_ID
+NUMBER
+
+Yes
+Foreign key to rnt_payment_types
+TRANSACTION_TYPE
+VARCHAR2
+(32)
+Yes
+AR|AP Scheduled or Paid
+DEBIT_ACCOUNT
+NUMBER
+
+Yes
+FK to rnt_default_accounts 
+CREDIT_ACCOUNT
+NUMBER
+
+Yes
+FK to rnt_default_accounts 
+Views
+Default transaction processing views should be generated for each of the new tables.  In addition to this a new reporting view will be required.
+RNT_LEDGER_TRANSACTIONS_V
+Union view which shows debits and credits.
+Name
+Datatype
+Length
+Mandatory
+Comments
+ACCOUNT_ID
+NUMBER
+
+
+
+ACCOUNT_NUMBER
+NUMBER
+
+
+
+BUSINESS_ID
+NUMBER
+
+
+
+ACCOUNT_NAME
+VARCHAR2
+(64)
+
+
+ACCOUNT_TYPE
+VARCHAR2
+(32)
+
+
+TRANSACTION_TYPE
+VARCHAR2
+(6)
+
+
+USER_ASSIGN_ID
+NUMBER
+
+
+
+LEDGER_ID
+NUMBER
+
+
+
+ENTRY_DATE
+DATE
+
+
+
+DESCRIPTION
+VARCHAR2
+(240)
+
+
+FROZEN_YN
+VARCHAR2
+(1)
+
+
+AR_ID
+NUMBER
+
+
+
+AP_ID
+NUMBER
+
+
+
+PAY_ALLOC_ID
+NUMBER
+
+
+
+PAYMENT_TYPE_ID
+NUMBER
+
+
+
+AMOUNT
+NUMBER
+
+
+
+
+Source Query
+select a.account_id
+,      a.account_number
+,      a.business_id
+,      a.name                                     account_name
+,      a.account_type
+,      'DEBIT'                                    transaction_type
+,      a.user_assign_id
+,      l.ledger_id
+,      l.entry_date
+,      l.description
+,      l.frozen_yn
+,      l.ar_id
+,      l.ap_id
+,      l.pay_alloc_id
+,      l.payment_type_id
+,      rnt_ledger_pkg.get_txn_amount(l.ledger_id) amount
+from rnt_accounts a
+,    rnt_ledger_entries l
+where l.debit_account = a.account_id
+UNION
+select a.account_id
+,      a.account_number
+,      a.business_id
+,      a.name                                    account_name
+,      a.account_type
+,      'CREDIT'                                  transaction_type
+,      a.user_assign_id
+,      l.ledger_id
+,      l.entry_date
+,      l.description
+,      l.frozen_yn
+,      l.ar_id
+,      l.ap_id
+,      l.pay_alloc_id
+,      l.payment_type_id
+,      rnt_ledger_pkg.get_txn_amount(l.ledger_id) amount
+from rnt_accounts a
+,    rnt_ledger_entries l
+where l.credit_account = a.account_id
+
+PL/SQL Requirements
+    1. Generate insert, update, delete apis for each of the new tables.  Use gen_api2.sql for this (svn:visulate/code/generate).
+    2. Create a new package RNT_GL_PKG to implement double entry bookkeeping business logic.  This should include procedures/functions for the following:
+        a. Generate a default chart of accounts for a given business unit.  Copy values from rnt_default_account to rnt_accounts.
+        b. Generate payment rules for a business unit.  Copy values from rnt_default_pt_rules to rnt_pt_rules.
+        c. Get accounting period status for a given business unit and date.  Returns ‘CLOSED’ if the books have been closed and ‘OPEN’ if the period is editable.
+        d. Get debit and credit account ids for a given transaction type and business unit.
+        e. Generate contra entries for a date in the current accounting period in a given business unit.
+        f. Close books and create new accounting period.  Accepts a business unit id, date and duration.  Sets the closed_yn flag in the current period to ‘Y’, creates a new period and calculates the balance amount for balance sheet accounts.
+        g. Undo close books.  Deletes current account period and corresponding balances, sets closed_yn flag for previous period to ‘N’.
+    3. Modify the transfer business unit functionality for a property.  Update the debit and credit account references for ledger entries that related to the property.
+Seed Data Requirements
+Default Chart of Accounts
+Account Type
+ACCT#
+Name
+Notes/Rules
+Asset
+1100
+Cash
+Default cash account
+Asset
+1110
+Escrow – Tax and Insurance
+This account would increase as escrow payments are made to the bank.
+ 
+1130
+Escrow - Mortgage Principal
+ 
+ 
+1150
+Escrow – Mortgage P&I
+Used to record P&I payments where Visulate does not have complete details of the loan.  The user sets up a recurring payment for their loan amount and tracks payment against it.  At the end of the year they record their actual Principal and Interest payments based on a statement they get from the lender
+ 
+1200
+Accounts Receivable
+Allocations are set
+ 
+1300
+Capital Improvements
+One thing to note: Costs incurred for "tenant turnover" are not necessarily considered a capital improvement. A capital improvement would be an upgrade to the property, not the replacement of worn carpet due to tenants. We should be careful not to impose rules on transactions that users may mistake as tax advice.
+ 
+1400
+Reserve Fund
+One thing to be careful of is that if Visulate is used to track an actual bank account rather than just a generic "cash" account without reconciliation, in order for this reserve fund to remain accurate it will actually need to be an equity account. EXAMPLE: Money is reserved monthly from the bank account. The actual balance of the bank account will not adjust, however, a reserve-equity account will increase. Having the reserve account as an asset account implies that this account is separate from the "cash" account.
+ 
+1500
+Supplies
+This account would be used to track inventory on hand, such as light fixtures, etc. This account would increase with the purchase of new inventory and decrease when inventory is used for tenant turnover or general repairs. At that time the inventory would either be charged to the tenant or absorbed by the investor. (It wouldn't be a bad idea to eventually have a function that would turn the supply-asset into a supply-expense with the push of a button.)
+ 
+1700
+Land
+Transactions for these accounts can be handled a couple ways. 1) Write a check, which would be written out of the selected (default) bank account. The account selected would be the appropriate asset account. (DB=Bank/Cash, CR=Asset) 2) Journal entry: An entry would be made to DR and CR the appropriate accounts. This would allow for a business partner to add property and increase their capital contribution, without effecting a bank account.
+ 
+1750
+Buildings
+
+ 
+1780
+Accumulated Depreciation Buildings
+Contra account, which would be set-up on a schedule for an automatic J/E (adjustment).
+ 
+1800
+Equipment
+Handled the same as the acquisition of Buildings and Land.
+ 
+1880
+Accumulated Depreciation Equipment
+Contra account, which would be set-up on a schedule for an automatic J/E (adjustment).
+ 
+ 
+ 
+ 
+Liability
+2100
+Notes Payable
+This could be opened up with a check or a J/E. It also might not hurt to eventually develop a system for tracking N/Ps, where the amortization can be entered so payments will be calculated automatically. 
+ 
+2200
+Accounts Payable
+Allocations are set
+ 
+2300
+Tenant Deposits
+This transaction could be handled by creating a running balance for the tenant. The first charge would be for the security deposit/pet deposit. Payment of that charge would create a current liability (current because most res. leases are not for more than a year).
+ 
+2400
+Pre-Paid Rent
+This account could be eliminated. If rent is prepaid it can just be applied to AR, which would create a (credit) balance prior to the appropriate charge. (i.e. a BS is ran for 3/31/09, which shows a balance of (1,000.00) - this means that the tenant overpaid their account by paying April rent in March. 
+ 
+ 
+ 
+ 
+Equity
+3000
+Business Owner, Capital
+These accounts would be affected by draws and contributions in the form of checks and deposits.
+ 
+3500
+Business Owner, Drawing
+
+ 
+ 
+ 
+ 
+Revenue
+4100
+Rental Income
+Includes Section 8 Rental Income
+ 
+4110
+Late Fees
+ 
+ 
+4120
+Other Income
+e.g. Laundry Service, Application Fees
+ 
+4130
+Mortgage Interest Income
+ 
+ 
+4140
+Esrow Mortgage Income
+ 
+ 
+ 
+ 
+ 
+Expenses
+5000
+Advertising Expense
+ 
+ 
+5100
+Auto and Travel Expense
+ 
+ 
+5200
+Cleaning/Janitorial
+ 
+ 
+5300
+Commissions and Fees
+ 
+ 
+5400
+Insurance
+ 
+ 
+5500
+Interest Expense
+ 
+ 
+5600
+Lawn Maintenance
+ 
+ 
+5700
+Management Fees
+ 
+ 
+5800
+Pest Control
+ 
+ 
+5900
+Professional Fees
+ 
+ 
+6000
+Property Taxes
+ 
+ 
+6100
+Repairs & Maintenance
+ 
+ 
+6200
+Weather Events
+ 
+ 
+6300
+Supplies
+Clients who don't want to track inventory can use this account for supplies with a short life (i.e. light bulbs) 
+ 
+6400
+Utilities:Electric
+ 
+ 
+6500
+Utilities:Gas
+ 
+ 
+6600
+Utilities:Irrigation
+ 
+ 
+6700
+Utilities:Telephone
+ 
+ 
+6800
+Utilities:Water/Sewer/Trash
+ 
+
+Payment Types
+Payment Type Name
+AR
+AP
+Depreciation Term
+Service Life
+Advertising
+N
+Y
+0
+0
+Auto and Travel
+N
+Y
+0
+0
+Building Purchase
+
+
+
+
+Building Sale
+
+
+
+
+Capital Improvements
+N
+Y
+0
+10
+Capital Improvements – 3 Year
+N
+Y
+3
+3
+Capital Improvements – 5 Year
+N
+Y
+5
+5
+Capital Improvements – 7 Year
+N
+Y
+7
+7
+Capital Improvements – 10 Year
+N
+Y
+10
+10
+Capital Improvements – 12 Year
+N
+Y
+12
+12
+Capital Improvements – 15 Year
+N
+Y
+15
+15
+Capital Improvements – 20 Year
+N
+Y
+20
+20
+Capital Improvements – 25 Year
+N
+Y
+25
+25
+Carpet Installation/Replacement
+N
+Y
+0
+5
+Cleaning/Janitorial Expense
+N
+Y
+0
+0
+Commissions
+N
+Y
+0
+0
+Contra 
+N
+N
+0
+0
+Equipment Purchase
+N
+Y
+0
+5
+Insurance
+N
+Y
+0
+0
+Interest Expense
+N
+Y
+0
+0
+Interest Income
+Y
+N
+0
+0
+Inventory Purchase
+N
+Y
+0
+5
+Landscaping
+N
+Y
+0
+3
+Land Purchase
+
+
+
+
+Land Sale
+
+
+
+
+Late Fee
+Y
+N
+0
+0
+Lawn Service
+N
+Y
+0
+0
+Legal and Other Fees
+N
+Y
+0
+0
+Management Fees
+N
+Y
+0
+0
+Mortgage Interest Income
+Y
+Y
+0
+0
+Mortgage Interest Payment
+N
+Y
+0
+0
+Mortgage Payment P&I
+Y
+Y
+0
+0
+Mortgage Principal Income
+Y
+N
+0
+0
+Mortgage Principal Payment
+N
+Y
+0
+0
+Other Income
+Y
+N
+0
+0
+Pest Control
+N
+Y
+0
+0
+Property Taxes
+N
+Y
+0
+0
+Recoverable
+Y
+N
+0
+0
+Rental Income
+Y
+N
+0
+0
+Repairs & Maintenance
+N
+Y
+0
+0
+Sales Tax
+Y
+Y
+0
+0
+Section 8 Rent
+Y
+N
+0
+0
+Security Deposit
+Y
+Y
+0
+0
+Supplies
+N
+Y
+0
+0
+Utilities:Electricity
+N
+Y
+0
+0
+Utilities:Gas
+N
+Y
+0
+0
+Utilities:Irrigation
+N
+Y
+0
+0
+Utilities:Telephone
+N
+Y
+0
+0
+Utilities:W/S/T
+N
+Y
+0
+0
+Weather Event
+N
+Y
+0
+0
+                                                   
+Default Payment Rules
+PAYMENT_TYPE_NAME
+TRA
+DEBIT
+CREDIT
+Advertising
+APS
+5000 - Advertising Expense
+2200 - Accounts Payable
+Advertising     
+APP
+2200 - Accounts Payable
+1100 - Cash
+Auto and Travel
+APS
+5100 – Auto and Travel Expense
+2200 – Accounts Payable
+Auto and Travel
+APP
+2200 – Accounts Payable
+1100 – Cash
+Building Purchase
+APS
+1750 - Buildings
+2200 - Accounts Payable
+Building Purchase
+APP
+2200 - Accounts Payable
+1100 - Cash
+Building Purchase
+DEP
+1780 – Accumulated Depreciation Buildings
+1750 - Buildings
+Building Sale
+ARS
+1200 – Accounts Receivable
+1750 - Buildings
+Building Sale
+ARP
+1100 – Cash
+1200 – Accounts Receivable
+Capital Improvements + (3,5,10,12,15,20 and 25 Improvements)
+APS
+1300 – Capital Improvements
+2200 - Accounts Payable
+Capital Improvements + (3,5,10,12,15,20 and 25 Improvements)
+APP
+2200 – Accounts Payable
+1100 – Cash
+Capital Improvements+ (3,5,10,12,15,20 and 25 Improvements)
+DEP
+1780 – Accumulated Depreciation Buildings
+1300 – Capital Improvements
+Carpet Installation/Replacement
+APS
+1300 – Capital Improvements
+2200 – Accounts Payable
+Carpet Installation/Replacement
+APP
+2200 – Accounts Payable
+1100 – Cash
+Cleaning/Janitorial Expense
+APS
+5200 – Cleaning/Janitorial Expense
+2200 – Accounts Payable
+Cleaning/Janitorial Expense
+APP
+2200 – Accounts Payable
+1100 – Cash
+Commissions
+APS
+5300 – Commissions and Fees Expense
+2200 – Accounts Payable
+Commissions
+APP
+2200 – Accounts Payable
+1100 – Cash
+Equipment Purchase
+APS
+1800 - Equipment
+2200 - Accounts Payable
+Equipment Purchase
+APP
+2200 - Accounts Payable
+1100 - Cash
+Equipment Purchase
+DEP
+1880 – Accumulated Depreciation Equipment
+1800 - Equipment
+Insurance
+APS
+5400 – Insurance Expense
+2200 – Accounts Payable
+Insurance
+APP
+2200 – Accounts Payable
+1100 – Cash
+Inventory Purchase
+APS
+1500 - Inventory
+2200 - Accounts Payable
+Inventory Purchase
+APP
+2200 - Accounts Payable
+1100 - Cash
+Landscaping
+APS
+1300 – Capital Improvements
+2200 – Accounts Payable
+Landscaping
+APP
+2200 – Accounts Payable
+1100 – Cash
+Land Purchase
+APS
+1700 - Land
+2200 – Accounts Payable
+Land Purchase
+APP
+2200 – Accounts Payable
+1100 - Cash
+Land Sale
+ARS
+1200 – Accounts Receivable
+1700 - Land
+Land Sale
+ARP
+1100 – Cash
+1200 – Accounts Receivable
+Late Fee Income
+ARS
+1200 – Accounts Receivable
+4110 – Late Fee Income
+Late Fee Income
+ARP
+1100 – Cash
+1200 – Accounts Receivable
+Lawn Service
+APS
+5600 - Lawn Service Expense
+2200 – Accounts Payable
+Lawn Service
+APP
+2200 – Accounts Payable
+1100 – Cash
+Legal and Other Fees
+APS
+5900 – Professional Fees Expense
+2200 – Accounts Payable
+Legal and Other Fees
+APP
+2200 – Accounts Payable
+1100 – Cash
+Management Fees
+APS
+5700 – Management Fees Expense
+2200 – Accounts Payable
+Management Fees
+APP
+2200 – Accounts Payable
+1100 – Cash
+Mortgage Interest Income
+ARS
+1200 – Accounts Receivable
+4130 – Mortgage Interest
+Mortgage Interest Income
+ARP
+1100 – Cash
+1200 – Accounts Receivable
+Mortgage Interest
+APS
+5500 – Interest Expense
+2200 – Accounts Payable
+Mortgage Interest
+APP
+2200 – Accounts Payable
+1100 – Cash
+Mortgage Payment P&I Income
+ARS
+1200 – Accounts Receivable
+4140 – Escrow Mortgage Income
+Mortgage Payment P&I Income
+ARP
+1100 – Cash
+1200 – Accounts Receivable
+Mortgage Payment P&I
+APS
+1150 – Escrow - Mortgage P&I
+2200 – Accounts Payable
+Mortgage Payment P&I
+APP
+2200 – Accounts Payable
+1100 – Cash
+Mortgage Payment Principal Income
+ARS
+1200 – Accounts Receivable
+1900 – Notes Receivable
+Mortgage Payment Principal Income
+ARP
+1100 – Cash
+1200 – Accounts Receivable
+Mortgage Payment Principal
+APS
+1130 – Escrow - Mortgage Principal
+2200 – Accounts Payable
+Mortgage Payment Principal
+APP
+2200 – Accounts Payable
+1100 – Cash
+Other Income
+ARS
+1200 – Accounts Receivable
+4120 – Other Income
+Other Income
+ARP
+1100 – Cash
+1200 – Accounts Receivable
+Interest Income
+ARS
+1200 - Accounts Receivable
+4130 - Interest Revenue
+Interest Income
+ARP
+1100 – Cash
+1200 – Accounts Receivable
+Interest Expense
+APP
+2200 – Accounts Payable
+1100 – Cash
+Interest Expense
+APS
+5500 – Interest Expense
+2200 – Accounts Payable
+Pest Control
+APS
+5800 – Pest Control Expense
+2200 – Accounts Payable
+Pest Control
+APP
+2200 – Accounts Payable
+1100 - Cash
+Property Taxes
+APS
+6000 - Property Taxes Expense
+2200 – Accounts Payable
+Property Taxes
+APP
+2200 – Accounts Payable
+1100 - Cash
+Rental Income
+ARS
+1200 – Accounts Receivable
+4100 – Rental Income
+Rental Income
+ARP
+1100 – Cash
+1200 – Accounts Receivable
+Repairs & Maintenance
+APS
+6100 - Repairs & Maintenance Expense
+2200 - Accounts Payable
+Repairs & Maintenance
+APP
+2200 - Accounts Payable
+1100 – Cash
+Section 8 Rental Income
+ARS
+1200 – Accounts Receivable
+4100 – Rental Income
+Section 8 Rental Income
+ARP
+1100 – Cash
+1200 – Accounts Receivable
+Security Deposit
+ARS
+1200 – Accounts Receivable
+2300 – Tenant Deposits
+Security Deposit
+ARP
+1100 – Cash
+1200 – Accounts Receivable
+Security Deposit
+APS
+2300 - Tenant Deposits
+2200 - Accounts Payable
+Security Deposit
+APP
+2200 - Accounts Payable
+1100 - Cash
+Weather Event
+APS
+6200 - Snow Removal Expense
+2200 - Accounts Payable
+Weather Event
+APP
+2200 - Accounts Payable
+1100 – Cash
+Supplies
+APS
+6300 - Supplies Expense
+2200 - Accounts Payable
+Supplies
+APP
+2200 - Accounts Payable
+1100 – Cash
+Utilities:Electricity
+APS
+6400 - Utilities:Electric
+2200 - Accounts Payable
+Utilities:Electricity
+APP
+2200 - Accounts Payable
+1100 – Cash
+Utilities:Gas
+APS
+6500 - Utilities:Gas
+2200 - Accounts Payable
+Utilities:Gas
+APP
+2200 - Accounts Payable
+1100 – Cash
+Utilities:Irrigation
+APS
+6600 - Utilities:Irrigation
+2200 - Accounts Payable
+Utilities:Irrigation
+APP
+2200 - Accounts Payable
+1100 – Cash
+Utilities:Telephone
+APS
+6700 - Utilities:Telephone
+2200 - Accounts Payable
+Utilities:Telephone
+APP
+2200 - Accounts Payable
+1100 – Cash
+Utilities:W/S/T
+APS
+6800 - Utilities:W/S/T
+2200 - Accounts Payable
+Utilities:W/S/T
+APP
+2200 - Accounts Payable
+1100 – Cash
+
+
+Data Upgrade
+A data upgrade script should insert accounts and ledger entries for every business unit.  Fix bug with property screen that records 27.5 year depreciation as 27 year.  Update existing rows.
+UI Changes
+Four new screens and two new reports are required along with changes to the AR and AP screens.
+Chart of Accounts
+Used to create, update and delete rows in the RNT_ACCOUNTS table.  Drop down list allows user to select an account type.  This is populated using values in the RN_ACCOUNT_TYPES table.  Accounts should be displayed in Account Number order.  Current check box should be enabled for accounts of type Asset and Liability.  It is used to indicate assets and liabilities which have a life of less than a year.  The balance in these accounts will be displayed as current assets or liabilities on the Balance Sheet report for the business unit.
+Screen should allow update access for Bookkeeping, Business Owner and Owner Manager roles.  All other roles should be Read Only.
+
+Payment Rules
+Reads the RNT_PT_RULES tables (with lookups to RNT_ACCOUNTS and RNT_PAYMENT_TYPES).  Allows the user to review and update payment rules for a business unit.  Screen should allow update access to Bookkeeping, Business Owner and Owner Manager roles.  All other roles should be read only.
+
+Accounts Payable and Receivable
+Make the following changes to the Accounts Payable and Receivable screens:
+    1. Add a new “Unpaid” drop down value to the dropdown list at the top of the page.  Selecting this value should show all unpaid and partially paid items regardless of their due date.
+    2. Break the screen into 2 sub-pages for scheduled and unscheduled payments.  The unscheduled payments are currently shown at the bottom of the main page.
+    3. Prevent updates for transactions in a closed accounting period.  Display a “locked” icon and grey out fields for paid rows whose due dates occur in a closed period.  These rows should not be updateable.  Unpaid rows should not be greyed out.  The user should be able to record payment against them as long as the paid date is later than the end of the closed period.  A pre-update check should prevent the user from entering a date that falls inside a closed accounting period.
+    4. Add a debit/credit column to the page.  These should allow the user to override the payment type rules for the AP Scheduled Debit account, AP Paid Credit account, AR Scheduled Credit account and AR Paid Debit account.  
+        a. An AP scheduled transaction occurs when a row is created in the RNT_ACCOUNTS_PAYABLE table.  For example, the “update list” button is pressed on the AP  screen or the user creates a new “unscheduled” AP row.  An AP Paid transaction occurs when a row is created in RNT_PAYMENT_ALLOCATIONS table with a not null value for the AP_ID column.
+        b. AR Scheduled transactions occur when rows are created in RNT_ACCOUNTS_RECEIVABLE.  AR Paid transactions occur when rows are created in RNT_PAYMENT_ALLOCATIONS with an AR_ID value.
+    5. Reorder the other columns as shown in the examples below.  
+
+
+
+
+Journal Entries
+Create a new Journal entry screen to record details of transactions that are not recorded in AR or AP.  The screen should retrieve and display all rows in the RNT_LEDGER_ENTRIES table that join to RNT_PAYMENT_ALLOCATIONS where the (payment allocation) AR and AP ids are null.  It should insert  Date, Memo, Property, Debit and Credit information in the RNT_LEDGER_ENTRIES table and record the Amount in RNT_PAYMENT_ALLOCATIONS leaving the AR_ID and AP_ID columns null.
+The Journal Entries screen should work in a similar way to the AR and AP screens with one exception.  The AR and AP screens show 2 ledger transactions for each row (scheduled and paid).  The Journal Entries screen shows one ledger transaction on each row.
+An Update list button should calculate depreciation expenses for properties and equipment.  It should call a PL/SQL function that generates the rows.
+
+General Ledger
+The General Leger screen is a 2 page screen.  The first page shows an account activity summary for the currently selected accounting period.  The second screen shows a detailed breakdown for the same period.  Both screens read the RNT_LEDGER_TRANSACTIONS_V  view.  The account name field on the summary page should be a hypertext link that drills down to the account details page.
+There are 4 columns in the summary page table.  The Debit and Credit columns show the sum of the debits and credit for each account during the selected accounting period.  The Debit Amount and Credit Amount columns show the difference between the debits and credits for each row.  Subtract the Credit value from the Debit value.  If the value is +ve show it as a Debit Amount, if it’s –ve show it as a Credit Amount.  Calculate the sum of the Debit Amount and Credit Amount columns and display it at the bottom of the page.  Highlight the values in red if they are different.
+
+The actions region of the screen has a Close Books button.  Pressing this button closes the books for the accounting period.  The date field in this table records the end date for the period.  The system should run quality checks when the button is checked to verify that the business unit is in a valid state prior to closing the books.  These checks should verify:
+    1. The “update list” buttons have been pressed for the AR and AP screens for the period in question.
+ 
+
+The details page reads the RNT_ACCOUNTS and RNT_ACCOUNT_BALANCES.  It displays a dropdown list of account types in the Account type field.  The screen makes an AJAX call to populate the list of values in the Account field each time a new account type value is selected.
+The screen queries the database each time a new account is selected.  It reads the opening balance for the account from RNT_ACCOUNT_BALANCES and the transaction details from RNT_LEDGER_TRANSACTIONS_V.   A running total is calculated and displayed in the Balance field using the following rules:
+Account Type
+Debit
+Credit
+Asset
+Increase
+Decrease
+Liability
+Decrease
+Increase
+Equity
+Decrease
+Increase
+Income/Revenue
+Decrease
+Increase
+Expenses
+Increase
+Decrease
+
+
+
+
+Reports
+Two new reports will be provided.  They will show the Balance Sheet and an Income statement.
+Balance Sheet
+Accepts business unit and effective date as input parameters and calculates current and long term asset and liability values based on their classification in rnt_accounts.
+
+Income Statement
+Accepts a business id and an accounting period and shows revenue and expenses for the period.
